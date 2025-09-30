@@ -4,21 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Katawa Shoujo</title>
-    <link rel="stylesheet" href="CSS/start_menu.css" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="CSS/menu.css" />
+    <link rel="stylesheet" href="CSS/game.css" />
     <link rel="stylesheet" href="CSS/base.css" />
-    <link rel="stylesheet" href="CSS/layout.css" />
+    <!-- JS-->
+    <script defer src="JS/menu.js"></script>
+    <script defer src="JS/game.js"></script>
   </head>
   <body>
-    <div id="start_menu">
-      <form>
-        <div id="buttons">
-          <button id="start_button">Démarrer</button>
-          <button id="load_button">Charger</button>
-          <button id="settings_button">Options</button>
-          <button id="exit_button">Quitter</button>
-          <button id="credits_button" formaction="HTML/credits.html">Crédits</button>
-        </div>
-      </form>
+    <!-- Content-->
+
+    <div id="menu">
+      <div id="buttons">
+        <button id="start_button">Démarrer</button>
+        <button id="load_button">Charger</button>
+        <button id="settings_button">Options</button>
+        <button id="exit_button">Quitter</button>
+        <button id="credits_button">Crédits</button>
+      </div>
     </div>
+
+    <div id="game">
+      <div id="text"></div>
+      <div id="character"></div>
+    </div>
+
+    <!-- End -->
   </body>
 </html>
