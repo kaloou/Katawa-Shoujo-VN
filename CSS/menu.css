@@ -1,26 +1,90 @@
 #menu {
   display: block;
   position: fixed;
-  top: 0;
-  left: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../assets/extern/UI/main/bg-main.png");
-  background-size: cover;
-  background-position: center;
-  z-index: 1;
+  margin: 0;
+  cursor: url("../assets/extern/UI/mousecursor.png"), default;
+  background-image: url("../assets/extern/UI/main/background-satured.png");
+  background-attachment: fixed;
+  background-position-y: center;
+  background-position-x: center;
 }
 
-#buttons {
+.div_img_menu {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
   position: absolute;
-  top: 75%;
-  left: 15%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+}
+
+.div_img_menu div{
+  width: 20vw;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  justify-content: space-between;
 }
+
+.div_img_menu div:first-child {
+  align-items: flex-start;
+}
+
+.div_img_menu div:last-child {
+  align-items: flex-end;
+}
+
+.img_menu {
+  z-index: 1;
+  object-fit: cover;
+  max-width: fit-content;
+  max-height: 13vw;
+  height: auto;
+  width: auto;
+  margin: 1vw 6vw;
+}
+
+main {
+  width: 90%;
+  height: 100%;
+  position: relative;
+  margin: 0 auto;
+}
+
+#main_menu {
+  z-index: 3;
+  width: 52.5vw; /* 15 */
+  height: 38.5vw; /* 11 */
+  margin: 1vw auto; /*l'image background de base fait 1025x803*/
+  background-image: url(../assets/extern/UI/main/bg-login-screen.png);
+  background-position-y: center;
+  background-position-x: center;
+  background-size: cover;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#buttons button {
+  display: block;
+  width: 18vw;
+  height: 3vw;
+  margin: 2vw;
+  border: 0;
+  color: #fff2d4;
+  background-color: #948b7c;
+  border: 0.2vw solid #fff2d4;
+  box-shadow: 0px 0px 0px 0.08vw #948b7c;
+  font-size: 2vw;
+}
+
+
 /* Button Credits*/
 #bg-video {
   position: fixed;
