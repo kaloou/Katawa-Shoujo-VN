@@ -8,3 +8,5 @@
 - [ ] faire un bouton se connecter / le remplacer par le boutton quitter
 - [ ] faire une animation de survol sur les boutons
 - [ ] inactivité curseur
+- [X] barre
+- [-] coche
