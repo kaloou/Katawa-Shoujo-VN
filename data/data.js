@@ -173,3 +173,23 @@ var data = [
   "#FFFFFF||C'est probablement mieux pour tout le monde qu'elle ne continue pas de parler.",
   "#F9EAA0|Lilly|TrÃ¨s bien. Pendant ce temps, Yuuko, je prendrai ces livres, si Ã§a vous convient.",
 ];
+
+let index = 0;
+
+let n = document.querySelector("#name p");
+let p = document.querySelector("#text p");
+
+p.addEventListener("click", GoNnextDialogue);
+
+function GoNnextDialogue() {
+  if (index < data.length) {
+    let [color, name, text] = data[index].split("|");
+
+    n.innerHTML = name;
+    n.style.color = color;
+
+    p.innerHTML = text;
+    p.style.color = color;
+  }
+  index++;
+}
