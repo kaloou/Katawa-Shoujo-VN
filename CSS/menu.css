@@ -52,14 +52,9 @@
   margin: 1vw 6vw;
 }
 
-main {
-  width: 90%;
-  height: 100%;
+#main_menu {
   position: relative;
   margin: 0 auto;
-}
-
-#main_menu {
   z-index: 3;
   width: 52.5vw; /* 15 */
   height: 38.5vw; /* 11 */
@@ -87,14 +82,7 @@ main {
   font-size: 2vw;
 }
 
-
-/* Button Credits*/
-#bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 2;
+#buttons button:hover {
+  text-decoration: underline;
+  text-decoration-color: #fff2d4;
 }

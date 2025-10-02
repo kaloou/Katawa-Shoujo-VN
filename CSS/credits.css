@@ -1,0 +1,26 @@
+#play_button_credits {
+    width: 10vw;
+    height: 10vw;
+}
+
+.div_play_button {
+    z-index: 5;
+    position: fixed;
+    display: flex;
+    height: 99%;
+    width: 99%;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Button Credits*/
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
