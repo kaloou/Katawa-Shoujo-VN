@@ -1,98 +1,98 @@
-1 | rin_basic_lucid_close_ni.png |
+1 | rin_basic_lucid_close_ni.png | 833x1080
 2 | emi_basic_closedgrin_gym_close.png | 765x1080
-3 | hanako_silhouette.png |
+3 | hanako_silhouette.png | 244x600
 4 | rin_relaxed_nonchalant_close.png | 833x1080
-5 | yuuko_smile_ss.png |
+5 | yuuko_smile_ss.png | 356x1080
 6 | nurse_concern_close.png | 768x1080
-7 | bg_hosp_room.png |
+7 | bg_hosp_room.png | 1920x1080
 8 | rin_basic_deadpan.png | 367x1080
 9 | hanako_basic_distant_close.png | 707x1080
-10 | lilly_missing.png |
+10 | lilly_missing.png | 257x555
 11 | bg_school_gardens2_ni.png |
-12 | lilly_cane_oops.png | 511x1080
-13 | misha_hips_frown_close_ss.png |
+12 | lilly_cane_oops_ni.png | 511x1080
+13 | misha_hips_frown_close_ss.png | 833x1080
 14 | shizu_behind_frustrated_close.png | 774x1080
 15 | rin_basic_deadpanupset_close.png | 833x1080
-16 | lilly_cane_oops_ni.png |
-17 | shizu_basic_normal_ss.png |
-18 | yuuko_worried_shang.png |
+16 | lilly_cane_oops_ni.png | 511x1080
+17 | shizu_basic_normal_ss.png | 531x1080
+18 | yuuko_worried_shang.png | 356x1080
 19 | hanako_emb_sad.png | 439x1080
 20 | emi_basic_happy.png | 531x1080
-21 | tearoom_lillyhisao_noon.png |
-22 | misha_hips_smile_ni.png |
-23 | rin_relaxed_nonchalant_ni.png |
-24 | ev_showdown_shizu.png |
-25 | heartattack.png |
+21 | bg_tearoom_lillyhisao_noon.png | 1920x1080
+22 | misha_hips_smile_ni.png | 552x1080
+23 | rin_relaxed_nonchalant_ni.png | 367x1080
+24 | ev_showdown_shizu.png | 800x600
+25 | heartattack.png | 1920x1080
 26 | misha_hips_smile_close.png | 833x1080
-27 | hospitalmask.png |
+27 | hospitalmask.png | 1920x1080
 28 | tearoom_lilly_weaksmile.png | 1920x1080
 29 | ev_shizu_shanghai_normallaugh.png |
-30 | lilly_cane_surprised_ni.png |
+30 | lilly_cane_surprised_ni.png | 511x1080
 31 | misha_hips_laugh_close.png | 833x1080
-32 | lilly_behind_cheerful_close_ni.png |
-33 | ev_shizu_shanghai_borednormal.png |
+32 | lilly_behind_cheerful_close_ni.png | 797x1080
+33 | ev_shizu_shanghai_borednormal.png | 1920x1080
 34 | lilly_basic_sad.png | 511x1080
 35 | emi_sad_angry.png | 531x1080
 36 | tearoom_hisaoe_lunsure.png | 1920x1080
-37 | bg_school_dormext_start_ni.png |
+37 | bg_school_dormext_start_ni.png | 2160x1080
 38 | hanako_defarms_worry.png | 439x1080
-39 | shizu_adjust_blush_close_ss.png |
-40 | misha_perky_smile_ni.png |
-41 | misha_sign_confused_ss.png |
-42 | ev_hana_library.png |
-43 | white.png |
+39 | shizu_adjust_blush_close_ss.png | 774x1080
+40 | misha_perky_smile_ni.png | 552x1080
+41 | misha_sign_confused_ss.png | 552x1080
+42 | ev_hana_library.png | 1920x1080
+43 | white.png | 800x600
 44 | emi_excited_amused_close.png | 765x1080
 45 | misha_cross_smile.png | 552x1080
 46 | nurse_neutral_close.png | 768x1080
-47 | lilly_cane_smileclosed_ni.png |
+47 | lilly_cane_smileclosed_ni.png | 511x1080
 48 | lilly_cane_sleepy.png | 511x1080
-49 | kenji_happy_close_ni.png |
+49 | kenji_happy_close_ni.png | 891x1080
 50 | lilly_basic_weaksmile.png | 511x1080
 51 | tearoom_hisaoe_sigh.png | 1920x1080
 52 | tearoom_hisaoe_lthink.png | 1920x1080
-53 | bg_school_courtyard_ss.png |
+53 | bg_school_courtyard_ss.png | 2160x1080
 54 | hanako_basic_bashful_ss.png |
-55 | bg_school_hallway3.png |
-56 | hanako_emb_timid.png | 439x1080
+55 | bg_school_hallway3.png | 2160x1080
+56 | hanako_emb_timid.png |
 57 | tearoom_hanae_open.png | 1920x1080
-58 | shizu_behind_smile_close_ss.png |
-59 | hill_pairnotouch.png |
-60 | misha_cross_smile_close_ss.png |
-61 | lilly_cane_weaksmile_ss.png |
-62 | crowd_ss.png |
-63 | crowd_ni.png |
-64 | yuuko_neutral_ss.png |
+58 | shizu_behind_smile_close_ss.png | 774x1080
+59 | hill_pairnotouch.png | 1920x504
+60 | misha_cross_smile_close_ss.png | 833x1080
+61 | lilly_cane_weaksmile_ss.png | 511x1080
+62 | crowd_ss.png | 2160x1080
+63 | crowd_ni.png | 2160x1080
+64 | yuuko_neutral_ss.png | 356x1080
 65 | emi_excited_happy.png | 531x1080
-66 | hanako_emb_downtimid_tremble_ss.png |
-67 | rin_relaxed_sleepy_close_ni.png |
-68 | kenji_tsun_ni.png |
-69 | misha_perky_confused_ss.png |
-70 | shizu_behind_blank_close_ni.png |
-71 | ev_hisao_class_end.png |
+66 | hanako_emb_downtimid_tremble_ss.png | 439x1080
+67 | rin_relaxed_sleepy_close_ni.png | 833x1080
+68 | kenji_tsun_ni.png | 691x1080
+69 | misha_perky_confused_ss.png | 552x1080
+70 | shizu_behind_blank_close_ni.png | 774x1080
+71 | ev_hisao_class_end.png | 800x600
 72 | hanako_cover_worry.png | 439x1080
-73 | steam.png |
+73 | steam.png | 800x600
 74 | shizu_behind_blank.png | 531x1080
 75 | hanako_emb_downsmile.png | 439x1080
-76 | ev_emi_knockeddown_face.png |
-77 | lilly_cane_displeased_ni.png |
+76 | ev_emi_knockeddown_face.png | 4800x3600
+77 | lilly_cane_displeased_ni.png | 511x1080
 78 | emi_sad_grin_gym.png | 531x1080
 79 | emi_sad_shy_gym.png | 531x1080
 80 | misha_perky_sad_close.png | 833x1080
-81 | rin_negative_sad_close_ni.png |
+81 | rin_negative_sad_close_ni.png | 833x1080
 82 | shizu_adjust_happy_close.png | 774x1080
-83 | lilly_cane_listen_ni.png |
-84 | hanako_basic_distant_ni.png |
-85 | bg_school_dormext_full.png |
-86 | rin_negative_spaciness_close_ni.png |
-87 | yuuko_happy.png |
+83 | lilly_cane_listen_ni.png | 511x1080
+84 | hanako_basic_distant_ni.png | 439x1080
+85 | bg_school_dormext_full.png | 2160x1080
+86 | rin_negative_spaciness_close_ni.png | 833x1080
+87 | yuuko_happy.png | 356x1080
 88 | shizu_adjust_smug.png | 531x1080
 89 | shizu_adjust_happy_close_ss.png |
-90 | hanako_emb_downtimid_ss.png |
+90 | hanako_emb_downtimid_ss.png | 439x1080
 91 | shizu_basic_sparkle_close.png | 774x1080
-92 | rin_shadow_negative.png |
-93 | bg_school_dormext_half_ni.png |
-94 | tearoom_lillyhisao_sunset.png |
-95 | bg_misc_sky.png |
+92 | rin_shadow_negative.png | 463x600
+93 | bg_school_dormext_half_ni.png | 2160x1080
+94 | tearoom_lillyhisao_sunset.png | 1920x1080
+95 | bg_misc_sky.png | 1920x1080
 96 | rin_basic_lucid.png | 367x1080
 97 | emi_sad_grin_close.png | 765x1080
 98 | rin_relaxed_surprised_close_ni.png |
@@ -156,7 +156,7 @@
 156 | rin_basic_deadpandelight.png | 367x1080
 157 | bg_school_staircase2.png |
 158 | hanako_emb_smile_ss.png |
-159 | misha_sign_confused.png | 552x1080
+159 | misha_sign_confused.png |
 160 | ev_lilly_tearoom.png |
 161 | hanako_basic_worry_close.png | 707x1080
 162 | kenji_neutral_close.png | 891x1080
@@ -173,7 +173,7 @@
 173 | tearoom_everyone_noon.png |
 174 | emi_sad_annoyed_gym.png | 531x1080
 175 | hanako_emb_blushtimid_ss.png |
-176 | misha_cross_smile_close.png | 833x1080
+176 | misha_cross_smile_close.png |
 177 | rin_basic_absent_ni.png |
 178 | bg_tearoom_lillyhisao_sunset.png |
 179 | bg_school_miyagi.png |
@@ -201,7 +201,7 @@
 201 | steam2.png | 1920x1080
 202 | rin_shadow_basic.png |
 203 | ev_hana_library_gasp.png |
-204 | misha_hips_smile.png | 552x1080
+204 | misha_hips_smile.png |
 205 | tearoom_hisaoe_hsmile.png | 1920x1080
 206 | nurse_grin.png | 549x1080
 207 | rin_relaxed_boredom_close.png | 833x1080
@@ -227,7 +227,7 @@
 227 | yuuko_panic.png |
 228 | lilly_cane_satisfied.png | 511x1080
 229 | lilly_cane_sleepy_ss.png |
-230 | shizu_behind_smile_close.png | 774x1080
+230 | shizu_behind_smile_close.png |
 231 | tearoom_hisao_smile.png | 1920x1080
 232 | rin_negative_worried_close.png | 833x1080
 233 | shizu_basic_angry_close_ni.png |
@@ -236,9 +236,9 @@
 236 | emi_basic_hes_gym.png | 531x1080
 237 | akira_basic_boo.png | 405x1080
 238 | nurse_fabulous_close.png | 768x1080
-239 | lilly_cane_smileclosed.png | 511x1080
+239 | lilly_cane_smileclosed.png |
 240 | lilly_cane_smileclosed_ss.png |
-241 | rin_negative_sad_close.png | 833x1080
+241 | rin_negative_sad_close.png |
 242 | bg_mural_part.png |
 243 | ev_showdown_large.png |
 244 | lilly_basic_smileclosed_ni.png |
@@ -262,14 +262,14 @@
 262 | rin_negative_confused_ni.png |
 263 | rin_basic_awayabsent_close_ni.png |
 264 | bg_school_council_ss.png |
-265 | rin_relaxed_sleepy_close.png | 833x1080
-266 | shizu_behind_blank_close.png | 774x1080
+265 | rin_relaxed_sleepy_close.png |
+266 | shizu_behind_blank_close.png |
 267 | darkgrey.png |
 268 | bg_school_roof_ni.png |
 269 | misha_sign_smile_close_ss.png |
 270 | misha_perky_sad.png | 552x1080
 271 | lilly_cane_sad_ni.png |
-272 | shizu_basic_normal.png | 531x1080
+272 | shizu_basic_normal.png |
 273 | rin_relaxed_boredom.png | 367x1080
 274 | emi_excited_amused_gym.png | 531x1080
 275 | lilly_basic_smile_close.png | 797x1080
@@ -283,7 +283,7 @@
 283 | bg_school_dormhisao_ss.png |
 284 | tearoom_hisaoe_thinkclosed.png | 1920x1080
 285 | tearoom_hisaoe_hunsure.png | 1920x1080
-286 | rin_basic_lucid_close.png | 833x1080
+286 | rin_basic_lucid_close.png |
 287 | lilly_basic_surprised.png | 511x1080
 288 | bg_school_staircase1.png |
 289 | ev_shizu_shanghai_boredlaugh.png |
@@ -314,7 +314,7 @@
 314 | rin_basic_delight_close.png | 833x1080
 315 | tearoom_hisao_outside.png | 1920x1080
 316 | hanako_defarms_shock.png | 439x1080
-317 | lilly_cane_listen.png | 511x1080
+317 | lilly_cane_listen.png |
 318 | ev_kenji_rooftop.png |
 319 | shizu_adjust_angry.png | 531x1080
 320 | yuuko_neurotic_shang.png |
@@ -341,20 +341,20 @@
 341 | hanako_def_worry_close.png | 707x1080
 342 | shizu_basic_angry_close.png | 774x1080
 343 | shizu_adjust_happy_ni.png |
-344 | rin_negative_spaciness_close.png | 833x1080
+344 | rin_negative_spaciness_close.png |
 345 | shizu_basic_sparkle_close_ss.png |
 346 | bg_suburb_konbiniint.png |
 347 | rin_basic_absent_close.png | 833x1080
 348 | rin_basic_deadpannormal_ni.png |
 349 | bg_school_miyagi_ss.png |
 350 | tearoom_hisaoe_calm.png | 1920x1080
-351 | kenji_tsun.png | 691x1080
+351 | kenji_tsun.png |
 352 | bg_tearoom_everyone_noon.png |
 353 | nurse_concern.png | 549x1080
 354 | shizu_adjust_happy.png | 531x1080
 355 | bg_school_dormext_half_ss.png |
 356 | bg_school_council.png |
-357 | bg_tearoom_lillyhisao_noon.png |
+357 | bg_tearoom_lillyhisao_noon.png | 1920x1080
 358 | hanako_basic_bashful.png | 439x1080
 359 | rin_relaxed_surprised_close.png | 833x1080
 360 | misha_cross_laugh.png | 552x1080
@@ -401,7 +401,7 @@
 401 | shizu_behind_smile_ni.png |
 402 | ev_emi_knockeddown_facepullout.png |
 403 | lilly_cane_ara_ss.png |
-404 | misha_hips_frown_close.png | 833x1080
+404 | misha_hips_frown_close.png |
 405 | muto_smile.png | 475x1080
 406 | rin_basic_deadpansurprised_close.png | 833x1080
 407 | lilly_cane_sad_ss.png |
@@ -421,7 +421,7 @@
 421 | rin_basic_surprised_close.png | 833x1080
 422 | emi_basic_happy_close.png | 765x1080
 423 | tearoom_lillye_ara.png | 1920x1080
-424 | hanako_basic_distant.png | 439x1080
+424 | hanako_basic_distant.png |
 425 | hanako_basic_normal_ni.png |
 426 | bg_school_courtyard_ni.png |
 427 | misha_missing.png |
@@ -435,11 +435,11 @@
 435 | akira_basic_smile.png | 405x1080
 436 | shizu_adjust_angry_ss.png |
 437 | bg_misc_sky_ss.png |
-438 | hanako_emb_downtimid.png | 439x1080
+438 | hanako_emb_downtimid.png |
 439 | emi_basic_annoyed_close.png | 765x1080
 440 | kenji_silhouette_naked.png |
 441 | emi_excited_laugh.png | 531x1080
-442 | lilly_cane_surprised.png | 511x1080
+442 | lilly_cane_surprised.png |
 443 | shizu_behind_frown.png | 531x1080
 444 | emi_basic_closedhappy_close.png | 765x1080
 445 | hanako_emb_smile_close.png | 707x1080
@@ -474,7 +474,7 @@
 474 | misha_hips_grin_ss.png |
 475 | emi_basic_grin.png | 531x1080
 476 | hanako_basic_worry.png | 439x1080
-477 | shizu_adjust_blush_close.png | 774x1080
+477 | shizu_adjust_blush_close.png |
 478 | rin_negative_worried.png | 367x1080
 479 | emi_sad_grit_gym_close.png |
 480 | ev_shizu_shanghai_smirklaugh.png |
@@ -494,7 +494,7 @@
 494 | emi_basic_happy_gym.png | 531x1080
 495 | emi_excited_laugh_close.png | 765x1080
 496 | nurse_grin_close.png | 768x1080
-497 | lilly_cane_weaksmile.png | 511x1080
+497 | lilly_cane_weaksmile.png |
 498 | lilly_basic_cheerful.png | 511x1080
 499 | mural_pan.png |
 500 | yuuko_neurotic.png |
@@ -519,14 +519,14 @@
 519 | bg_school_track.png |
 520 | bg_suburb_shanghaiint.png |
 521 | yuuko_smile_shang.png |
-522 | lilly_behind_cheerful_close.png | 797x1080
+522 | lilly_behind_cheerful_close.png |
 523 | hanako_basic_smile.png | 439x1080
 524 | shizu_cross_angry.png | 531x1080
 525 | emi_sad_grit_close.png | 765x1080
 526 | hanako_emb_emb.png | 439x1080
 527 | bg_school_dormhallground.png |
 528 | shizu_behind_frown_ss.png |
-529 | misha_perky_confused.png | 552x1080
+529 | misha_perky_confused.png |
 530 | kenji_neutral_close_ni.png |
 531 | shizu_behind_frustrated_close_ni.png |
 532 | rin_basic_deadpan_close_ss.png |
@@ -538,7 +538,7 @@
 538 | showdown_shizu_slice.png |
 539 | bg_school_road.png |
 540 | emi_excited_laugh_gym_close.png | 765x1080
-541 | misha_perky_smile.png | 552x1080
+541 | misha_perky_smile.png |
 542 | ev_hisao_class_move.png |
 543 | bg_school_track_on.png |
 544 | rin_basic_lucid_ni.png |
@@ -559,7 +559,7 @@
 559 | lilly_basic_concerned_close_ni.png |
 560 | ev_hana_library_read.png |
 561 | misha_perky_smile_ss.png |
-562 | kenji_happy_close.png | 891x1080
+562 | kenji_happy_close.png |
 563 | kenji_rage_ni.png |
 564 | lilly_basic_smile_ni.png |
 565 | shizu_adjust_blush.png | 531x1080
@@ -587,7 +587,7 @@
 587 | nomiya_talk.png | 765x1080
 588 | rin_basic_absent.png | 367x1080
 589 | hanako_basic_smile_ni.png |
-590 | rin_relaxed_nonchalant.png | 367x1080
+590 | rin_relaxed_nonchalant.png |
 591 | emi_sad_shy_close.png | 765x1080
 592 | lilly_cane_giggle_ni.png |
 593 | rin_negative_worried_ni.png |
@@ -595,7 +595,7 @@
 595 | lilly_basic_listen.png | 511x1080
 596 | emi_sad_depressed.png | 531x1080
 597 | emi_basic_closedhappy.png | 531x1080
-598 | lilly_cane_displeased.png | 511x1080
+598 | lilly_cane_displeased.png |
 599 | hanako_cover_worry_close.png | 707x1080
 600 | lilly_basic_pout.png | 511x1080
 601 | ev_showdown_shizu_slice.png |
