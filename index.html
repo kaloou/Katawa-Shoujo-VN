@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Katawa Shoujo</title>
-    <link rel="shortcut icon" href="assets/extern/UI/icon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/extern/UI/icon.ico" type="image/x-icon" />
     <!-- CSS -->
     <link rel="stylesheet" href="CSS/menu.css" />
     <link rel="stylesheet" href="CSS/game.css" />
     <link rel="stylesheet" href="CSS/base.css" />
+    <link rel="stylesheet" href="CSS/escape.css">
     <!-- JS-->
     <script defer src="JS/menu.js"></script>
     <script defer src="JS/game.js"></script>
@@ -31,7 +32,7 @@
       </div>
       <div id="main_menu">
         <div id="buttons">
-          <button id="connect_button">Se connecter</button>
+          <button id="connect_button">Se Connecter</button>
           <!-- Avec JS faire devenir "Vous êtes connecté" -->
           <button id="start_button">Démarrer</button>
           <button id="load_button">Charger</button>
@@ -42,11 +43,13 @@
       </div>
     </div>
 
+    <div id="escape">
+      <!-- A faire pour quand on seras en jeu. ça mettre une pop up avec des boutons pour save, quitter, hide, ... OK-->
+       <h1>TEMPORAIRE : CLIQUE POUR REVENIR AU MENU</h1>
+    </div>
+
     <!-- Ecran de Jeu -->
     <div id="game">
-      <div id="escape">
-        <!-- A faire pour quand on seras en jeu. ça mettre une pop up avec des boutons pour save, quitter, hide, ... OK-->
-      </div>
       <div id="name">
         <p>???</p>
       </div>

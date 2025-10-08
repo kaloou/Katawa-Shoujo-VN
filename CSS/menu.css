@@ -3,11 +3,13 @@
 }
 
 #menu {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   z-index: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   margin: 0;
   background-image: url("../assets/extern/UI/main/background-satured.png");
   background-attachment: fixed;
@@ -17,8 +19,8 @@
 
 .div_img_menu {
   z-index: -1;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -28,7 +30,7 @@
 
 .div_img_menu div{
   width: 20vw;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -67,6 +69,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#main_menu p {
+  display: block;
+  justify-self: center;
 }
 
 #buttons button {
