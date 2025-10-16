@@ -178,6 +178,7 @@ let index = 0;
 
 let n = document.querySelector("#name p");
 let p = document.querySelector("#text p");
+let div_name = document.getElementById("name");
 
 p.addEventListener("click", GoNnextDialogue);
 
@@ -185,7 +186,16 @@ function GoNnextDialogue() {
   if (index < data.length) {
     let [color, name, text] = data[index].split("|");
 
-    n.innerHTML = name;
+    if(name != "")
+    {
+      div_name.style.display = "flex"
+      n.innerHTML = name;
+    }
+    else
+    {
+      div_name.style.display = "none"
+    }
+
     n.style.color = color;
 
     p.innerHTML = text;
