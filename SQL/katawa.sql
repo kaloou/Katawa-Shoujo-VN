@@ -1,4 +1,16 @@
-CREATE TABLE image(iid 	INTEGER PRIMARY KEY AUTOINCREMENT,name	TEXT,w	INTEGER,h	INTEGER);
+DROP TABLE IF EXISTS image CASCADE;
+DROP TABLE IF EXISTS story CASCADE;
+DROP TABLE IF EXISTS character CASCADE;
+DROP TABLE IF EXISTS seqtag CASCADE;
+DROP TABLE IF EXISTS seqtext CASCADE;
+DROP TABLE IF EXISTS menu CASCADE;
+
+CREATE TABLE image(
+    iid SERIAL PRIMARY KEY,
+    name TEXT,
+    w INTEGER,
+    h INTEGER
+);
 INSERT INTO image VALUES(1,'rin_basic_lucid_close_ni.png',833,1080);
 INSERT INTO image VALUES(2,'emi_basic_closedgrin_gym_close.png',765,1080);
 INSERT INTO image VALUES(3,'hanako_silhouette.png',244,600);
@@ -619,7 +631,13 @@ INSERT INTO image VALUES(617,'kenji_neutral_ni.png',691,1080);
 INSERT INTO image VALUES(618,'yuuko_panic_shang.png',356,1080);
 INSERT INTO image VALUES(619,'bg_mural_start.png',1920,1080);
 
-CREATE TABLE story (id INTEGER, type INTEGER, name TEXT, param INTEGER, next INTEGER);
+CREATE TABLE story(
+    id INTEGER,
+    type INTEGER,
+    name TEXT,
+    param INTEGER,
+    next INTEGER
+);
 INSERT INTO story VALUES(1,1,'',0,2);
 INSERT INTO story VALUES(2,2,'NOP1',0,0);
 INSERT INTO story VALUES(3,1,'',0,4);
@@ -1135,7 +1153,12 @@ INSERT INTO story VALUES(512,9,'badend',0,0);
 INSERT INTO story VALUES(513,2,'A44',0,0);
 INSERT INTO story VALUES(514,9,'shizuneend',0,0);
 
-CREATE TABLE character (cid INTEGER PRIMARY KEY AUTOINCREMENT, code TEXT, name TEXT, color TEXT);
+CREATE TABLE character(
+    cid SERIAL PRIMARY KEY,
+    code TEXT,
+    name TEXT,
+    color TEXT
+);
 INSERT INTO character VALUES(1,'','','#FFFFFF');
 INSERT INTO character VALUES(2,'n','','#FFFFFF');
 INSERT INTO character VALUES(3,'mystery','???','#FFFFFF');
@@ -1182,7 +1205,11 @@ INSERT INTO character VALUES(43,'hx_','Père de Shizune','#99AACC');
 INSERT INTO character VALUES(44,'hh_','Fille mince','#6299FF');
 INSERT INTO character VALUES(45,'emm_','Mère d''Emi','#995050');
 
-CREATE TABLE seqtag (seqid INTEGER PRIMARY KEY AUTOINCREMENT, tag TEXT, type INTEGER);
+CREATE TABLE seqtag(
+    seqid SERIAL PRIMARY KEY,
+    tag TEXT,
+    type INTEGER
+);
 INSERT INTO seqtag VALUES(1,'NOP1',1);
 INSERT INTO seqtag VALUES(2,'NOP2',1);
 INSERT INTO seqtag VALUES(3,'A1',1);
@@ -1349,7 +1376,15 @@ INSERT INTO seqtag VALUES(163,'A41a',1);
 INSERT INTO seqtag VALUES(164,'A42',1);
 INSERT INTO seqtag VALUES(165,'A43',1);
 
-CREATE TABLE seqtext (seqid INTEGER, seqserial INTEGER, type INTEGER, data TEXT, elid INTEGER, pos INTEGER, z INTEGER);
+CREATE TABLE seqtext(
+    seqid INTEGER,
+    seqserial INTEGER,
+    type INTEGER,
+    data TEXT,
+    elid INTEGER,
+    pos INTEGER,
+    z INTEGER
+);
 INSERT INTO seqtext VALUES(1,1,2,'',190,0,0);
 INSERT INTO seqtext VALUES(1,2,2,'',566,0,0);
 INSERT INTO seqtext VALUES(1,3,1,'Une légère brise faisait tinter les branches dégarnies comme des carillons en bois.',1,0,0);
@@ -11844,7 +11879,15 @@ INSERT INTO seqtext VALUES(165,215,2,'',572,0,0);
 INSERT INTO seqtext VALUES(165,216,1,'Je peux voir le ciel pendant que je tourne dans les airs. La bouteille s''envole du bout de mes doigts et disparaît dans les airs pendant que je tombe.',1,0,0);
 INSERT INTO seqtext VALUES(165,217,1,'Je réalise que c''est la fin d''une très, très mauvaise journée.',1,0,0);
 
-CREATE TABLE menu (seqid INTEGER, qtext TEXT, qid INTEGER, opt1 TEXT, opt2 TEXT, opt3 TEXT, opt4 TEXT);
+CREATE TABLE menu(
+    seqid INTEGER,
+    qtext TEXT,
+    qid INTEGER,
+    opt1 TEXT,
+    opt2 TEXT,
+    opt3 TEXT,
+    opt4 TEXT
+);
 INSERT INTO menu VALUES(4,'Tu veux te présenter à la classe ?',NULL,'Pourquoi ?','Oui, bien sûr.','','');
 INSERT INTO menu VALUES(16,'Hmmm, je me demande...',NULL,'Poser des questions sur la bibliothèque.','Poser des questions sur la surdité de Shizune.','Je pense que je sais tout ce que j''ai besoin de savoir.','');
 INSERT INTO menu VALUES(24,'Elle dit que tu n''as aucune chance si tu continues à jouer comme ça, non tu n''en as pas~ !',NULL,'Elle n''a pas tort. Attaque agressive !','C''est un piège, il est plus intelligent de jouer défensif ici.','','');
