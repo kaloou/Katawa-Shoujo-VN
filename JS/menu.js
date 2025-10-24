@@ -1,103 +1,85 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
+	window.onload = function () {
+		const startBtn = document.getElementById('start_button');
+		const creditsBtn = document.getElementById('credits_button');
+		const connectBtn = document.getElementById('connect_button');
+		const settingsBtn = document.getElementById('settings_button');
+		const divMenu = document.getElementById('menu');
+		const divGame = document.getElementById('game');
+		const divEscape = document.getElementById('escape');
 
-  window.onload = function() {
-    const startBtn = document.getElementById("start_button");
-    const creditsBtn = document.getElementById("credits_button");
-    const connectBtn = document.getElementById("connect_button");
-    const settingsBtn = document.getElementById("settings_button");
+		let connected = false;
 
-    const divMenu = document.getElementById("menu");
-    const divGame = document.getElementById("game");
+		divEscape.style.display = 'none';
 
-    const divEscape = document.getElementById("escape");
+		// if(connected)
+		// {
+		//   divMenu.style.display = "none";
+		//   divGame.style.display = "block";
+		// }
+		// else
+		// {
+		//   divMenu.style.display = "block";
+		//   divGame.style.display = "none";
+		// }
 
-    let connected = false;
+		connectBtn.addEventListener('click', Connect);
 
-    divEscape.style.display = "none";
+		startBtn.addEventListener('click', Start);
 
-    // if(connected)
-    // {
-    //   divMenu.style.display = "none";
-    //   divGame.style.display = "block";
-    // }
-    // else
-    // {
-    //   divMenu.style.display = "block";
-    //   divGame.style.display = "none";
-    // }
+		creditsBtn.addEventListener('click', () => {
+            window.location.href = 'HTML/credits.html';
+		});
 
-    connectBtn.addEventListener("click", Connect);
 
-    startBtn.addEventListener("click", Start);
+		settingsBtn.addEventListener('click', OpenEscape);
 
-    creditsBtn.addEventListener("click", () => {
-      window.location.href = "HTML/credits.html";
-    });
+		divEscape.addEventListener('click', GameToMenu);
 
-    settingsBtn.addEventListener("click", OpenEscape);
-    
+		document.addEventListener('keydown', PressEscape);
 
-    divEscape.addEventListener("click", GameToMenu);
+		function Start() {
+			if (connected) {
+				divMenu.style.display = 'none';
+				divGame.style.display = 'block';
+			} else {
+				NotConnected();
+			}
+		}
 
-    document.addEventListener("keydown", PressEscape);
+		function NotConnected() {
+			// je crée une fonction car on l'utilisera aussi pour le bouton charger
+			connectBtn.style.boxShadow = '0px 0px 0px 0.08vw #eb243b'; // code couleur : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
+			connectBtn.style.backgroundColor = '#eb243b';
+		}
 
-    function Start()
-    {
-      if(connected)
-      {
-        divMenu.style.display = "none";
-        divGame.style.display = "block";
-      }
-      else
-      {
-        NotConnected(); 
-      }
-    }
+		function Connect() {
+			connected = true;
+			if (connected) {
+				connectBtn.textContent = 'Vous êtes connecté';
+				connectBtn.style.boxShadow = '0px 0px 0px 0.08vw #2c9e31';
+				connectBtn.style.backgroundColor = '#2c9e31';
+			}
+		}
 
-    function NotConnected() // je crée une fonction car on l'utilisera aussi pour le bouton charger
-    {
-      connectBtn.style.boxShadow = "0px 0px 0px 0.08vw #eb243b"; // code couleur : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
-      connectBtn.style.backgroundColor = "#eb243b";
-    }
+		function PressEscape(event) {
+			if (event.key == 'Escape') {
+				OpenEscape();
+			}
+		}
 
-    function Connect()
-    {
-      connected = true;
-      if(connected)
-      {
-        connectBtn.textContent = "Vous êtes connecté";
-        connectBtn.style.boxShadow = "0px 0px 0px 0.08vw #2c9e31";
-        connectBtn.style.backgroundColor = "#2c9e31";
-      }
-    }
+		function OpenEscape() {
+			if (divEscape.style.display == 'none') {
+				divEscape.style.display = 'flex';
+			} else if (divEscape.style.display == 'flex') {
+				divEscape.style.display = 'none';
+			}
+		}
 
-    function PressEscape(event)
-    {
-      if(event.key == "Escape")
-      {
-        OpenEscape();
-      }
-    }
-
-    function OpenEscape()
-    {
-      if(divEscape.style.display=="none")
-      {
-        divEscape.style.display = "flex";
-
-      }
-      else if(divEscape.style.display=="flex")
-      {
-        divEscape.style.display = "none";
-      }
-    }
-
-    function GameToMenu()
-    {
-      divMenu.style.display = "flex";
-      divGame.style.display = "none";
-      divEscape.style.display = "none"; // supprimer ça après
-    }
-  }
+		function GameToMenu() {
+			divMenu.style.display = 'flex';
+			divGame.style.display = 'none';
+			divEscape.style.display = 'none'; // supprimer ça après
+		}
+	};
 });
-
