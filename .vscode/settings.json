@@ -1,9 +1,0 @@
-{
-	"liveServer.settings.port": 5501,
-	"workbench.colorTheme": "Solarized Light",
-	"editor.cursorSize": 10,
-	"editor.cursorBlinking": "smooth",
-	"editor.fontFamily": "Comic Sans MS",
-	"editor.fontSize": 30,
-	"caca": "fallait pas push ton .vscode (met le dans gitignore)"
-}

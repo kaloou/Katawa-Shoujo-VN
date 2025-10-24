@@ -1,27 +1,12 @@
 <?php
+session_start();
 
-/** @var PDO $connexion */
-include 'connexion.php';
+include_once('connexion.php');
 
-try
-{
-    $stmt = $connexion->query("SELECT * FROM image");
-    $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// ENDPOINT TEXT
+header('Content-Type: text/plain; charset=utf-8');
 
-    if (!$images)
-    {
-        echo "Aucune image trouvée.";
-    }
-    else
-    {
-        foreach ($images as $img)
-        {
-            echo "ID : " . $img['iid'] . " - Nom fichier : " . $img['name'] . "<br>";
-        }
-    }
+$seqid = $_SESSION["story"]["seqid"];
+$seqserial = $_SESSION["seqtext"]["seqserial"];
 
-}
-catch (PDOException $e)
-{
-    echo "Erreur lors de la récupération des images : " . $e->getMessage();
-}
+$query = "SELECT * FROM seqtext WHERE seqid = :seqid AND seqserial = :seqserial";
