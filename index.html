@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Katawa Shoujo</title>
-    <link rel="shortcut icon" href="assets/extern/UI/icon.ico" type="image/x-icon" />
-    <!-- CSS -->
-    <link rel="stylesheet" href="CSS/menu.css" />
-    <link rel="stylesheet" href="CSS/game.css" />
-    <link rel="stylesheet" href="CSS/base.css" />
-    <link rel="stylesheet" href="CSS/escape.css" />
-    <!-- JS-->
-    <script defer src="JS/menu.js"></script>
-    <script defer src="JS/game.js"></script>
-    <script defer src="data/data.js"></script>
-  </head>
-  <body>
-    <!-- Menu Principal-->
-    <div id="menu">
-      <div class="div_img_menu">
-        <div>
-          <img class="img_menu unselectable" src="assets/extern/UI/main/04_tc3-emi.png" alt="" />
-          <img class="img_menu unselectable" src="assets/extern/UI/main/00_tc1-hisao.png" alt="" />
-          <img class="img_menu unselectable" src="assets/extern/UI/main/07_tc2-lilly.png" alt="" />
-        </div>
-        <div>
-          <img class="img_menu unselectable" src="assets/extern/UI/main/01_tc2-hanako.png" alt="" />
-          <img class="img_menu unselectable" src="assets/extern/UI/main/02_tc3-hanako.png" alt="" />
-          <img class="img_menu unselectable" src="assets/extern/UI/main/05_tc4-emi.png" alt="" />
-        </div>
-      </div>
-      <div id="main_menu">
-        <div id="buttons">
-          <button id="connect_button">Se Connecter</button>
-          <!-- Avec JS faire devenir "Vous êtes connecté" -->
-          <button id="start_button">Démarrer</button>
-          <button id="load_button">Charger</button>
-          <button id="settings_button">Options</button>
-          <!--<button id="exit_button">Quitter</button>-->
-          <button id="credits_button">Crédits</button>
-        </div>
-      </div>
-    </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Katawa Shoujo</title>
+		<link rel="shortcut icon" href="assets/extern/UI/icon.ico" type="image/x-icon" />
+		<!-- CSS -->
+		<link rel="stylesheet" href="CSS/menu.css" />
+		<link rel="stylesheet" href="CSS/game.css" />
+		<link rel="stylesheet" href="CSS/base.css" />
+		<link rel="stylesheet" href="CSS/escape.css" />
+		<!-- JS-->
+        <script defer src="JS/init.js"></script>
+		<script defer src="JS/menu.js"></script>
+		<script defer src="JS/game.js"></script>
+	</head>
+	<body>
+		<!-- Menu Principal-->
+		<div id="menu">
+			<div class="div_img_menu">
+				<div>
+					<img class="img_menu unselectable" src="assets/extern/UI/main/04_tc3-emi.png" alt="" />
+					<img class="img_menu unselectable" src="assets/extern/UI/main/00_tc1-hisao.png" alt="" />
+					<img class="img_menu unselectable" src="assets/extern/UI/main/07_tc2-lilly.png" alt="" />
+				</div>
+				<div>
+					<img class="img_menu unselectable" src="assets/extern/UI/main/01_tc2-hanako.png" alt="" />
+					<img class="img_menu unselectable" src="assets/extern/UI/main/02_tc3-hanako.png" alt="" />
+					<img class="img_menu unselectable" src="assets/extern/UI/main/05_tc4-emi.png" alt="" />
+				</div>
+			</div>
+			<div id="main_menu">
+				<div id="buttons">
+					<button id="connect_button">Se Connecter</button>
+					<!-- Avec JS faire devenir "Vous êtes connecté" -->
+					<button id="start_button">Démarrer</button>
+					<button id="load_button">Charger</button>
+					<button id="settings_button">Options</button>
+					<!--<button id="exit_button">Quitter</button>-->
+					<button id="credits_button">Crédits</button>
+				</div>
+			</div>
+		</div>
 
-    <div id="escape">
-      <!-- A faire pour quand on seras en jeu. ça mettre une pop up avec des boutons pour save, quitter, hide, ... OK-->
-      <h1>TEMPORAIRE : CLIQUE POUR REVENIR AU MENU</h1>
-    </div>
+		<div id="escape">
+			<!-- A faire pour quand on seras en jeu. ça mettre une pop up avec des boutons pour save, quitter, hide, ... OK-->
+			<h1>TEMPORAIRE : CLIQUE POUR REVENIR AU MENU</h1>
+		</div>
 
-    <!-- Ecran de Jeu -->
-    <div id="game">
-      <div id="name">
-        <p>???</p>
-      </div>
-      <div id="text">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi impedit, optio minima deserunt repellat reprehenderit
-          amet omnis voluptatum perferendis eius architecto aliquam quam consequuntur reiciendis? Velit ex inventore nihil
-          quae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus natus eaque molestias eveniet dolor commodi
-          laboriosam adipisci hic neque ad perferendis numquam libero quod vero enim odit, sit a voluptatum.
-        </p>
-      </div>
-      <div id="character"></div>
-    </div>
+		<!-- Ecran de Jeu -->
+		<div id="game">
+			<div id="name">
+				<p>???</p>
+			</div>
+			<div id="text">
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi impedit, optio minima deserunt repellat
+					reprehenderit amet omnis voluptatum perferendis eius architecto aliquam quam consequuntur reiciendis?
+					Velit ex inventore nihil quae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus natus eaque
+					molestias eveniet dolor commodi laboriosam adipisci hic neque ad perferendis numquam libero quod vero
+					enim odit, sit a voluptatum.
+				</p>
+			</div>
+			<div id="character"></div>
+		</div>
 
-    <!-- End -->
-  </body>
+		<!-- End -->
+	</body>
 </html>

@@ -8,6 +8,7 @@
   background-image: url("../assets/extern/bgs/bg_op_snowywoods.png");
   background-size: cover;
   background-position: center;
+  background-repeat :'no-repeat';
   z-index: 1;
 }
 
