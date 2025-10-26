@@ -31,12 +31,7 @@ function getLine() {
 
 function update_dialogue(line) {
     let data = line.split('|');
-
-    if (data.length < 4) {
-        console.error("Erreur dans la structure des données : ", line);
-        return;
-    }
-
+    
     // [0] seqid | [1] seqserial | [2] type | [3] data | [4] elid | [5] pos | [6] z | [7] image_name | [8] character_name | [9] character_color
     const seqid = data[0];
     const seqserial = data[1];
@@ -68,13 +63,19 @@ function update_dialogue(line) {
 }
 
 function displayText(content, characterName = "", characterColor = "") {
+    let nameElement = document.getElementById("name");
     let textElement = document.getElementById("text");
 
-    if (characterName && characterColor) {
-        textElement.innerHTML = `<span style="color: ${characterColor};">${characterName}:</span> ${content}`;
+
+    if (characterName && characterColor && characterName !== "") {
+        nameElement.style.display = "flex";
+        nameElement.innerHTML = `<p style="color: ${characterColor};">${characterName}</p>`;
     } else {
-        textElement.innerHTML = content;
+        nameElement.style.display = "none";
+        nameElement.innerHTML = `<p></p>`;
     }
+
+    textElement.innerHTML = `<p>${content}</p>`;
 }
 
 
