@@ -1,49 +1,50 @@
 #game {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url("../assets/extern/bgs/bg_op_snowywoods.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat :'no-repeat';
-  z-index: 1;
+	display: none;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-image: url('../assets/extern/bgs/bg_op_snowywoods.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: 'no-repeat';
 }
 
 #text {
-  position: fixed;
-  width: 100vw;
-  height: 200px;
-  bottom: 5%;
-  left: 3%;
-  background-size: cover;
-  background-position: top left;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  background-image: url("../assets/extern/UI/bg-narration.png");
-    padding: 6.5% 5%;
-    color: white;
-    font-size: 20px;
+	position: fixed;
+	bottom: 3%;
+	left: 2%;
+	width: 90%;
+	height: 15%;
+	background-color: black;
+	opacity: 0.7;
+	border: 3px solid #8b8275;
+	color: white;
+	font-size: 1.2rem;
+	line-height: 1.5;
+	padding: 3% 5%;
+	z-index: 1001;
+	display: flex;
+	align-items: flex-start;
 }
 
 #name {
-  position: fixed;
-  width: 25%;
-  height: 180px;
-  bottom: 10%;
-  left: 75%;
-  background-size: cover;
-  background-position: top left;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url("../assets/extern/UI/bg-narration.png");
-    margin-bottom: 2%;
-    color: white;
-    font-size: 23px;
+	position: fixed;
+	width: 21%;
+	height: 15%;
+	bottom: 9%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	color: white;
+	font-size: 23px;
+	z-index: 1000;
+	padding-left: 1%;
+	padding-top: 1%;
+	background-color: black;
+	opacity: 0.7;
+	border-bottom: 3px solid #8b8275;
+	border-top: 3px solid #8b8275;
+	border-right: 3px solid #8b8275;
 }
