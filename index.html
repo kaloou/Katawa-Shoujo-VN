@@ -10,10 +10,13 @@
 		<link rel="stylesheet" href="CSS/game.css" />
 		<link rel="stylesheet" href="CSS/base.css" />
 		<link rel="stylesheet" href="CSS/escape.css" />
+		<link rel="stylesheet" href="CSS/login.css" />
 		<!-- JS-->
 		<script defer src="JS/init.js"></script>
 		<script defer src="JS/menu.js"></script>
 		<script defer src="JS/game.js"></script>
+		<script defer src="JS/escape.js"></script>
+		<script defer src="JS/login.js"></script>
 	</head>
 	<body>
 		<!-- Menu Principal-->
@@ -31,19 +34,30 @@
 				</div>
 			</div>
 			<div id="main_menu">
-				<div id="buttons">
-					<button id="connect_button">Se Connecter</button>
+				<div class="buttons">
+					<button id="connect_button" class="unselectable">Se Connecter</button>
 					<!-- Avec JS faire devenir "Vous êtes connecté" -->
-					<button id="start_button">Démarrer</button>
-					<button id="load_button">Charger</button>
-					<button id="settings_button">Options</button>
-					<!--<button id="exit_button">Quitter</button>-->
-					<button id="credits_button">Crédits</button>
+					<button id="start_button" class="unselectable">Démarrer</button>
+					<button id="load_button" class="unselectable">Charger</button>
+					<button id="settings_button" class="unselectable">Options</button>
+					<!--<button id="exit_button" class="unselectable">Quitter</button>-->
+					<button id="credits_button" class="unselectable">Crédits</button>
 				</div>
 			</div>
 		</div>
 
-		<div id="escape">
+		<div id="escape" style="display: none;"> <!--Il faut mettre le style="display: none;" pour que le ESCAPE marche toujours-->
+			<!-- A faire pour quand on seras en jeu. ça mettre une pop up avec des boutons pour save, quitter, hide, ... OK-->
+			<div class="buttons">
+					<button id="continue_button" class="unselectable">Continuer</button>
+					<!-- Avec JS faire devenir "Vous êtes connecté" -->
+					<button id="save_button" class="unselectable">Sauvegarder</button>
+					<button id="load_button" class="unselectable">Charger</button>
+					<button id="return_button" class="unselectable">Revenir au Menu</button>
+				</div>
+		</div>
+
+		<div id="login">
 			<!-- A faire pour quand on seras en jeu. ça mettre une pop up avec des boutons pour save, quitter, hide, ... OK-->
 			<h1>TEMPORAIRE : CLIQUE POUR REVENIR AU MENU</h1>
 		</div>

@@ -3,14 +3,18 @@
   position: fixed;
   width: 30vw;
   height: 30vw;
+  background-color: aquamarine;
   box-shadow: 0 0 30vw 5vw black;
   
   z-index: 101;
+
+  align-items: center;
+  justify-content: center;
 }
 
 #escape h1{
-    align-self: center;
-    text-align: center;
-    color: #eb243b;
-    text-shadow: 0px 0px 1vw white;
+  align-self: center;
+  text-align: center;
+  color: #eb243b;
+  text-shadow: 0px 0px 1vw white;
 }

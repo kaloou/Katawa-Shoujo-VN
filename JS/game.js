@@ -1,6 +1,35 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", () => {
     getLine(); //at launch print the line save in session
+
+    
+    const divMenu = document.getElementById("menu");
+    const divGame = document.getElementById("game");
+    const divEscape = document.getElementById("escape");
+    
+    document.addEventListener("keydown", PressKey);
+
+    function PressKey(event) {
+        if (event.key == "Escape") {
+            OpenEscape();
+        }
+        else if ((event.key == " " || event.key == "ArrowRight" || event.key == "Enter") && divGame.style.display == "flex") {
+            // passer au dialogue suivant
+        }
+        else if (event.key == "ArrowLeft" && divGame.style.display == "flex") {
+            // revenir au diagolgue précédent
+        }
+    }
+
+    function OpenEscape() {
+        if (divEscape.style.display == "none") {
+            divEscape.style.display = "flex";
+        } 
+        else if (divEscape.style.display == "flex") {
+            divEscape.style.display = "none";
+        }
+    }
 });
+
 let game_screen = document.getElementById("game");
 
 game_screen.addEventListener("click", getLine);
@@ -51,7 +80,8 @@ function update_dialogue(line) {
     else if (type === 2) {
         change_bg(image_name);
         getLine(); // recall to not click again to pass dialogue
-    } else {
+    } 
+    else {
         console.log("Type non géré pour l'instant : " + type);
         getLine();
     }
@@ -70,7 +100,8 @@ function displayText(content, characterName = "", characterColor = "") {
     if (characterName && characterColor && characterName !== "") {
         nameElement.style.display = "flex";
         nameElement.innerHTML = `<p style="color: ${characterColor};">${characterName}</p>`;
-    } else {
+    } 
+    else {
         nameElement.style.display = "none";
         nameElement.innerHTML = `<p></p>`;
     }
@@ -80,7 +111,6 @@ function displayText(content, characterName = "", characterColor = "") {
 
 
 function change_bg(img_name) {
-    let bg = document.getElementById('game');
-    bg.style.backgroundImage = `url('assets/internHD/${img_name}')`;
+    let bg = document.getElementById("game");
+    bg.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 }
-
