@@ -10,12 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function PressKey(event) {
         if (event.key == "Escape") {
+            event.preventDefault();
             OpenEscape();
         }
         else if ((event.key == " " || event.key == "ArrowRight" || event.key == "Enter") && divGame.style.display == "flex") {
+            event.preventDefault();
             // passer au dialogue suivant
         }
         else if (event.key == "ArrowLeft" && divGame.style.display == "flex") {
+            event.preventDefault();
             // revenir au diagolgue précédent
         }
     }
@@ -23,9 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function OpenEscape() {
         if (divEscape.style.display == "none") {
             divEscape.style.display = "flex";
+            divMenu.style.filter = "blur(5px)";
+            divGame.style.filter = "blur(5px)";
         } 
         else if (divEscape.style.display == "flex") {
             divEscape.style.display = "none";
+            divMenu.style.filter = "none";
+            divGame.style.filter = "none";
         }
     }
 });
