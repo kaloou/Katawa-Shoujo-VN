@@ -1,5 +1,5 @@
 #login{
-  display: none;
+  display: flex;
   position: fixed;
   /*box-shadow: 0 0 30vw 5vw black;*/
   
@@ -35,11 +35,11 @@
 
 #login input:focus, #login input:hover{
   outline: none;
-  border-color: #99B681;
+  border-color: #eb243b;
 }
 
 #login input:focus::placeholder{
-  color: #99B681;
+  color: #eb243b;
 }
 
 #login #inp_pseudo{

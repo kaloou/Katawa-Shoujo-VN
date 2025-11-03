@@ -1,9 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let regex8Char = /.{10,}/;
-    let regexMaj = /[A-Z]/;
+    /*
+    let regex10Char = /.{10,}/;
     let regexMin = /[a-z]/;
+    let regexMaj = /[A-Z]/;
     let regexNum = /[0-9]/;
-    let regexSpeChar = /[a-zA-z0-9]/;
+    let regexSpeChar = /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/; // https://stackoverflow.com/a/66435604
+    */
+
+    let listRegex = [/.{10,}/,/[A-Z]/,/[a-z]/,/[0-9]/,/[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|°]/];
 
     let connected = false;
 
@@ -12,56 +16,52 @@ document.addEventListener("DOMContentLoaded", () => {
     const divMenu = document.getElementById("menu");
     const divGame = document.getElementById("game");
     const inputPswd = document.getElementById("inp_pswd");
-    const ulTestPswd = document.querySelectorAll("#inp_pswd>ul>li");
+    const liIndicePswd = document.querySelectorAll("#login>div>ul>li");
     const inputSubmit = document.getElementById("inp_submit");
 
-    inputSubmit.addEventListener("click", (event) => {event.preventDefault()})
+    inputSubmit.addEventListener("click", (event) => {event.preventDefault()}) // juste ça fait bugger live server
 
-    connectBtn.addEventListener("click", Connect);
+    connectBtn.addEventListener("click", connect);
 
-    startBtn.addEventListener("click", Start);
+    startBtn.addEventListener("click", start);
 
-    inputPswd.addEventListener("keydown", CheckValidPassword);
+    inputPswd.addEventListener("keyup", checkValidPassword);
 
-    connectBtn.addEventListener("mouseenter", WantDisconnect);
-    connectBtn.addEventListener("mouseleave", PrintConnected);
+    connectBtn.addEventListener("mouseenter", wantDisconnect);
+    connectBtn.addEventListener("mouseleave", printConnected);
 
-    function Connect()
-    {
-        if(!connected)
-        {
+    function connect() {
+        if(!connected) {
             connected = true;
-            PrintConnected();
+            printConnected();
         }
     }
 
-    function Disconnect() {
-        if(connected)
-        {
+    function disconnect() {
+        if(connected) {
             connected = false;
-            NotConnected();
-            connectBtn.removeEventListener("click", Disconnect);
+            notConnected();
+            connectBtn.removeEventListener("click", disconnect);
         }
     }
 
-    function Start() {
+    function start() {
         if (connected) {
             divMenu.style.display = "none";
             divGame.style.display = "block";
         }
         else {
-            NotConnected();
+            notConnected();
         }
     }
 
-    function NotConnected() {
-        // je crée une fonction car on l'utilisera aussi pour le bouton charger
-        connectBtn.textContent = "Se Connecter";
+    function notConnected() {
+        connectBtn.textContent = "Se connecter";
         connectBtn.style.boxShadow = "0px 0px 0px 0.08vw #eb243b"; // code couleur : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
         connectBtn.style.backgroundColor = "#eb243b";
     }
 
-    function PrintConnected() {
+    function printConnected() {
         if (connected) {
             connectBtn.textContent = "Vous êtes connecté";
             connectBtn.style.boxShadow = "0px 0px 0px 0.08vw #99B681";
@@ -71,62 +71,37 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function WantDisconnect() {
-        if(connected)
-        {
-            connectBtn.addEventListener("click", Disconnect);
+    function wantDisconnect() {
+        if(connected) {
+            connectBtn.addEventListener("click", disconnect);
             connectBtn.textContent = "Se déconnecter ?";
             connectBtn.style.boxShadow = "0px 0px 0px 0.08vw #FF8D7C";
             connectBtn.style.backgroundColor = "#FF8D7C";
         }
     }
 
-    function CheckValidPassword() {
+    function checkValidPassword() {
+        var nbrErrors = 0;
         text_input = inputPswd.value.trim();
-        inputPswd.style.backgroundColor = "#ff0000";
-        if(regex8Char.test(text_input))
-        {
-            ulTestPswd[1].style.color = "#99B681";
-        }
-        else
-        {
-            
+
+        for(let i = 0 ; i<listRegex.length ; i++) {
+            if(listRegex[i].test(text_input)) {
+                liIndicePswd[i].style.color = "#99B681";
+            }
+            else {
+                nbrErrors += 1;
+                liIndicePswd[i].style.color = "#eb243b";
+            }
         }
 
-        if(regexMaj.test(text_input))
-        {
-            ulTestPswd[2].style.color = "#99B681";
+        if(nbrErrors==0) {
+            // envoyer text_input avec XML HTTP REQUEST
+            inputPswd.style.color = "#99B681";
+            inputPswd.style.borderColor = "#99B681";
         }
-        else
-        {
-
-        }
-
-        if(regexMin.test(text_input))
-        {
-            ulTestPswd[3].style.color = "#99B681"
-        }
-        else
-        {
-
-        }
-
-        if(regexMin.test(text_input))
-        {
-            ulTestPswd[4].style.color = "#99B681";
-        }
-        else
-        {
-            
-        }
-
-        if(regexSpeChar.test(text_input))
-        {
-            ulTestPswd[5].style.color = "#99B681";
-        }
-        else
-        {
-
+        else {
+            inputPswd.style.color = "#eb243b";
+            inputPswd.style.borderColor = "#eb243b";
         }
     }
 });
