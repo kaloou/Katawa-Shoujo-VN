@@ -1,13 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     /*
     let regex10Char = /.{10,}/;
-    let regexMin = /[a-z]/;
+    let regexMin = /[]/;
     let regexMaj = /[A-Z]/;
     let regexNum = /[0-9]/;
     let regexSpeChar = /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/; // https://stackoverflow.com/a/66435604
     */
 
     let listRegex = [/.{10,}/,/[A-Z]/,/[a-z]/,/[0-9]/,/[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|°]/];
+    let regexPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-._!"`'#%&,:;<>=@{}~$()*/\\?[\]^|°]).{10,}$/;
 
     let connected = false;
 
@@ -15,11 +16,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const startBtn = document.getElementById("start_button");
     const divMenu = document.getElementById("menu");
     const divGame = document.getElementById("game");
+    const defMenu = document.getElementById("default_menu");
+    const formLogin = document.getElementById("login");
+    const inputUsrName = document.getElementById("inp_usr");
     const inputPswd = document.getElementById("inp_pswd");
-    const liIndicePswd = document.querySelectorAll("#login>div>ul>li");
+    const liIndicePswd = document.querySelectorAll("#login ul>li");
     const inputSubmit = document.getElementById("inp_submit");
 
-    inputSubmit.addEventListener("click", (event) => {event.preventDefault()}) // juste ça fait bugger live server
+    inputSubmit.addEventListener("click", (event) => 
+        {
+            event.preventDefault();
+            if(regexPwd.test(inputPswd.value.trim())) // ne doit pas se trouver ici mais c'est temporaire
+            {
+                formLogin.style.display = "none";
+                defMenu.style.display = "flex"; 
+            }
+        }) // juste ça fait bugger live server
 
     connectBtn.addEventListener("click", connect);
 
@@ -31,7 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
     connectBtn.addEventListener("mouseleave", printConnected);
 
     function connect() {
+
         if(!connected) {
+            formLogin.style.display = "flex";
+            defMenu.style.display = "none";
             connected = true;
             printConnected();
         }
@@ -98,10 +113,12 @@ document.addEventListener("DOMContentLoaded", () => {
             // envoyer text_input avec XML HTTP REQUEST
             inputPswd.style.color = "#99B681";
             inputPswd.style.borderColor = "#99B681";
+            return true;
         }
         else {
             inputPswd.style.color = "#eb243b";
             inputPswd.style.borderColor = "#eb243b";
+            return false;
         }
     }
 });
