@@ -5,13 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const divMenu = document.getElementById("menu");
     const divGame = document.getElementById("game");
     const divEscape = document.getElementById("escape");
+    const hideBtn = document.getElementById("hide_button");
+    const dialogContener = document.getElementById("dialog_container");
     
-    document.addEventListener("keydown", PressKey);
+    document.addEventListener("keyup", pressKey);
+    hideBtn.addEventListener("click", hideButton)
 
-    function PressKey(event) {
+    function pressKey(event) {
         if (event.key == "Escape") {
             event.preventDefault();
-            OpenEscape();
+            openEscape();
         }
         else if ((event.key == " " || event.key == "ArrowRight" || event.key == "Enter") && divGame.style.display == "flex") {
             event.preventDefault();
@@ -23,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function OpenEscape() {
+    function openEscape() {
         if (divEscape.style.display == "none") {
             divEscape.style.display = "flex";
             divMenu.style.filter = "blur(5px)";
@@ -34,6 +37,21 @@ document.addEventListener("DOMContentLoaded", () => {
             divMenu.style.filter = "none";
             divGame.style.filter = "none";
         }
+    }
+
+    function hideButton() {
+        divEscape.style.display = "none";
+        divMenu.style.filter = "none";
+        divGame.style.filter = "none";
+        dialogContener.style.display = "none";
+        document.addEventListener("keydown", showDialog);
+        divGame.addEventListener("click", showDialog);
+    }
+
+    function showDialog() {
+        dialogContener.style.display = "block";
+        divGame.removeEventListener("click", showDialog);
+        document.removeEventListener ("keydown", showDialog);
     }
 });
 

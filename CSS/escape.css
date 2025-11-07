@@ -22,3 +22,17 @@
   color: #eb243b;
   text-shadow: 0px 0px 1vw white;
 }
+
+#continue_button {
+  display: block;
+  margin: 3vw 5vw;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2vw;
+  height: 2vw;
+  background-image: url(../assets/extern/UI/bt-del.png);
+  background-position-y: center;
+  background-position-x: center;
+  background-size: cover;
+}

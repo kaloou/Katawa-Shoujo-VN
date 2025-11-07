@@ -60,22 +60,26 @@
 		</div>
 
 		<div id="escape" style="display: none;"> <!--Il faut mettre le style="display: none;" pour que le ESCAPE marche toujours-->
+			<img src="assets/extern/UI/bt-del.png" id="continue_button"></img>
 			<div class="buttons">
-					<button id="continue_button" class="unselectable">Continuer</button>
-					<button id="save_button" class="unselectable">Sauvegarder</button>
-					<button id="load_button" class="unselectable">Charger</button>
-					<button id="return_button" class="unselectable">Revenir au Menu</button>
-				</div>
+				<!--<button id="continue_button" class="unselectable">Continuer</button>-->
+				<button id="hide_button" class="unselectable" title="Cacher le dialogue en jeu">Cacher le dialogue</button>
+				<button id="save_button" class="unselectable">Sauvegarder</button>
+				<button id="load_button" class="unselectable">Charger</button>
+				<button id="return_button" class="unselectable">Revenir au Menu</button>
+			</div>
 		</div>
 
 		<!-- Ecran de Jeu -->
 		<div id="game">
-			<div id="name">Fille aux ondulés</div>
-			<!-- texte le plus long de la db-->
-			<div id="text">
-				Elle revient quelques minutes plus tard avec nos boissons et mon sandwich. Shizune semble être satisfaite
-				avec seulement son thé, tandis que Misha a aussi commandé un parfait. Je ne sais pas pourquoi, étant donné je
-				ne peux pas imaginer beaucoup d''autres choses qui seraient pires avec du thé.
+			<div id="dialog_container">
+				<div id="name">Fille aux ondulés</div>
+				<!-- texte le plus long de la db-->
+				<div id="text">
+					Elle revient quelques minutes plus tard avec nos boissons et mon sandwich. Shizune semble être satisfaite
+					avec seulement son thé, tandis que Misha a aussi commandé un parfait. Je ne sais pas pourquoi, étant donné je
+					ne peux pas imaginer beaucoup d''autres choses qui seraient pires avec du thé.
+				</div>
 			</div>
 			<div id="character"></div>
 		</div>
