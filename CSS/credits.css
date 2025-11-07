@@ -1,6 +1,7 @@
 #play_button_credits {
-  width: 10vw;
-  height: 10vw;
+  width: 7vw;
+  height: 7vw;
+  display: block;
 }
 
 .div_play_button {
@@ -11,6 +12,22 @@
   width: 100vw;
   justify-content: center;
   align-items: center;
+}
+
+.div_play_button a {
+  margin: 1.5vw;
+  position: fixed;
+  align-self: flex-start;
+  justify-self: end;
+  top: 0;
+  left: 0;
+  width: 10.5vw;
+  height: 7.5vw;
+}
+
+a>img {
+  width: 100%;
+  height: 100%;
 }
 
 /* Button Credits*/
