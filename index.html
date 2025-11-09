@@ -10,17 +10,20 @@
 		<link rel="stylesheet" href="CSS/game.css" />
 		<link rel="stylesheet" href="CSS/base.css" />
 		<link rel="stylesheet" href="CSS/escape.css" />
+		<link rel="stylesheet" href="CSS/common.css" />
 		<link rel="stylesheet" href="CSS/login.css" />
 		<!-- JS-->
 		<script defer src="JS/init.js"></script>
-		<script defer src="JS/menu.js"></script>
+        <script defer src="JS/common.js"></script>
+        <script defer src="JS/menu.js"></script>
 		<script defer src="JS/game.js"></script>
 		<script defer src="JS/escape.js"></script>
 		<script defer src="JS/login.js"></script>
+        <script defer src="JS/debug.js"></script>
 	</head>
 	<body>
 		<!-- Menu Principal-->
-		<div id="menu">
+		<div id="menu_screen">
 			<div class="div_img_menu">
 				<div>
 					<img class="img_menu unselectable" src="assets/extern/UI/main/04_tc3-emi.png" alt="" />
@@ -46,15 +49,16 @@
 			</div>
 		</div>
 
-		<div id="escape" style="display: none;"> <!--Il faut mettre le style="display: none;" pour que le ESCAPE marche toujours-->
+		<div id="escape" style="display: none">
+			<!--Il faut mettre le style="display: none;" pour que le ESCAPE marche toujours-->
 			<!-- A faire pour quand on seras en jeu. ça mettre une pop up avec des boutons pour save, quitter, hide, ... OK-->
 			<div class="buttons">
-					<button id="continue_button" class="unselectable">Continuer</button>
-					<!-- Avec JS faire devenir "Vous êtes connecté" -->
-					<button id="save_button" class="unselectable">Sauvegarder</button>
-					<button id="load_button" class="unselectable">Charger</button>
-					<button id="return_button" class="unselectable">Revenir au Menu</button>
-				</div>
+				<button id="continue_button" class="unselectable">Continuer</button>
+				<!-- Avec JS faire devenir "Vous êtes connecté" -->
+				<button id="save_button" class="unselectable">Sauvegarder</button>
+				<button id="load_button" class="unselectable">Charger</button>
+				<button id="return_button" class="unselectable">Revenir au Menu</button>
+			</div>
 		</div>
 
 		<div id="login">
@@ -63,15 +67,17 @@
 		</div>
 
 		<!-- Ecran de Jeu -->
-		<div id="game">
-			<div id="name">Fille aux ondulés</div>
+		<div id="game_screen">
+			<div id="sprite_stack"></div>
+            <div id ="dialogue">
+			<div id="name">Fille aux cheveveux ondulés</div>
 			<!-- texte le plus long de la db-->
 			<div id="text">
 				Elle revient quelques minutes plus tard avec nos boissons et mon sandwich. Shizune semble être satisfaite
 				avec seulement son thé, tandis que Misha a aussi commandé un parfait. Je ne sais pas pourquoi, étant donné je
 				ne peux pas imaginer beaucoup d''autres choses qui seraient pires avec du thé.
 			</div>
-			<div id="character"></div>
+            </div>
 		</div>
 
 		<!-- End -->

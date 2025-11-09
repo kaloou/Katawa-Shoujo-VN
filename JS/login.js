@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const connectBtn = document.getElementById("connect_button");
     const startBtn = document.getElementById("start_button");
-    const divMenu = document.getElementById("menu");
-    const divGame = document.getElementById("game");
+    const divMenu = document.getElementById("menu_screen");
+    const divGame = document.getElementById("game_screen");
 
     connectBtn.addEventListener("click", Connect);
 
