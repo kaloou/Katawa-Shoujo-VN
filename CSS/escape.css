@@ -1,15 +1,19 @@
 #escape {
   display: none;
   position: fixed;
-  width: 30vw;
+  width: 40vw;
   height: 30vw;
-  background-color: aquamarine;
-  box-shadow: 0 0 30vw 5vw black;
+  /*box-shadow: 0 0 30vw 5vw black;*/
   
   z-index: 101;
 
   align-items: center;
   justify-content: center;
+
+  background-image: url(../assets/extern/UI/bg-config-gallery.png);
+  background-position-y: center;
+  background-position-x: center;
+  background-size: cover;
 }
 
 #escape h1{
@@ -17,4 +21,18 @@
   text-align: center;
   color: #eb243b;
   text-shadow: 0px 0px 1vw white;
+}
+
+#continue_button {
+  display: block;
+  margin: 3vw 5vw;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2vw;
+  height: 2vw;
+  background-image: url(../assets/extern/UI/bt-del.png);
+  background-position-y: center;
+  background-position-x: center;
+  background-size: cover;
 }

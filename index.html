@@ -37,47 +37,55 @@
 				</div>
 			</div>
 			<div id="main_menu">
-				<div class="buttons">
-					<button id="connect_button" class="unselectable">Se Connecter</button>
-					<!-- Avec JS faire devenir "Vous êtes connecté" -->
-					<button id="start_button" class="unselectable">Démarrer</button>
-					<button id="load_button" class="unselectable">Charger</button>
-					<button id="settings_button" class="unselectable">Options</button>
-					<!--<button id="exit_button" class="unselectable">Quitter</button>-->
-					<button id="credits_button" class="unselectable">Crédits</button>
+				<div id="default_menu">
+					<div class="buttons">
+						<button id="connect_button" class="unselectable">Se Connecter</button>
+						<button id="start_button" class="unselectable">Démarrer</button>
+						<button id="load_button" class="unselectable">Charger</button>
+						<button id="settings_button" class="unselectable">Options</button>
+						<button id="credits_button" class="unselectable">Crédits</button>
+					</div>
 				</div>
+
+				<form method="post" id="login" autocomplete="off">
+					<input type="text" name="inp_pseudo" id="inp_pseudo" placeholder="Pseudo" required >
+					<input type="password" name="inp_pswd" id="inp_pswd" placeholder="Mot de Passe" required>
+					<ul>
+						<li>10 Caractères</li>
+						<li>Majuscule</li>
+						<li>Minuscule</li>
+						<li>Chiffre</li>
+						<li>Caractère Spécial</li>
+					</ul>
+					<input type="submit" name="inp_submit" id="inp_submit" value="Se connecter">
+				</form>
 			</div>
 		</div>
 
 		<div id="escape" style="display: none">
 			<!--Il faut mettre le style="display: none;" pour que le ESCAPE marche toujours-->
-			<!-- A faire pour quand on seras en jeu. ça mettre une pop up avec des boutons pour save, quitter, hide, ... OK-->
+			<img src="assets/extern/UI/bt-del.png" id="continue_button"></img>
 			<div class="buttons">
-				<button id="continue_button" class="unselectable">Continuer</button>
-				<!-- Avec JS faire devenir "Vous êtes connecté" -->
+				<!--<button id="continue_button" class="unselectable">Continuer</button>-->
+				<button id="hide_button" class="unselectable" title="Cacher le dialogue en jeu">Cacher le dialogue</button>
 				<button id="save_button" class="unselectable">Sauvegarder</button>
 				<button id="load_button" class="unselectable">Charger</button>
 				<button id="return_button" class="unselectable">Revenir au Menu</button>
 			</div>
 		</div>
 
-		<div id="login">
-			<!-- A faire pour quand on seras en jeu. ça mettre une pop up avec des boutons pour save, quitter, hide, ... OK-->
-			<h1>TEMPORAIRE : CLIQUE POUR REVENIR AU MENU</h1>
-		</div>
-
 		<!-- Ecran de Jeu -->
 		<div id="game_screen">
 			<div id="sprite_stack"></div>
-            <div id ="dialogue">
-			<div id="name">Fille aux cheveveux ondulés</div>
-			<!-- texte le plus long de la db-->
-			<div id="text">
-				Elle revient quelques minutes plus tard avec nos boissons et mon sandwich. Shizune semble être satisfaite
-				avec seulement son thé, tandis que Misha a aussi commandé un parfait. Je ne sais pas pourquoi, étant donné je
-				ne peux pas imaginer beaucoup d''autres choses qui seraient pires avec du thé.
+			<div id="dialog_container">
+				<div id="name">Fille aux cheveveux ondulés</div>
+				<!-- texte le plus long de la db-->
+				<div id="text">
+					Elle revient quelques minutes plus tard avec nos boissons et mon sandwich. Shizune semble être satisfaite
+					avec seulement son thé, tandis que Misha a aussi commandé un parfait. Je ne sais pas pourquoi, étant donné je
+					ne peux pas imaginer beaucoup d''autres choses qui seraient pires avec du thé.
+				</div>
 			</div>
-            </div>
 		</div>
 
 		<!-- End -->

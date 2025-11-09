@@ -15,6 +15,9 @@
 	background-attachment: fixed;
 	background-position-y: center;
 	background-position-x: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .div_img_menu {
@@ -87,6 +90,7 @@
 	border: 0.2vw solid #fff2d4;
 	box-shadow: 0px 0px 0px 0.08vw #948b7c;
 	font-size: 2vw;
+	justify-self: center;
 }
 
 .buttons button:hover {

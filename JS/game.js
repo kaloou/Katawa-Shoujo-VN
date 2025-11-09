@@ -8,33 +8,59 @@ document.addEventListener('DOMContentLoaded', () => {
 	textElement = document.getElementById('text');
 	divEscape = document.getElementById('escape');
 	spriteStack = document.getElementById('sprite_stack');
+	hideBtn = document.getElementById('hide_button');
+	dialogContener = document.getElementById('dialog_container');
 
 	// EVENTS
 	document.addEventListener('keydown', PressKey);
 	divGame.addEventListener('click', getLine);
 });
 
-let divMenu, divGame, nameElement, textElement, divEscape, spriteStack;
+let divMenu, divGame, nameElement, textElement, divEscape, spriteStack, hideBtn, dialogContener;
 //==========KEY PRESS FUNCTION==========
 function PressKey(event) {
 	if (event.key == 'Escape') {
+		event.preventDefault();
 		OpenEscape();
 	} else if ((event.key == ' ' || event.key == 'ArrowRight' || event.key == 'Enter') && divGame.style.display == 'flex') {
+		event.preventDefault();
 		// passer au dialogue suivant
 	} else if (event.key == 'ArrowLeft' && divGame.style.display == 'flex') {
+		event.preventDefault();
 		// revenir au diagolgue précédent
 	}
 }
 
-function OpenEscape() {
+function openEscape() {
 	if (divEscape.style.display == 'none') {
 		divEscape.style.display = 'flex';
+		divMenu.style.filter = 'blur(5px)';
+		divGame.style.filter = 'blur(5px)';
 	} else if (divEscape.style.display == 'flex') {
 		divEscape.style.display = 'none';
+		divMenu.style.filter = 'none';
+		divGame.style.filter = 'none';
 	}
 }
 
-//=========LOGIC GAME FUNCTIONS==========
+function hideButton() {
+	divEscape.style.display = 'none';
+	divMenu.style.filter = 'none';
+	divGame.style.filter = 'none';
+	dialogContener.style.display = 'none';
+	document.addEventListener('keydown', showDialog);
+	divGame.addEventListener('click', showDialog);
+}
+
+function showDialog() {
+	dialogContener.style.display = 'block';
+	divGame.removeEventListener('click', showDialog);
+	document.removeEventListener('keydown', showDialog);
+}
+
+let game_screen = document.getElementById('game');
+
+game_screen.addEventListener('click', getLine);
 
 function getLine() {
 	let xhr = getXHR(); // function from common.js
@@ -78,7 +104,7 @@ function update_dialogue(response) {
 	const image_name = response.image_name || '';
 	const character_name = response.character_name || '';
 	const character_color = response.character_color || '';
-    const character_code = response.character_code || '';
+	const character_code = response.character_code || '';
 	const image_tag = response.image_tag || '';
 	const width = response.width || 0;
 	const height = response.height || 0;
@@ -89,16 +115,15 @@ function update_dialogue(response) {
 	}
 	// type 2 -> image (bg)
 	else if (type === 2) {
-		change_bg(image_name,true);
+		change_bg(image_name, true);
 		getLine(); // recall to not click again to pass dialogue
+	} else if (image_tag === 'bg') {
+		change_bg(image_name, false);
+		getLine();
 	}
-    else if (image_tag === 'bg')
-    {
-        change_bg(image_name,false);
-        getLine();
-    }
 	// type 3 -> sprite
-	else if (type === 3 && image_tag !== 'bg') { // && image_tag !== 'bg' may not be necessary
+	else if (type === 3 && image_tag !== 'bg') {
+		// && image_tag !== 'bg' may not be necessary
 		const shouldContinue = add_sprite(image_name, image_tag, pos, z, width, height);
 		if (shouldContinue === true) {
 			getLine(); // recall to not click again to pass dialogue
@@ -119,71 +144,68 @@ function update_dialogue(response) {
 }
 
 function displayText(content, characterName = '', characterColor = '', character_code = '') {
-    //supp la div center si existe, si pas opti plus tard remplacer tout le css du textElement temporairement
-    const oldCenteredDiv = document.querySelector('.centered-text');
-    if (oldCenteredDiv) oldCenteredDiv.remove();
+	//supp la div center si existe, si pas opti plus tard remplacer tout le css du textElement temporairement
+	const oldCenteredDiv = document.querySelector('.centered-text');
+	if (oldCenteredDiv) oldCenteredDiv.remove();
 
-    if (characterName && characterColor && characterName !== '') {
-        textElement.style.display = 'flex';
-        nameElement.style.display = 'flex';
-        nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
-    }
-    else if (character_code === 'centered') {
-        // game screen ref
-        const parent = textElement.parentNode;
+	if (characterName && characterColor && characterName !== '') {
+		textElement.style.display = 'flex';
+		nameElement.style.display = 'flex';
+		nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
+	} else if (character_code === 'centered') {
+		// game screen ref
+		const parent = textElement.parentNode;
 
-        nameElement.style.display = 'none';
-        nameElement.innerHTML = '';
-        textElement.style.display = 'none';
-        textElement.innerHTML = '';
+		nameElement.style.display = 'none';
+		nameElement.innerHTML = '';
+		textElement.style.display = 'none';
+		textElement.innerHTML = '';
 
-        const centeredDiv = document.createElement('div');
-        centeredDiv.classList.add('centered-text');
-        centeredDiv.innerHTML = `<span>${content}</span>`;
+		const centeredDiv = document.createElement('div');
+		centeredDiv.classList.add('centered-text');
+		centeredDiv.innerHTML = `<span>${content}</span>`;
 
-        // css
-        Object.assign(centeredDiv.style, {
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            textAlign: 'center',
-            color: 'white',
-            fontSize: '1.5rem'
-        });
+		// css
+		Object.assign(centeredDiv.style, {
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			transform: 'translate(-50%, -50%)',
+			textAlign: 'center',
+			color: 'white',
+			fontSize: '1.5rem'
+		});
 
-        // On ajoute la div dans game screen
-        parent.appendChild(centeredDiv);
+		// On ajoute la div dans game screen
+		parent.appendChild(centeredDiv);
 
-        return;
-    }
-    else { // narrateur
-        textElement.style.display = 'flex';
-        nameElement.style.display = 'none';
-        nameElement.innerHTML = `<span></span>`;
-    }
-    textElement.style.display = 'flex';
-    textElement.innerHTML = `<span>${content}</span>`;
+		return;
+	} else {
+		// narrateur
+		textElement.style.display = 'flex';
+		nameElement.style.display = 'none';
+		nameElement.innerHTML = `<span></span>`;
+	}
+	textElement.style.display = 'flex';
+	textElement.innerHTML = `<span>${content}</span>`;
 
-    // clignotement
-    triggerLogoEffect();
+	// clignotement
+	triggerLogoEffect();
 }
 
-
 function change_bg(img_name, reset) {
-    if (reset) {
-        divGame.style.transition = "opacity 0.3s ease-in";
-        divGame.style.opacity = 0;
-        setTimeout(() => {
-            divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
-            divGame.style.opacity = 1;
-            reset_sprite_stack();
-        }, 200);
-    }
-    else  // j'hésite de carrement rien faire car quasiment sur que les tag 'bg' sont inutiles...bref
-    {
-        divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
-    }
+	if (reset) {
+		divGame.style.transition = 'opacity 0.3s ease-in';
+		divGame.style.opacity = 0;
+		setTimeout(() => {
+			divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
+			divGame.style.opacity = 1;
+			reset_sprite_stack();
+		}, 200);
+	} // j'hésite de carrement rien faire car quasiment sur que les tag 'bg' sont inutiles...bref
+	else {
+		divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
+	}
 }
 
 function reset_sprite_stack() {
@@ -208,109 +230,105 @@ function convert_y_on_current_format(y) {
 const HD_WIDTH = 1920;
 const HD_HEIGHT = 1080;
 function convert_x_on_current_format_hd(x) {
-    const currentWidth = window.innerWidth;
-    const ratio = currentWidth / HD_WIDTH;
-    return x * ratio;
+	const currentWidth = window.innerWidth;
+	const ratio = currentWidth / HD_WIDTH;
+	return x * ratio;
 }
 
 function convert_y_on_current_format_hd(y) {
-    const currentHeight = window.innerHeight;
-    const ratio = currentHeight / HD_HEIGHT;
-    return y * ratio;
+	const currentHeight = window.innerHeight;
+	const ratio = currentHeight / HD_HEIGHT;
+	return y * ratio;
 }
 
-
 function add_sprite(image_name, image_tag, pos, z, width, height) {
+	// Exception cases
+	if (image_tag === 'heartattack') {
+		handle_heartattck(image_name, image_tag, pos, z, width, height);
+		return false; // logique pour ne pas appeller directement getline
+	}
+	let spriteImg = document.createElement('div');
+	spriteImg.style.backgroundImage = `url("assets/internHD/${image_name}")`;
+	spriteImg.className = 'sprite';
+	spriteImg.dataset.tag = image_tag;
+	spriteImg.dataset.pos = pos;
+	spriteImg.dataset.z = z;
+	spriteImg.style.zIndex = z;
+	spriteImg.style.backgroundSize = 'contain';
+	spriteImg.style.backgroundRepeat = 'no-repeat';
 
-    // Exception cases
-    if (image_tag === "heartattack") {
-        handle_heartattck(image_name, image_tag, pos, z, width, height);
-        return false; // logique pour ne pas appeller directement getline
-    }
-    let spriteImg = document.createElement('div');
-    spriteImg.style.backgroundImage = `url("assets/internHD/${image_name}")`;
-    spriteImg.className = 'sprite';
-    spriteImg.dataset.tag = image_tag;
-    spriteImg.dataset.pos = pos;
-    spriteImg.dataset.z = z;
-    spriteImg.style.zIndex = z;
-    spriteImg.style.backgroundSize = 'contain';
-    spriteImg.style.backgroundRepeat = 'no-repeat';
+	const originalX = pos % 800;
+	const convertedX = convert_x_on_current_format(originalX);
 
-    const originalX = pos % 800;
-    const convertedX = convert_x_on_current_format(originalX);
+	spriteImg.style.left = convertedX - convert_x_on_current_format_hd(width) / 2 + 'px';
+	spriteImg.style.bottom = '0';
 
-    spriteImg.style.left = (convertedX - (convert_x_on_current_format_hd(width) / 2)) + 'px';
-    spriteImg.style.bottom = '0';
+	// dimensions
+	spriteImg.style.width = (width > 0 ? width : 200) + 'px';
+	spriteImg.style.height = (height > 0 ? height : 200) + 'px';
 
-    // dimensions
-    spriteImg.style.width = (width > 0 ? width : 200) + 'px';
-    spriteImg.style.height = (height > 0 ? height : 200) + 'px';
-
-    let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
-    if (existingSprite) existingSprite.replaceWith(spriteImg);
-    else spriteStack.appendChild(spriteImg);
+	let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
+	if (existingSprite) existingSprite.replaceWith(spriteImg);
+	else spriteStack.appendChild(spriteImg);
 }
 
 function handle_heartattck(image_name, image_tag, pos, z, width, height) {
+	textElement.style.display = 'none';
+	nameElement.style.display = 'none';
 
-    textElement.style.display = 'none';
-    nameElement.style.display = 'none';
+	let heart = document.createElement('div');
+	heart.style.backgroundImage = `url("assets/internHD/${image_name}")`;
+	heart.className = 'sprite heart-flash';
+	heart.dataset.tag = image_tag;
+	heart.dataset.pos = pos;
+	heart.dataset.z = z;
+	heart.style.zIndex = z;
+	heart.style.backgroundSize = 'cover';
+	heart.style.backgroundRepeat = 'no-repeat';
+	heart.style.opacity = '0.2';
 
-    let heart = document.createElement('div');
-    heart.style.backgroundImage = `url("assets/internHD/${image_name}")`;
-    heart.className = 'sprite heart-flash';
-    heart.dataset.tag = image_tag;
-    heart.dataset.pos = pos;
-    heart.dataset.z = z;
-    heart.style.zIndex = z;
-    heart.style.backgroundSize = 'cover';
-    heart.style.backgroundRepeat = 'no-repeat';
-    heart.style.opacity = "0.2";
+	const originalX = pos % 800;
+	const convertedX = convert_x_on_current_format(originalX);
 
-    const originalX = pos % 800;
-    const convertedX = convert_x_on_current_format(originalX);
+	heart.style.left = convertedX - convert_x_on_current_format_hd(width) / 2 + 'px';
+	heart.style.bottom = '0';
+	heart.style.width = window.innerWidth + 'px';
+	heart.style.height = window.innerHeight + 'px';
 
-    heart.style.left = (convertedX - (convert_x_on_current_format_hd(width) / 2)) + 'px';
-    heart.style.bottom = '0';
-    heart.style.width = window.innerWidth + 'px';
-    heart.style.height = window.innerHeight + 'px';
+	// --- dégradé horizontal (centre opaque → côtés transparents) ---
+	heart.style.maskImage =
+		'linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%)';
+	heart.style.webkitMaskImage =
+		'linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%)';
+	heart.style.maskMode = 'alpha';
+	heart.style.webkitMaskMode = 'alpha';
 
-    // --- dégradé horizontal (centre opaque → côtés transparents) ---
-    heart.style.maskImage = 'linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%)';
-    heart.style.webkitMaskImage = 'linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%)';
-    heart.style.maskMode = 'alpha';
-    heart.style.webkitMaskMode = 'alpha';
+	// Si un sprite du même tag existe déjà → le remplacer
+	let existing = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
+	if (existing) existing.replaceWith(heart);
+	else spriteStack.appendChild(heart);
 
-    // Si un sprite du même tag existe déjà → le remplacer
-    let existing = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
-    if (existing) existing.replaceWith(heart);
-    else spriteStack.appendChild(heart); 
+	// requestAnimationFrame pour s'assurer que l'élément est rendu
+	requestAnimationFrame(() => {
+		setTimeout(() => {
+			const animation = heart.animate(
+				[
+					{opacity: 0.2, transform: 'scale(0.95)'},
+					{opacity: 0.3, transform: 'scale(1.1)'},
+					{opacity: 0.2, transform: 'scale(1)'}
+				],
+				{
+					duration: 600,
+					easing: 'ease-in-out'
+				}
+			);
 
-    // requestAnimationFrame pour s'assurer que l'élément est rendu
-    requestAnimationFrame(() => {
-        setTimeout(() => {
-
-            const animation = heart.animate(
-                [
-                    { opacity: 0.2, transform: 'scale(0.95)' },
-                    { opacity: 0.3, transform: 'scale(1.1)' },
-                    { opacity: 0.2, transform: 'scale(1)' }
-                ],
-                {
-                    duration: 600,
-                    easing: 'ease-in-out'
-                }
-            );
-
-            animation.finished.then(() => {
-                getLine();
-            });
-        }, 200);
-    });
-
+			animation.finished.then(() => {
+				getLine();
+			});
+		}, 200);
+	});
 }
-
 
 function remove_sprite(image_tag) {
 	let spriteToRemove = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
@@ -320,21 +338,20 @@ function remove_sprite(image_tag) {
 }
 
 function triggerLogoEffect() {
-    // reset opacité
-    textElement.classList.remove('blink', 'pop');
-    textElement.style.opacity = '1';
+	// reset opacité
+	textElement.classList.remove('blink', 'pop');
+	textElement.style.opacity = '1';
 
-    // force reflow
-    void textElement.offsetWidth;
+	// force reflow
+	void textElement.offsetWidth;
 
-    // mini pop une fois
-    textElement.classList.add('pop');
+	// mini pop une fois
+	textElement.classList.add('pop');
 
-    // après le pop, lancer le clignotement
-    setTimeout(() => {
-        textElement.classList.remove('pop');
-        void textElement.offsetWidth; // reflow
-        textElement.classList.add('blink');
-    }, 300); // durée = durée de l'animation pop
+	// après le pop, lancer le clignotement
+	setTimeout(() => {
+		textElement.classList.remove('pop');
+		void textElement.offsetWidth; // reflow
+		textElement.classList.add('blink');
+	}, 300); // durée = durée de l'animation pop
 }
-
