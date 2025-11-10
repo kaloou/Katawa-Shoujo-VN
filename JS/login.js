@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	function notConnected() {
-		connectBtn.textContent = 'Se connecter';
+		connectBtn.textContent = 'Se Connecter';
 		connectBtn.style.boxShadow = '0px 0px 0px 0.08vw #eb243b'; // code couleur : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
 		connectBtn.style.backgroundColor = '#eb243b';
 	}
