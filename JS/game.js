@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	getLine(); //at launch print the line save in session
 
 	// IDS
-	divMenu = document.getElementById('menu');
+	divMenu = document.getElementById('menu_screen');
 	divGame = document.getElementById('game_screen');
 	nameElement = document.getElementById('name');
 	textElement = document.getElementById('text');
@@ -12,20 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
 	dialogContener = document.getElementById('dialog_container');
 
 	// EVENTS
-	document.addEventListener('keydown', PressKey);
+    document.addEventListener("keyup", pressKey);
+    hideBtn.addEventListener("click", hideButton);
 	divGame.addEventListener('click', getLine);
 });
 
 let divMenu, divGame, nameElement, textElement, divEscape, spriteStack, hideBtn, dialogContener;
 //==========KEY PRESS FUNCTION==========
-function PressKey(event) {
-	if (event.key == 'Escape') {
+function pressKey(event) {
+	if (event.key === 'Escape') {
 		event.preventDefault();
-		OpenEscape();
-	} else if ((event.key == ' ' || event.key == 'ArrowRight' || event.key == 'Enter') && divGame.style.display == 'flex') {
+		openEscape();
+	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && divGame.style.display === 'flex') {
 		event.preventDefault();
-		// passer au dialogue suivant
-	} else if (event.key == 'ArrowLeft' && divGame.style.display == 'flex') {
+		getLine();
+	} else if (event.key === 'ArrowLeft' && divGame.style.display === 'flex') {
 		event.preventDefault();
 		// revenir au diagolgue précédent
 	}
@@ -57,10 +58,6 @@ function showDialog() {
 	divGame.removeEventListener('click', showDialog);
 	document.removeEventListener('keydown', showDialog);
 }
-
-let game_screen = document.getElementById('game');
-
-game_screen.addEventListener('click', getLine);
 
 function getLine() {
 	let xhr = getXHR(); // function from common.js
@@ -212,7 +209,7 @@ function reset_sprite_stack() {
 	spriteStack.innerHTML = '';
 }
 
-// Format original de la DB: 800x600
+// Format original de la DB, table sous ce format -> seqtext pour les xpos
 const ORIGINAL_WIDTH = 800;
 const ORIGINAL_HEIGHT = 600;
 function convert_x_on_current_format(x) {
@@ -227,6 +224,7 @@ function convert_y_on_current_format(y) {
 	return y * ratio;
 }
 
+// Format HD: 1920x1080, table sous ce format -> image pour les résolutions
 const HD_WIDTH = 1920;
 const HD_HEIGHT = 1080;
 function convert_x_on_current_format_hd(x) {

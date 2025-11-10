@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		const creditsBtn = document.getElementById('credits_button');
 		const settingsBtn = document.getElementById('settings_button');
 		const divEscape = document.getElementById('escape');
-		const divMenu = document.getElementById('menu');
-		const divGame = document.getElementById('game');
+		const divMenu = document.getElementById('menu_screen');
+		const divGame = document.getElementById('game_screen');
 
 		creditsBtn.addEventListener('click', () => {
 			window.location.href = 'HTML/credits.html';

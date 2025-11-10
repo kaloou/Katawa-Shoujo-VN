@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const divMenu = document.getElementById("menu");
-    const divGame = document.getElementById("game");
+    const divMenu = document.getElementById("menu_screen");
+    const divGame = document.getElementById("game_screen");
     const divEscape = document.getElementById("escape");
     const continueBtn = document.getElementById("continue_button");
     const saveBtn = document.getElementById("save_button");
