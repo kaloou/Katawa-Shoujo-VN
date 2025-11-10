@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 });
 
+window.addEventListener("load", () => {
+    //ici rendre visible une page de chargement temporaire
+});
+
 function initGame() {
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'PHP/init.php', true);
