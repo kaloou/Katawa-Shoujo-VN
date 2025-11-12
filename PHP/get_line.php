@@ -40,6 +40,8 @@ try {
 
     //BASE RESPONSE
     $response = [
+        'seqid' => $seqid,
+        'seqserial' => $seqserial,
         'type' => (int)$row['type'],
         'elid' => (int)$row['elid'],
     ];

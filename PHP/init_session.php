@@ -26,7 +26,8 @@ if (!isset($_SESSION["seqtext"])) {
 if (!isset($_SESSION["game_state"])) {
     $_SESSION["game_state"] = array(
         "background" => "",
-        "menu_active" => false,
+        "menu_active" => false, // may not be necessary
+        "choice_active" => false,
         "actual_music" => ""
     );
 }

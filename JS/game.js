@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-	getLine(); //at launch print the line save in session
-
 	// IDS
 	divMenu = document.getElementById('menu_screen');
 	divGame = document.getElementById('game_screen');
@@ -75,6 +73,9 @@ function getLine() {
                     getLine();
                 }
                 else {
+                    if (response.seqserial === 1) {
+                        preloadImages();
+                    }
                     update_dialogue(response);
                 }
 
@@ -337,12 +338,28 @@ function remove_sprite(image_tag) {
 }
 
 //==== TYPE 5 ==================================
+function add_center_div(content)
+{
+    //
+}
 
 //==== TYPE 6 ==================================
 
+function htmlDialogueInterpreter(html_string){
+    // exemple de ce que on doit interpreter :
+    // <span style="color: #b14343">Emi<br>Aaah!</span><span style="color: #FF8D7C">Fille étrange<br>Bonjour.</span>'
+    // <span style="color: #b14343">Emi<br>Parler comme quoi ?</span><span style="color: #FF8D7C">Rin<br>Comme quoi ?</span>
+    // je ne sais pas ou le placer pour l'instant, doije supprimer les textbox actuelles???
+}
 //==== TYPE 7 ==================================
+function play_music(music_name){
+    //
+}
 
 //==== TYPE 8 ==================================
+function stop_music(fadeout){
+    //
+}
 
 //==== UI FUNCTIONS ==================================
 function triggerLogoEffect() {
@@ -363,3 +380,5 @@ function triggerLogoEffect() {
 		textElement.classList.add('blink');
 	}, 300); // durée = durée de l'animation pop
 }
+
+//==== UTILITY FUNCTIONS ==================================

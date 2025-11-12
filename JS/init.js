@@ -2,6 +2,7 @@ const DEBUG = true;
 
 document.addEventListener('DOMContentLoaded', function () {
 	initGame();
+    preloadImages();
 	if(DEBUG) {
 		initTestButtons();
 	}
@@ -23,6 +24,30 @@ function initGame() {
 		}
 	};
 	xhr.send();
+}
+
+//============= Preload image function =============
+function preloadImages() {
+   // preload les images de la séquence actuelle
+    fetch('PHP/image_preloader.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.images && data.images.length > 0) {
+                // Créer des objets Image pour chaque nom d'image
+                data.images.forEach(image => {
+                    const img = new Image();
+                    img.src = 'assets/internHD/' + image.image_name; // Mettez ici le chemin correct
+                    img.onload = function () {
+                        console.log('Image préchargée:', image.image_name);
+                    };
+                });
+            } else {
+                console.log('Aucune image trouvée.');
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors du préchargement des images:', error);
+        });
 }
 
 // ==================== DEBUG TEST DE SESSION ===================
@@ -143,20 +168,4 @@ function initTestButtons() {
         }, 1000);
     }
 }
-
-// ==================== PLEIN ÉCRAN ===================
-
-	document.addEventListener("keydown", (event) => {
-		if (event.key.toLowerCase() === "f") {
-			if (!document.fullscreenElement) {
-				// Plein écran sur tout le document
-				document.documentElement.requestFullscreen();
-			} else {
-				document.exitFullscreen();
-			}
-		}
-	});
-	// later on add a button to toggle the fullscreen mode (will be in parameters menu)
-	// like that also phones can use the fullscreen mode
-
 	

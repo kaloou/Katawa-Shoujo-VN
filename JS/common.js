@@ -503,3 +503,21 @@ String.prototype.trunc = function (n, useWordBoundary, ellipsis) {
 	var subString = this.substr(0, n - 1);
 	return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(" ")) : subString) + (ellipsis ? "\u2026" : "");
 };
+
+
+
+
+// ==================== PLEIN ÉCRAN ===================
+
+document.addEventListener("keydown", (event) => {
+    if (event.key.toLowerCase() === "f") {
+        if (!document.fullscreenElement) {
+            // Plein écran sur tout le document
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+});
+// later on add a button to toggle the fullscreen mode (will be in parameters menu)
+// like that also phones can use the fullscreen mode
