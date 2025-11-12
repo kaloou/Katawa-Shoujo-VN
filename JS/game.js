@@ -20,24 +20,22 @@ document.addEventListener('DOMContentLoaded', () => {
 let divMenu, divGame, nameElement, textElement, divEscape, spriteStack, hideBtn, dialogContener;
 //==========KEY PRESS FUNCTION==========
 function pressKey(event) {
+    event.preventDefault();
 	if (event.key === 'Escape') {
-		event.preventDefault();
 		openEscape();
 	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && divGame.style.display === 'flex') {
-		event.preventDefault();
 		getLine();
 	} else if (event.key === 'ArrowLeft' && divGame.style.display === 'flex') {
-		event.preventDefault();
 		// revenir au diagolgue précédent
 	}
 }
 
 function openEscape() {
-	if (divEscape.style.display == 'none') {
+	if (divEscape.style.display === 'none') {
 		divEscape.style.display = 'flex';
 		divMenu.style.filter = 'blur(5px)';
 		divGame.style.filter = 'blur(5px)';
-	} else if (divEscape.style.display == 'flex') {
+	} else if (divEscape.style.display === 'flex') {
 		divEscape.style.display = 'none';
 		divMenu.style.filter = 'none';
 		divGame.style.filter = 'none';
@@ -70,16 +68,14 @@ function getLine() {
 
 				if (response.type === 'error') {
 					if (DEBUG) console.error('Une erreur est survenue:', response.message);
-					return;
-				}
-
-				if (response.type === 'end') {
+				} else if (response.type === 'end') {
 					if (DEBUG) console.log('Fin de la séquence, redémarrage...');
 					getLine();
-					return;
 				}
+                else {
+				    update_dialogue(response);
+                }
 
-				update_dialogue(response);
 			} catch (error) {
 				if (DEBUG) {
 					console.error('Erreur lors du parsing JSON:', error);
