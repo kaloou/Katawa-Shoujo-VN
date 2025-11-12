@@ -41,34 +41,29 @@ try {
     //BASE RESPONSE
     $response = [
         'type' => (int)$row['type'],
-        'data' => $row['data'],
         'elid' => (int)$row['elid'],
-        'pos' => (int)$row['pos'],
-        'z' => (int)$row['z']
     ];
 
     // ajouter les propriétés spécifiques selon le type
     switch ($row['type']) {
         case 1: // texte
-            $response['text'] = $row['data'];
             $response['character_name'] = $row['character_name'] ?? '';
             $response['character_color'] = $row['character_color'] ?? '';
+            $response['text'] = $row['data'];
             $response['character_code'] = $row['character_code'] ?? '';
             break;
-            
+
         case 2: // BG
             $response['image_name'] = $row['image_name'] ?? '';
-            $response['width'] = (int)($row['image_width'] ?? 0);
-            $response['height'] = (int)($row['image_height'] ?? 0);
             break;
             
         case 3: // Sprites
-        case 4: // Remove Sprites
-            $response['image_tag'] = $row['data'];
             $response['image_name'] = $row['image_name'] ?? '';
             $response['width'] = (int)($row['image_width'] ?? 0);
             $response['height'] = (int)($row['image_height'] ?? 0);
             break;
+        case 4: // Remove Sprites
+            $response['image_tag'] = $row['data'];
             
         case 5: // DIV au milieu de l'écran
             $response['text'] = $row['data'];
@@ -76,6 +71,14 @@ try {
             
         case 6: // HTML à interpréter
             $response['html'] = $row['data'];
+            break;
+
+        case 7: // music
+            $response['music_name'] = $row['data'];
+            break;
+
+        case 8:
+            $response['fade'] = $row['data'];
             break;
     }
 

@@ -20,3 +20,4 @@
 - [ ] quand on arrive dans une save de session mettre le dernier bg enregistré dans la bd
 - [ ] supp doublons de la tablle ici : fin seq1 deb seq2
 - [ ] ajouter animation texte d'apparition
+- [ ] implémenter les musiques dans la DB 1 par 1

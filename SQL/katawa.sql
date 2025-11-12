@@ -624,12 +624,7 @@ INSERT INTO image VALUES(617,'kenji_neutral_ni.png',691,1080);
 INSERT INTO image VALUES(618,'yuuko_panic_shang.png',356,1080);
 INSERT INTO image VALUES(619,'bg_mural_start.png',1920,1080);
 
-DROP TABLE IF EXISTS music;
-CREATE TABLE music( 
-		iid 	SERIAL PRIMARY KEY,
-		name	TEXT,
-		time	REAL
-);
+
 INSERT INTO music VALUES(1,'1-01 Lullaby of Open Eyes.mp3',3.15);
 INSERT INTO music VALUES(2,'1-02 Cold Iron.mp3',3.04);
 INSERT INTO music VALUES(3,'1-03 Damage.mp3',1.26);
@@ -1414,7 +1409,7 @@ DROP TABLE IF EXISTS seqtext;
 CREATE TABLE seqtext (seqid INTEGER, seqserial INTEGER, type INTEGER, data TEXT, elid INTEGER, pos INTEGER, z INTEGER);
 INSERT INTO seqtext VALUES(1,1,2,'',190,0,0);
 INSERT INTO seqtext VALUES(1,2,2,'',566,0,0);
-INSERT INTO seqtext VALUES(1,2,7,'music',1,0,0);
+INSERT INTO seqtext VALUES(1,2,7,'1-01 Lullaby of Open Eyes.mp3',0,0,0);
 INSERT INTO seqtext VALUES(1,3,1,'Une légère brise faisait tinter les branches dégarnies comme des carillons en bois.',1,0,0);
 INSERT INTO seqtext VALUES(1,4,1,'Il s''agissait d''un endroit populaire pour les couples pendant l''été. Les arbres feuillus permettaient l''existence d''un superbe auvent vert, loin de la vue des professeurs et des étudiants.',1,0,0);
 INSERT INTO seqtext VALUES(1,5,1,'Mais à ce moment-là, en fin d''hiver, c''était comme si j''étais debout sous une pile de petit bois.',1,0,0);
@@ -1439,6 +1434,7 @@ INSERT INTO seqtext VALUES(1,23,1,'Fait chier. J''avais passé tout l''après-mi
 INSERT INTO seqtext VALUES(1,24,1,'Pathétique.',1,0,0);
 INSERT INTO seqtext VALUES(1,25,1,'Ah... oui. J''ai demandé à un ami de te donner ce message... Je suis heureuse que tu l''aies reçu.',4,0,0);
 INSERT INTO seqtext VALUES(1,26,1,'Son timide mais joyeux sourire me rendait si tendu que je ne pouvais pas bouger un seul muscle, même si j''essayais.',1,0,0);
+INSERT INTO seqtext VALUES(1,27,8,'fadeout 10',0,0,0);
 INSERT INTO seqtext VALUES(1,27,2,'',43,0,0);
 INSERT INTO seqtext VALUES(1,28,2,'',566,0,0);
 INSERT INTO seqtext VALUES(1,29,3,'heartattack',396,400,10);

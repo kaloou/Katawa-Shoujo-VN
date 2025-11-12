@@ -4,7 +4,6 @@ function updateSeqid(newSeqid) {
 
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    // Préparation des données à envoyer au script PHP
     var params = "seqid=" + encodeURIComponent(newSeqid);
 
     xhr.onreadystatechange = function() {
