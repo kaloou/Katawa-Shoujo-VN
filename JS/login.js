@@ -89,10 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function checkValidPassword() {
 		var nbrErrors = 0;
-		text_input = inputPswd.value.trim();
+		var testInput = inputPswd.value.trim();
 
 		for (let i = 0; i < listRegexPwd.length; i++) {
-			if (listRegexPwd[i].test(text_input)) {
+			if (listRegexPwd[i].test(testInput)) {
 				liHelpPswd[i].style.color = '#99B681';
 			} else {
 				nbrErrors += 1;
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}
 
-		if (nbrErrors == 0) {
+		if (nbrErrors === 0) {
 			inputPswd.style.color = '#99B681';
 			inputPswd.style.borderColor = '#99B681';
 			return true;
@@ -112,9 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
     function checkValidUsrName() {
-		text_input = inputUsrName.value.trim();
+		var testInput = inputUsrName.value.trim();
 
-        if (regexUsrName.test(text_input)) {
+        if (regexUsrName.test(testInput)) {
             helpUsrName.style.color = '#99B681';
             inputUsrName.style.color = '#99B681';
             inputUsrName.style.borderColor = '#99B681';
@@ -128,15 +128,18 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
     function sendConnexion(event) {
-        event.preventDefault();
+        
         if(checkValidUsrName() && checkValidPassword())
         {
+            inputSubmit.value = "Envoyer";
+            formLogin.submit(); /*
             formLogin.style.display = 'none';
             defMenu.style.display = 'flex';
             inputUsrName.value = '';
             inputPswd.value = '';
             checkValidUsrName();
-            checkValidPassword();
+            checkValidPassword(); */
         }
+        else event.preventDefault();
     }
 });
