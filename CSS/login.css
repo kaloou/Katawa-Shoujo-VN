@@ -13,9 +13,8 @@
   width: 30vw;
   height: 3vw;
 
-  margin: 0.7vw;
+  margin: 0.7vw auto;
   padding: 0.5vw;
-  justify-self: center;
 
   border: 0;
   color: #fff2d4;
@@ -42,12 +41,8 @@
   color: #eb243b;
 }
 
-#login #inp_pseudo{
-  margin-bottom: 2vw;
-}
-
 #login #inp_submit{
-  margin-top: 3vw;
+  margin-top: 1vw;
 }
 
 #login #inp_submit:hover, #login #inp_submit:focus{
@@ -56,20 +51,20 @@
   border-color: #fff2d4;
 }
 
-#login li{
-  display: block;
-  justify-self: center;
-
-  color: #eb243b;
-  font-size: 1vw;
-}
-
 #login ul{
   justify-self: center;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  
 }
 
-#login ul>li {
-  margin: 0 1vw;
+#login ul>li, #login p {
+  display: block;
+  align-self: center;
+
+  color: #eb243b;
+  font-size: 1vw;
+
+  margin: 0 1vw 1.2vw 1vw;
 }

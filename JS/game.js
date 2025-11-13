@@ -10,32 +10,44 @@ document.addEventListener('DOMContentLoaded', () => {
 	dialogContener = document.getElementById('dialog_container');
 
 	// EVENTS
-    document.addEventListener("keyup", pressKey);
-    hideBtn.addEventListener("click", hideButton);
+	document.addEventListener('keyup', pressKey);
+	hideBtn.addEventListener('click', hideButton);
 	divGame.addEventListener('click', getLine);
 });
 
 let divMenu, divGame, nameElement, textElement, divEscape, spriteStack, hideBtn, dialogContener;
 //==========KEY PRESS FUNCTION==========
 function pressKey(event) {
+	event.preventDefault();
 	if (event.key === 'Escape') {
-		event.preventDefault();
 		openEscape();
-	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && divGame.style.display === 'flex') {
-		event.preventDefault();
+	} else if (
+		(event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') &&
+		divGame.style.display === 'block'
+	) {
 		getLine();
-	} else if (event.key === 'ArrowLeft' && divGame.style.display === 'flex') {
-		event.preventDefault();
+	} else if (event.key === 'ArrowLeft' && divGame.style.display === 'block') {
 		// revenir au diagolgue précédent
+	} else if (event.key.toLowerCase() === 'f' && divGame.style.display === 'block') {
+		fullScreen();
+	}
+}
+
+function fullScreen() {
+	if (!document.fullscreenElement) {
+		// Plein écran sur tout le document
+		document.documentElement.requestFullscreen();
+	} else {
+		document.exitFullscreen();
 	}
 }
 
 function openEscape() {
-	if (divEscape.style.display == 'none') {
+	if (divEscape.style.display === 'none') {
 		divEscape.style.display = 'flex';
 		divMenu.style.filter = 'blur(5px)';
 		divGame.style.filter = 'blur(5px)';
-	} else if (divEscape.style.display == 'flex') {
+	} else if (divEscape.style.display === 'flex') {
 		divEscape.style.display = 'none';
 		divMenu.style.filter = 'none';
 		divGame.style.filter = 'none';
@@ -58,88 +70,85 @@ function showDialog() {
 }
 //==== MAIN FUNCTIONS ==================================
 function getLine() {
-    let xhr = getXHR(); // function from common.js
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            let responseText = xhr.responseText;
+	let xhr = getXHR(); // function from common.js
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			let responseText = xhr.responseText;
 
-            try {
-                let response = JSON.parse(responseText);
+			try {
+				let response = JSON.parse(responseText);
 
-                if (response.type === 'error') {
-                    if (DEBUG) console.error('Une erreur est survenue:', response.message);
-                } else if (response.type === 'end') {
-                    if (DEBUG) console.log('Fin de la séquence, redémarrage...');
-                    getLine();
-                }
-                else {
-                    if (response.seqserial === 1) {
-                        preloadImages();
-                    }
-                    update_dialogue(response);
-                }
-
-            } catch (error) {
-                if (DEBUG) {
-                    console.error('Erreur lors du parsing JSON:', error);
-                    console.error('Réponse reçue:', responseText);
-                }
-            }
-        }
-    };
-    xhr.open('GET', 'PHP/get_line.php', true);
-    xhr.send();
+				if (response.type === 'error') {
+					if (DEBUG) console.error('Une erreur est survenue:', response.message);
+				} else if (response.type === 'end') {
+					if (DEBUG) console.log('Fin de la séquence, redémarrage...');
+					getLine();
+				} else {
+					if (response.seqserial === 1) {
+						preloadImages();
+					}
+					update_dialogue(response);
+				}
+			} catch (error) {
+				if (DEBUG) {
+					console.error('Erreur lors du parsing JSON:', error);
+					console.error('Réponse reçue:', responseText);
+				}
+			}
+		}
+	};
+	xhr.open('GET', 'PHP/get_line.php', true);
+	xhr.send();
 }
 
 function update_dialogue(response) {
-    const type = parseInt(response.type);
-    const content = response.data || '';
-    const pos = response.pos || 0;
-    const z = response.z || 0;
-    const image_name = response.image_name || '';
-    const character_name = response.character_name || '';
-    const character_color = response.character_color || '';
-    const character_code = response.character_code || '';
-    const image_tag = response.image_tag || '';
-    const width = response.width || 0;
-    const height = response.height || 0;
+	const type = parseInt(response.type);
+	const content = response.data || '';
+	const pos = response.pos || 0;
+	const z = response.z || 0;
+	const image_name = response.image_name || '';
+	const character_name = response.character_name || '';
+	const character_color = response.character_color || '';
+	const character_code = response.character_code || '';
+	const image_tag = response.image_tag || '';
+	const width = response.width || 0;
+	const height = response.height || 0;
 
-    switch (type) {
-        case 1: // type 1 -> text
-            displayText(content, character_name, character_color, character_code);
-            break;
-        case 2: // type 2 -> image (bg)
-            change_bg(image_name, true);
-            getLine();
-            break;
-        case 3: // type 3 -> sprite
-            if (image_tag === 'bg'){ // handle problem in DB for type 3 with 'bg' tag
-                change_bg(image_name, false);
-                getLine();
-            }
-            else {
-                // add sprite return false just for heartattack to see animation going
-                if (add_sprite(image_name, image_tag, pos, z, width, height)) {
-                    getLine();
-                }
-            }
-            break;
-        case 4: // type 4 -> remove sprite
-            remove_sprite(image_tag);
-            getLine();
-            break;
-        case 5: //type 5
-        default:
-            console.log("Type non géré pour l'instant : " + type);
-            getLine();
-            break;
-    }
+	switch (type) {
+		case 1: // type 1 -> text
+			displayText(content, character_name, character_color, character_code);
+			break;
+		case 2: // type 2 -> image (bg)
+			change_bg(image_name, true);
+			getLine();
+			break;
+		case 3: // type 3 -> sprite
+			if (image_tag === 'bg') {
+				// handle problem in DB for type 3 with 'bg' tag
+				change_bg(image_name, false);
+				getLine();
+			} else {
+				// add sprite return false just for heartattack to see animation going
+				if (add_sprite(image_name, image_tag, pos, z, width, height)) {
+					getLine();
+				}
+			}
+			break;
+		case 4: // type 4 -> remove sprite
+			remove_sprite(image_tag);
+			getLine();
+			break;
+		case 5: //type 5
+		default:
+			console.log("Type non géré pour l'instant : " + type);
+			getLine();
+			break;
+	}
 
-    if (DEBUG) {
-        console.log(response);
-    }
+	if (DEBUG) {
+		console.log(response);
+	}
 }
-
 
 //==== TYPE 1 FUNCTIONS ==================================
 function displayText(content, characterName = '', characterColor = '', character_code = '') {
@@ -215,26 +224,26 @@ function reset_sprite_stack() {
 //==== TYPE 3 FUNCTIONS ==================================
 // Fonctions pour passer d'un format spécifique à la taille de l'écran
 function convert_x_on_current_format(x) {
-    const ORIGINAL_WIDTH = 800;
+	const ORIGINAL_WIDTH = 800;
 	const currentWidth = window.innerWidth;
 	const ratio = currentWidth / ORIGINAL_WIDTH;
 	return x * ratio;
 }
 function convert_y_on_current_format(y) {
-    const ORIGINAL_HEIGHT = 600;
+	const ORIGINAL_HEIGHT = 600;
 	const currentHeight = window.innerHeight;
 	const ratio = currentHeight / ORIGINAL_HEIGHT;
 	return y * ratio;
 }
 
 function convert_x_on_current_format_hd(x) {
-    const HD_WIDTH = 1920;
+	const HD_WIDTH = 1920;
 	const currentWidth = window.innerWidth;
 	const ratio = currentWidth / HD_WIDTH;
 	return x * ratio;
 }
 function convert_y_on_current_format_hd(y) {
-    const HD_HEIGHT = 1080;
+	const HD_HEIGHT = 1080;
 	const currentHeight = window.innerHeight;
 	const ratio = currentHeight / HD_HEIGHT;
 	return y * ratio;
@@ -338,27 +347,26 @@ function remove_sprite(image_tag) {
 }
 
 //==== TYPE 5 ==================================
-function add_center_div(content)
-{
-    //
+function add_center_div(content) {
+	//
 }
 
 //==== TYPE 6 ==================================
 
-function htmlDialogueInterpreter(html_string){
-    // exemple de ce que on doit interpreter :
-    // <span style="color: #b14343">Emi<br>Aaah!</span><span style="color: #FF8D7C">Fille étrange<br>Bonjour.</span>'
-    // <span style="color: #b14343">Emi<br>Parler comme quoi ?</span><span style="color: #FF8D7C">Rin<br>Comme quoi ?</span>
-    // je ne sais pas ou le placer pour l'instant, doije supprimer les textbox actuelles???
+function htmlDialogueInterpreter(html_string) {
+	// exemple de ce que on doit interpreter :
+	// <span style="color: #b14343">Emi<br>Aaah!</span><span style="color: #FF8D7C">Fille étrange<br>Bonjour.</span>'
+	// <span style="color: #b14343">Emi<br>Parler comme quoi ?</span><span style="color: #FF8D7C">Rin<br>Comme quoi ?</span>
+	// je ne sais pas ou le placer pour l'instant, doije supprimer les textbox actuelles???
 }
 //==== TYPE 7 ==================================
-function play_music(music_name){
-    //
+function play_music(music_name) {
+	//
 }
 
 //==== TYPE 8 ==================================
-function stop_music(fadeout){
-    //
+function stop_music(fadeout) {
+	//
 }
 
 //==== UI FUNCTIONS ==================================

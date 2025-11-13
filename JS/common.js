@@ -7,7 +7,7 @@
  */
 function $(elem) {
 	var type = typeof elem;
-	if (type == "string") {
+	if (type == 'string') {
 		return document.getElementById(elem);
 	}
 	return elem;
@@ -52,12 +52,12 @@ function hide(elem) {
 	var el = $(elem);
 
 	if (!el.defdisplay) {
-		if (el.style.display != "none" && el.style.display != "block") {
+		if (el.style.display != 'none' && el.style.display != 'block') {
 			el.defdisplay = el.style.display;
 		}
 	}
 
-	el.style.display = "none";
+	el.style.display = 'none';
 	return el;
 }
 
@@ -70,14 +70,14 @@ function hide(elem) {
 function show(elem) {
 	var el = $(elem);
 
-	if (el.style.display != "" && el.style.display != "none") {
+	if (el.style.display != '' && el.style.display != 'none') {
 		return el;
 	}
 
 	if (el.defdisplay) {
 		el.style.display = el.defdisplay;
 	} else {
-		el.style.display = "block";
+		el.style.display = 'block';
 	}
 	return el;
 }
@@ -91,7 +91,7 @@ function show(elem) {
 
 function toggle(elem) {
 	var el = $(elem);
-	if (el.style.display != "none") {
+	if (el.style.display != 'none') {
 		hide(el);
 	} else {
 		show(el);
@@ -122,7 +122,7 @@ function selectClear(tag) {
 function selectAppend(tag, text, value, sel) {
 	var el = $(tag);
 	sel = sel || false;
-	var opt = document.createElement("option");
+	var opt = document.createElement('option');
 	opt.text = text;
 	opt.value = value;
 	if (sel) {
@@ -149,7 +149,7 @@ function selectGetValue(tag) {
 	if (el.options[idx]) {
 		return el.options[idx].value;
 	} else {
-		return "";
+		return '';
 	}
 }
 
@@ -164,7 +164,7 @@ function selectGetText(tag) {
 	if (el.options[idx]) {
 		return el.options[idx].text;
 	} else {
-		return "";
+		return '';
 	}
 }
 
@@ -180,10 +180,10 @@ function getXHR() {
 		xhr = new XMLHttpRequest();
 	} catch (e) {
 		try {
-			xhr = new ActiveXObject("Msxml2.XMLHTTP");
+			xhr = new ActiveXObject('Msxml2.XMLHTTP');
 		} catch (e) {
 			try {
-				xhr = new ActiveXObject("Microsoft.XMLHTTP");
+				xhr = new ActiveXObject('Microsoft.XMLHTTP');
 			} catch (e) {
 				xhr = null;
 			}
@@ -216,7 +216,7 @@ function getValFromXML(xml, tag) {
 			return els[0].firstChild.nodeValue;
 		}
 	}
-	return "";
+	return '';
 }
 
 /**
@@ -227,10 +227,10 @@ function getValFromXML(xml, tag) {
  */
 
 function createElement(element) {
-	if (typeof document.createElementNS != "undefined") {
-		return document.createElementNS("http://www.w3.org/1999/xhtml", element);
+	if (typeof document.createElementNS != 'undefined') {
+		return document.createElementNS('http://www.w3.org/1999/xhtml', element);
 	}
-	if (typeof document.createElement != "undefined") {
+	if (typeof document.createElement != 'undefined') {
 		return document.createElement(element);
 	}
 	return false;
@@ -263,23 +263,23 @@ function createElement(element) {
 			var wrapper = function (e) {
 				e.target = e.srcElement;
 				e.currentTarget = self;
-				if (typeof listener.handleEvent != "undefined") {
+				if (typeof listener.handleEvent != 'undefined') {
 					listener.handleEvent(e);
 				} else {
 					listener.call(self, e);
 				}
 			};
-			if (type == "DOMContentLoaded") {
+			if (type == 'DOMContentLoaded') {
 				var wrapper2 = function (e) {
-					if (document.readyState == "complete") {
+					if (document.readyState == 'complete') {
 						wrapper(e);
 					}
 				};
 				// noinspection JSUnresolvedFunction
-				document.attachEvent("onreadystatechange", wrapper2);
+				document.attachEvent('onreadystatechange', wrapper2);
 				eventListeners.push({object: this, type: type, listener: listener, wrapper: wrapper2});
 
-				if (document.readyState == "complete") {
+				if (document.readyState == 'complete') {
 					var e = new Event();
 					// noinspection JSDeprecatedSymbols
 					e.srcElement = window;
@@ -287,7 +287,7 @@ function createElement(element) {
 				}
 			} else {
 				// noinspection JSUnresolvedFunction
-				this.attachEvent("on" + type, wrapper);
+				this.attachEvent('on' + type, wrapper);
 				eventListeners.push({object: this, type: type, listener: listener, wrapper: wrapper});
 			}
 		};
@@ -296,12 +296,12 @@ function createElement(element) {
 			while (counter < eventListeners.length) {
 				var eventListener = eventListeners[counter];
 				if (eventListener.object == this && eventListener.type == type && eventListener.listener == listener) {
-					if (type == "DOMContentLoaded") {
+					if (type == 'DOMContentLoaded') {
 						// noinspection JSUnresolvedFunction
-						this.detachEvent("onreadystatechange", eventListener.wrapper);
+						this.detachEvent('onreadystatechange', eventListener.wrapper);
 					} else {
 						// noinspection JSUnresolvedFunction
-						this.detachEvent("on" + type, eventListener.wrapper);
+						this.detachEvent('on' + type, eventListener.wrapper);
 					}
 					eventListeners.splice(counter, 1);
 					break;
@@ -362,12 +362,12 @@ var css = {
 
 	getElementsByClass: function (node, searchClass, tag) {
 		/* tag parameter is optionnal */
-		tag = tag || "*";
+		tag = tag || '*';
 
 		var classElements = [];
 		var els = $(node).getElementsByTagName(tag);
 		var elsLen = els.length;
-		var pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)");
+		var pattern = new RegExp('(^|\\s)' + searchClass + '(\\s|$)');
 
 		for (var i = 0, j = 0; i < elsLen; i++) {
 			if (this.elementHasClass(els[i], searchClass)) {
@@ -379,11 +379,11 @@ var css = {
 	},
 
 	privateGetClassArray: function (el) {
-		return el.className.split(" ");
+		return el.className.split(' ');
 	},
 
 	privateCreateClassString: function (classArray) {
-		return classArray.join(" ");
+		return classArray.join(' ');
 	},
 
 	/**
@@ -400,7 +400,7 @@ var css = {
 			return false;
 		}
 
-		var regex = new RegExp("\\b" + classString + "\\b");
+		var regex = new RegExp('\\b' + classString + '\\b');
 		return !!el.className.match(regex);
 	},
 
@@ -437,7 +437,7 @@ var css = {
 
 		for (x in classArray) {
 			if (classString == classArray[x]) {
-				classArray[x] = "";
+				classArray[x] = '';
 				break;
 			}
 		}
@@ -457,7 +457,7 @@ var css = {
 
 if (!Array.prototype.filter) {
 	Array.prototype.filter = function (fun /*, thisArg*/) {
-		"use strict";
+		'use strict';
 
 		if (this === void 0 || this === null) {
 			throw new TypeError();
@@ -465,7 +465,7 @@ if (!Array.prototype.filter) {
 
 		var t = Object(this);
 		var len = t.length >>> 0;
-		if (typeof fun !== "function") {
+		if (typeof fun !== 'function') {
 			throw new TypeError();
 		}
 
@@ -501,14 +501,11 @@ String.prototype.trunc = function (n, useWordBoundary, ellipsis) {
 		return this;
 	}
 	var subString = this.substr(0, n - 1);
-	return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(" ")) : subString) + (ellipsis ? "\u2026" : "");
+	return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(' ')) : subString) + (ellipsis ? '\u2026' : '');
 };
 
-
-
-
 // ==================== PLEIN ÉCRAN ===================
-
+/*
 document.addEventListener("keydown", (event) => {
     if (event.key.toLowerCase() === "f") {
         if (!document.fullscreenElement) {
@@ -521,3 +518,4 @@ document.addEventListener("keydown", (event) => {
 });
 // later on add a button to toggle the fullscreen mode (will be in parameters menu)
 // like that also phones can use the fullscreen mode
+*/

@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let regexNum = /[0-9]/;
     let regexSpeChar = /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/; // https://stackoverflow.com/a/66435604
     */
-
-	let listRegex = [/.{10,}/, /[A-Z]/, /[a-z]/, /[0-9]/, /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|°]/];
-	let regexPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-._!"`'#%&,:;<>=@{}~$()*/\\?[\]^|°]).{10,}$/;
+    let regexUsrName = /^[a-zA-Z0-9]{3,}$/;
+	let listRegexPwd = [/.{8,}/, /[A-Z]/, /[a-z]/, /[0-9]/, /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|ùµ°]/];
+	let regexPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-._!"`'#%&,:;<>=@{}~$()*/\\?[\]^|ùµ°]).{8,}$/;
 
 	let connected = false;
 
@@ -18,24 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	const divGame = document.getElementById('game_screen');
 	const defMenu = document.getElementById('default_menu');
 	const formLogin = document.getElementById('login');
-	const inputUsrName = document.getElementById('inp_usr');
+	const inputUsrName = document.getElementById('inp_pseudo');
+    const helpUsrName = document.querySelector('#login p');
 	const inputPswd = document.getElementById('inp_pswd');
-	const liIndicePswd = document.querySelectorAll('#login ul>li');
+	const liHelpPswd = document.querySelectorAll('#login ul>li');
 	const inputSubmit = document.getElementById('inp_submit');
 
-	inputSubmit.addEventListener('click', (event) => {
-		event.preventDefault();
-		if (regexPwd.test(inputPswd.value.trim())) {
-			// ne doit pas se trouver ici mais c'est temporaire
-			formLogin.style.display = 'none';
-			defMenu.style.display = 'flex';
-		}
-	}); // juste ça fait bugger live server
+	inputSubmit.addEventListener('click', sendConnexion);
 
 	connectBtn.addEventListener('click', connect);
 
 	startBtn.addEventListener('click', start);
 
+    inputUsrName.addEventListener('keyup', checkValidUsrName);
 	inputPswd.addEventListener('keyup', checkValidPassword);
 
 	connectBtn.addEventListener('mouseenter', wantDisconnect);
@@ -96,17 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		var nbrErrors = 0;
 		text_input = inputPswd.value.trim();
 
-		for (let i = 0; i < listRegex.length; i++) {
-			if (listRegex[i].test(text_input)) {
-				liIndicePswd[i].style.color = '#99B681';
+		for (let i = 0; i < listRegexPwd.length; i++) {
+			if (listRegexPwd[i].test(text_input)) {
+				liHelpPswd[i].style.color = '#99B681';
 			} else {
 				nbrErrors += 1;
-				liIndicePswd[i].style.color = '#eb243b';
+				liHelpPswd[i].style.color = '#eb243b';
 			}
 		}
 
 		if (nbrErrors == 0) {
-			// envoyer text_input avec XML HTTP REQUEST
 			inputPswd.style.color = '#99B681';
 			inputPswd.style.borderColor = '#99B681';
 			return true;
@@ -116,4 +110,33 @@ document.addEventListener('DOMContentLoaded', () => {
 			return false;
 		}
 	}
+
+    function checkValidUsrName() {
+		text_input = inputUsrName.value.trim();
+
+        if (regexUsrName.test(text_input)) {
+            helpUsrName.style.color = '#99B681';
+            inputUsrName.style.color = '#99B681';
+            inputUsrName.style.borderColor = '#99B681';
+            return true;
+        } else {
+            helpUsrName.style.color = '#eb243b';
+            inputUsrName.style.color = '#eb243b';
+            inputUsrName.style.borderColor = '#eb243b';
+            return false;
+        }
+	}
+
+    function sendConnexion(event) {
+        event.preventDefault();
+        if(checkValidUsrName() && checkValidPassword())
+        {
+            formLogin.style.display = 'none';
+            defMenu.style.display = 'flex';
+            inputUsrName.value = '';
+            inputPswd.value = '';
+            checkValidUsrName();
+            checkValidPassword();
+        }
+    }
 });
