@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const inputSubmit = document.getElementById('inp_submit');
 
 	inputSubmit.addEventListener('click', sendConnexion);
+    formLogin.addEventListener('submit', sendConnexion);
 
 	connectBtn.addEventListener('click', connect);
 
@@ -35,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	connectBtn.addEventListener('mouseenter', wantDisconnect);
 	connectBtn.addEventListener('mouseleave', printConnected);
+
+    //tryConnexion();
 
 	function connect() {
 		if (!connected) {
@@ -128,18 +131,58 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
     function sendConnexion(event) {
-        
         if(checkValidUsrName() && checkValidPassword())
         {
             inputSubmit.value = "Envoyer";
-            formLogin.submit(); /*
+
+            //tryConnexion();
             formLogin.style.display = 'none';
             defMenu.style.display = 'flex';
-            inputUsrName.value = '';
-            inputPswd.value = '';
-            checkValidUsrName();
-            checkValidPassword(); */
+            //formLogin.submit();
         }
         else event.preventDefault();
     }
+
+
+
+/*
+
+    function tryConnexion() {
+        let xhr = getXHR(); // function from common.js
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let responseText = xhr.responseText;
+
+                try {
+                    let response = JSON.parse(responseText);
+
+                    if (!response.submit) {
+                        if (DEBUG) console.error('Pas connecté');
+                        connected = false;
+                    } else if (response.submit) {
+                        if (response.valid) {
+                            switch (response.connexion) {
+                                case "Connexion réussie":
+                                    connected = true;
+                                    break;
+                                case "Mauvaises infos":
+                                    connected = false;
+                                    break;
+                                default: 
+                                    if (DEBUG) console.error('??? reponse.connexion ???');
+                            }
+                        }
+                        else if (DEBUG) console.error('Données invalides');
+                    }
+                } catch (error) {
+                    if (DEBUG) {
+                        console.error('Erreur lors du parsing JSON:', error);
+                        console.error('Réponse reçue:', responseText);
+                    }
+                }
+            }
+        };
+        xhr.open('POST', 'PHP/login.php', true);
+        xhr.send();
+    }*/
 });
