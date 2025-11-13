@@ -33,10 +33,9 @@ function preloadImages() {
         .then(response => response.json())
         .then(data => {
             if (data.images && data.images.length > 0) {
-                // Créer des objets Image pour chaque nom d'image
                 data.images.forEach(image => {
-                    const img = new Image();
-                    img.src = 'assets/internHD/' + image.image_name; // Mettez ici le chemin correct
+                    const img = new Image(); // creer une image pour chaque nom trouvé
+                    img.src = 'assets/internHD/' + image.image_name;
                     img.onload = function () {
                         console.log('Image préchargée:', image.image_name);
                     };
