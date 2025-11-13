@@ -133,6 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             formLogin.style.display = 'none';
             defMenu.style.display = 'flex';
+            inputUsrName.value = '';
+            inputPswd.value = '';
+            checkValidUsrName();
+            checkValidPassword();
         }
     }
 });

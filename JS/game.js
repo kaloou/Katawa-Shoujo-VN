@@ -23,11 +23,22 @@ function pressKey(event) {
     event.preventDefault();
 	if (event.key === 'Escape') {
 		openEscape();
-	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && divGame.style.display === 'flex') {
+	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && divGame.style.display === 'block') {
 		getLine();
-	} else if (event.key === 'ArrowLeft' && divGame.style.display === 'flex') {
+	} else if (event.key === 'ArrowLeft' && divGame.style.display === 'block') {
 		// revenir au diagolgue précédent
-	}
+	} else if (event.key.toLowerCase() === 'f' && divGame.style.display === 'block') {
+        fullScreen();
+    }
+}
+
+function fullScreen() {
+    if (!document.fullscreenElement) {
+        // Plein écran sur tout le document
+        document.documentElement.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
 }
 
 function openEscape() {
