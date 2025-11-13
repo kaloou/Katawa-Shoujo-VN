@@ -103,7 +103,7 @@ function getLine() {
 
 function update_dialogue(response) {
 	const type = parseInt(response.type);
-	const content = response.data || '';
+	const content = response.text || '';
 	const pos = response.pos || 0;
 	const z = response.z || 0;
 	const image_name = response.image_name || '';

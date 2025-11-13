@@ -63,6 +63,8 @@ try {
             $response['image_name'] = $row['image_name'] ?? '';
             $response['width'] = (int)($row['image_width'] ?? 0);
             $response['height'] = (int)($row['image_height'] ?? 0);
+            $response['image_tag'] = $row['data'];
+            $response['pos'] = (int)($row['pos'] ?? 0);
             break;
         case 4: // Remove Sprites
             $response['image_tag'] = $row['data'];

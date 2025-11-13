@@ -5,20 +5,20 @@
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	background-image: url('../assets/internHD/black.png');
+	background-image: url('../assets/internHD/bg_op_snowywoods.png');
 	background-size: cover;
 	background-position: center;
 }
 
 #dialog_container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.7;
-    isolation: isolate;
-    z-index: 999;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.7;
+	isolation: isolate;
+	z-index: 999;
 }
 #text {
 	position: fixed;
@@ -35,39 +35,50 @@
 	z-index: 1001;
 	display: flex;
 	align-items: flex-start;
-    mix-blend-mode: normal;
+	mix-blend-mode: normal;
 }
 
 #text::after {
-    content: "";
-    position: absolute;
-    right: 10px;
-    top: 85%;
-    transform: translateY(-50%);
-    width: 24px;
-    height: 24px;
-    background-image: url("../assets/extern/UI/ctc.png");
-    background-size: contain;
-    background-repeat: no-repeat;
+	content: '';
+	position: absolute;
+	right: 10px;
+	top: 85%;
+	transform: translateY(-50%);
+	width: 24px;
+	height: 24px;
+	background-image: url('../assets/extern/UI/ctc.png');
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 
 #text.blink::after {
-    animation: blink 1.5s infinite;
+	animation: blink 1.5s infinite;
 }
 
 #text.pop::after {
-    animation: pop 0.15s forwards;
+	animation: pop 0.15s forwards;
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
 }
 
 @keyframes pop {
-    0% { transform: translateY(-50%) scale(1); }
-    50% { transform: translateY(-50%) scale(1.2); }
-    100% { transform: translateY(-50%) scale(1); }
+	0% {
+		transform: translateY(-50%) scale(1);
+	}
+	50% {
+		transform: translateY(-50%) scale(1.2);
+	}
+	100% {
+		transform: translateY(-50%) scale(1);
+	}
 }
 
 #sprite_stack {
@@ -90,7 +101,6 @@
 	user-select: none;
 }
 
-
 #name {
 	position: fixed;
 	width: 22%;
@@ -108,5 +118,5 @@
 	border-bottom: 3px solid #8b8275;
 	border-top: 3px solid #8b8275;
 	border-right: 3px solid #8b8275;
-    mix-blend-mode: normal;
+	mix-blend-mode: normal;
 }
