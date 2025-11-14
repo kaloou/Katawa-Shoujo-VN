@@ -28,6 +28,7 @@ if (!isset($_SESSION["game_state"])) {
         "background" => "",
         "menu_active" => false, // may not be necessary
         "choice_active" => false,
+        "get_line_loaded" => false,
         "actual_music" => ""
     );
 }

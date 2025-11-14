@@ -2,7 +2,7 @@
 // je teste des trucs TQT
     session_start();
     include_once('connexion.php');
-    header('Content-Type: text/plain; charset=utf-8');
+    header('Content-Type: application/json; charset=utf-8');
 
     try {
         $regex_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-._!\"'@#$%^&*(){}[\]\/\\\\?~:;+=|]).{8,}$/";

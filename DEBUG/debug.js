@@ -1,6 +1,6 @@
 function updateSeqid(newSeqid) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "PHP/update_seqid.php", true); // Le script PHP qui met à jour la session
+    xhr.open("POST", "DEBUG/update_seqid.php", true); // Le script PHP qui met à jour la session
 
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
