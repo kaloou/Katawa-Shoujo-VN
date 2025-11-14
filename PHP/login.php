@@ -37,7 +37,7 @@
                 }
                 else
                 { 
-                    $hash_pswd = password_hash($_POST["inp_pswd"], PASSWORD_DEFAULT, ['cost' => 12]);
+                    $hash_pswd = password_hash($_POST["inp_pswd"], PASSWORD_DEFAULT);
 
                     $query = "INSERT INTO users VALUES (:usrname, :pswd)";
                     $stmt = $pdo->prepare($query);
