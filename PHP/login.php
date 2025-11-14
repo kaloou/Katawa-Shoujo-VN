@@ -3,21 +3,24 @@
     session_start();
     include_once('connexion.php');
     header('Content-Type: text/plain; charset=utf-8');
+    $DEBUG = false;
 
     try {
-        $regex_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-._!\"'@#$%^&*(){}[\]\/\\\\?~:;+=|]).{8,}$/";
-        $regex_username = "/^[a-zA-Z0-9]{3,}$/";
+        $regex_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-._!\"'@#$%^&*(){}[\]\/\\\\?~:;+=|]).{8,25}$/u";
+        $regex_username = "/^[a-zA-Z0-9]{3,15}$/";
         
-        var_dump($_POST);
+        if($DEBUG) var_dump($_POST);
+
         if(isset($_POST["inp_submit"]) && $_POST["inp_submit"] === "Envoyer")
         {
             $response['submit'] = true;
 
-            if(preg_match($regex_username, $_POST["inp_pseudo"]) && preg_match($regex_password, $_POST["inp_pswd"])) 
+            $usrname = htmlspecialchars(trim($_POST["inp_pseudo"]));
+            $pswd = htmlspecialchars(trim($_POST["inp_pswd"]));
+
+            if(preg_match($regex_username, $usrname) && preg_match($regex_password, $pswd)) 
             {
                 $response['valid'] = true;
-
-                $usrname = $_POST["inp_pseudo"];
 
                 $query = "SELECT * FROM users WHERE users.username = :usrname";
                 $stmt = $pdo->prepare($query);
@@ -28,16 +31,17 @@
 
                 if($exist["username"])
                 {
-                    if(password_verify($_POST["inp_pswd"], $exist["password"]))
+                    if(password_verify($pswd, $exist["password"]))
                     {
                         $_SESSION["username"] = $usrname;
-                        $response['connexion'] = "Connexion réussie";
+                        $response['connexion'] = 1;
+                        //$response['username'] = $usrname;
                     }
-                    else $response['connexion'] = "Mauvaises infos";
+                    else $response['connexion'] = 0;
                 }
                 else
                 { 
-                    $hash_pswd = password_hash($_POST["inp_pswd"], PASSWORD_DEFAULT);
+                    $hash_pswd = password_hash($pswd, PASSWORD_DEFAULT);
 
                     $query = "INSERT INTO users VALUES (:usrname, :pswd)";
                     $stmt = $pdo->prepare($query);
@@ -48,16 +52,18 @@
                     $info = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     $_SESSION["username"] = $usrname;
-                    $response['connexion'] = "Connexion réussie";
+                    $response['connexion'] = 1;
+                    //$response['username'] = $usrname;
                 }
-                $response['username'] = $usrname;
             }
             else $response['valid'] = false;
         }
         else $response['submit'] = false;
 
         $_SESSION["connexion_answer"] = $response;
-        var_dump($response);
+        
+        echo json_encode($response);
+
         //header("Location: ../test_connection.html");
 
     } catch (PDOException $e) {
