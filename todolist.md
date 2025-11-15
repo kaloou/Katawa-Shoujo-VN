@@ -1,23 +1,45 @@
-- [ ] Faire menu pop up à l'intérieur du jeu : 1-> Retour
-  2-> Bouton Show hide ici et/ou bien direct dans le jeu dans un coin
-  3-> Options
-  5/6-> Sauvegarder / Charger (plus tard si possible car il faut enregistré tout les choix sinon)
-  7-> Menu principal
-- [ ] En dessous du menu pop up du jeu avec ESC affiché les infos actuelles
-  1-> Temps de jeu
-  2-> Scéne actuelle
-  3- > Musique ?
-- [ ] Faire menu pop up de options :
+- -----------------
+MENU POPUP AVEC ESC
+- -----------------
+- [ ] 1-> bouton Options qui ouvre un autre pop up avec dedans:
 
-- 1->Résolution : responsive coché de base ou autre format qui lance une nouvelle page web avec la réso choisie (1920x1080 ou 800x600 par exemple )
-- 2-> Son / musique de fond
-- 3-> Mode automatique
+- a -> Mode plein écran (toggle button)
+- b->Résolution : responsive coché de base ou autre format qui lance une nouvelle page web avec la réso choisie (1920x1080 ou 800x600 par exemple )
+- c -> Mode automatique boucle qui appelle getline
+- d -> Vitesse de lecture (apparition du texte)(slider)
+- e -> Volume de la musique (slider)
+- f -> En commentaire mettre Volume effets(slider)car pas sur
 
-- [ ] creer table user / rendre fonctionnel le se connecter
-- [ ] gerer le next dans la table story pour le stocker en session
-- [ ] musique/transition fade with bg
+- [ ] En dessous du menu ESC affiché les infos actuelles
+- a-> Temps de jeu
+- b-> Scéne actuelle (optionnel) en commentaire
+- c- > Musique actuelle
+
+- [ ] 2 -> bouton Retour ->l'afficher au dessus (user friendly)
+
+--------------------
+- ERREUR DB
+- -----------------
+- [ ] elid 2 -> cid 2 signifie avec tag 'n' signifie rester dans le centered mode j'usqu'a un nouveau cid 
+ou alors tag 'centered' a reglé dans la db et le mettre  tous en type 5 
+- [ ] optionnel mettre les type 3 en tag 'bg' en type 2 avec en tag 'noreset' pour ne pas enlever sprites actuelles
+- ou alors supprimer les lignes car selon moi il sont inutiles
+--------------------
+- SAUVEGARDE CHARGER
+- -----------------
+- [ ] à la sauvegarde mettre le dernier bg enregistré dans la bd
+- [ ] et les éléments de la sprite stack
+------------------------
+- TACHES UNIQUES
+- -----------------
+- [ ] faire animation d'apparition du texte
+- [ ] implémenter la musique
 - [ ] zoom animation on ev images (bgs or sprites)
-- [ ] quand on arrive dans une save de session mettre le dernier bg enregistré dans la bd
-- [ ] supp doublons de la tablle ici : fin seq1 deb seq2
-- [ ] ajouter animation texte d'apparition
 - [ ] implémenter les musiques dans la DB 1 par 1
+- [ ] ajouter type 9 pour les vidéo
+- [ ] récuperer la vidéo avec mots pendant la scene avec l'hopital depuis la db originale en cachant le texte
+- [ ] regler le cas exeptionnel hanako (xpos > 800) rajouter le reste au dessus de 800 aussi calculé
+- [ ] ajouter animation de glissement sur les changements de positions de sprite déja présent sur l'écran (utiliser tag)
+- [ ] Optionnel ->creer animation fluide d'apparition quand on passe du menu au jeu et du jeu au menu ESC (animation powerpoint)
+- [ ] Implémenter la sauvegarde et chargement
+- [ ] optionnel ->Faire du responsive en temp réel au niveau de l'affichage 
