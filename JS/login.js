@@ -34,7 +34,7 @@ let regexMaj = /[A-Z]/;
 let regexNum = /[0-9]/;
 let regexSpeChar = /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/; // https://stackoverflow.com/a/66435604
 */
-let regexUsrName = /^[a-zA-Z0-9]{3,15}$/;
+let regexUsrName = /^[-_a-zA-Z0-9]{3,15}$/;
 let listRegexPwd = [/^.{8,25}$/, /[A-Z]/, /[a-z]/, /[0-9]/, /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/u];
 //let regexPwd = /^[-A-Za-z0-9,?;.:/=+~ù%´µ£`^¨\[$*\]&|é@"#'(§^è!ç{à)°_}]{8,25}$/u;
 

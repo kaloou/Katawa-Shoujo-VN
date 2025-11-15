@@ -7,7 +7,7 @@
 
     try {
         $regex_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-._!\"'@#$%^&*(){}[\]\/\\\\?~:;+=|]).{8,25}$/u";
-        $regex_username = "/^[a-zA-Z0-9]{3,15}$/";
+        $regex_username = "/^[-_a-zA-Z0-9]{3,15}$/";
         
         if($DEBUG) var_dump($_POST);
 
@@ -43,15 +43,17 @@
                 { 
                     $hash_pswd = password_hash($pswd, PASSWORD_DEFAULT);
 
-                    $query = "INSERT INTO users VALUES (:usrname, :pswd)";
+                    $query ="INSERT INTO users (username, password) VALUES (:usrname, :pswd)";
+
                     $stmt = $pdo->prepare($query);
-                    $stmt->bindValue(':usrname', $usrname, PDO::PARAM_INT);
-                    $stmt->bindValue(':pswd', $hash_pswd, PDO::PARAM_INT);
+                    $stmt->bindValue(':usrname', $usrname, PDO::PARAM_STR);
+                    $stmt->bindValue(':pswd', $hash_pswd, PDO::PARAM_STR);
                     $stmt->execute();
 
-                    $info = $stmt->fetch(PDO::FETCH_ASSOC);
-
                     $_SESSION["username"] = $usrname;
+
+                    include_once('create_saves.php');
+                    
                     $response['connexion'] = 1;
                     //$response['username'] = $usrname;
                 }
@@ -63,8 +65,6 @@
         $_SESSION["connexion_answer"] = $response;
         
         echo json_encode($response);
-
-        //header("Location: ../test_connection.html");
 
     } catch (PDOException $e) {
         error_log('login.php -> PDOException: ' . $e->getMessage());
