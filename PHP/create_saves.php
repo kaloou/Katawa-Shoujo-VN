@@ -5,23 +5,24 @@ $DEBBUG = false;
 //include_once('connexion.php');
 //header('Content-Type: text/plain; charset=utf-8');
 
-    try {
-        if($DEBBUG) var_dump($_SESSION);
-        if(isset($_SESSION["connexion_answer"]))
+    try 
+    {
+        //if($DEBBUG) var_dump($_SESSION);
+        if(isset($_SESSION["username"]))
         {
-            if($DEBBUG) echo "avant_sql\n";
+            //if($DEBBUG) echo "avant_sql\n";
             $usrname = $_SESSION["username"];
-            if($DEBBUG) echo "user=session\n";
+            //if($DEBBUG) echo "user=session\n";
             $query = "SELECT * FROM saves WHERE saves.user_id = :usrname";
             $stmt = $pdo->prepare($query);
-            if($DEBBUG) echo "prepare\n";
+            //if($DEBBUG) echo "prepare\n";
             $stmt->bindValue(':usrname', $usrname, PDO::PARAM_STR);
-            if($DEBBUG) echo "bindValue\n";
+            //if($DEBBUG) echo "bindValue\n";
             $stmt->execute();
-            if($DEBBUG) echo "exe\n";
+            //if($DEBBUG) echo "exe\n";
 
             $info = $stmt->fetch(PDO::FETCH_ASSOC);
-            if($DEBBUG) echo "apres_sql\n";
+            //if($DEBBUG) echo "apres_sql\n";
 
 
             if(!$info)
@@ -37,15 +38,17 @@ $DEBBUG = false;
 
                 for($i=0 ; $i < 5 ; $i++)
                 {
-                    if($DEBBUG) echo "creer $i\n";
+                    //if($DEBBUG) echo "creer $i\n";
                     $stmt->bindValue(':init_date', time(), PDO::PARAM_INT);
                     $stmt->execute();
                 }
             }
         }
-    } catch (PDOException $e) {
+    } 
+    catch (PDOException $e) 
+    {
         error_log('create_saves.php -> PDOException: ' . $e->getMessage());
         http_response_code(500);
         exit;
-}
+    }
 ?>

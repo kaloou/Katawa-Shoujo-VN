@@ -1,13 +1,14 @@
 <?php
-// je teste des trucs TQT
     session_start();
     include_once('connexion.php');
     header('Content-Type: text/plain; charset=utf-8');
     $DEBUG = false;
 
-    try {
+    try 
+    {
         $regex_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-._!\"'@#$%^&*(){}[\]\/\\\\?~:;+=|]).{8,25}$/u";
         $regex_username = "/^[-_a-zA-Z0-9]{3,15}$/";
+        $default_save = "On vera";
         
         if($DEBUG) var_dump($_POST);
 
@@ -24,7 +25,7 @@
 
                 $query = "SELECT * FROM users WHERE users.username = :usrname";
                 $stmt = $pdo->prepare($query);
-                $stmt->bindValue(':usrname', $usrname, PDO::PARAM_INT);
+                $stmt->bindValue(':usrname', $usrname, PDO::PARAM_STR);
                 $stmt->execute();
 
                 $exist = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -35,7 +36,6 @@
                     {
                         $_SESSION["username"] = $usrname;
                         $response['connexion'] = 1;
-                        //$response['username'] = $usrname;
                     }
                     else $response['connexion'] = 0;
                 }
@@ -43,11 +43,12 @@
                 { 
                     $hash_pswd = password_hash($pswd, PASSWORD_DEFAULT);
 
-                    $query ="INSERT INTO users (username, password) VALUES (:usrname, :pswd)";
+                    $query ="INSERT INTO users (username, password, auto_save) VALUES (:usrname, :pswd, :default_save)";
 
                     $stmt = $pdo->prepare($query);
                     $stmt->bindValue(':usrname', $usrname, PDO::PARAM_STR);
                     $stmt->bindValue(':pswd', $hash_pswd, PDO::PARAM_STR);
+                    $stmt->bindValue(':default_save', $default_save, PDO::PARAM_STR);
                     $stmt->execute();
 
                     $_SESSION["username"] = $usrname;
@@ -55,7 +56,6 @@
                     include_once('create_saves.php');
                     
                     $response['connexion'] = 1;
-                    //$response['username'] = $usrname;
                 }
             }
             else $response['valid'] = false;
@@ -66,10 +66,12 @@
         
         echo json_encode($response);
 
-    } catch (PDOException $e) {
+    } 
+    catch (PDOException $e) 
+    {
         error_log('login.php -> PDOException: ' . $e->getMessage());
         http_response_code(500);
         echo json_encode(['type' => 'error', 'message' => $e->getMessage()]);
         exit;
-}
+    }
 ?>

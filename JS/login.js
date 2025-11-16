@@ -62,9 +62,11 @@ function disconnect() {
 
 function start() {
 	if (connected) {
+		//getAutoSave();
 		divMenu.style.display = 'none';
 		divGame.style.display = 'block';
-	} else {
+	} 
+	else {
 		notConnected();
 	}
 }
@@ -99,7 +101,8 @@ function checkValidPassword() {
 	for (let i = 0; i < listRegexPwd.length; i++) {
 		if (listRegexPwd[i].test(testInput)) {
 			liHelpPswd[i].style.color = greenColor;
-		} else {
+		} 
+		else {
 			nbrErrors += 1;
 			liHelpPswd[i].style.color = redColor;
 		}
@@ -109,7 +112,8 @@ function checkValidPassword() {
 		inputPswd.style.color = greenColor;
 		inputPswd.style.borderColor = greenColor;
 		return true;
-	} else {
+	} 
+	else {
 		inputPswd.style.color = redColor;
 		inputPswd.style.borderColor = redColor;
 		return false;
@@ -124,7 +128,8 @@ function checkValidUsrName() {
 		inputUsrName.style.color = greenColor;
 		inputUsrName.style.borderColor = greenColor;
 		return true;
-	} else {
+	} 
+	else {
 		helpUsrName.style.color = redColor;
 		inputUsrName.style.color = redColor;
 		inputUsrName.style.borderColor = redColor;
@@ -209,4 +214,47 @@ function tryConnexion() {
 	xhr.open('POST', 'PHP/login.php', true);
 	xhr.responseType = "text";
 	xhr.send(data);
+}
+
+function getAutoSave() {
+let xhr = getXHR(); // function from common.js
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			let responseText = xhr.responseText;
+			try {
+				let response = JSON.parse(responseText);
+				if (response.submit) {
+					if (response.valid) {
+						switch (response.connexion) {
+							case 1:
+								if (DEBUG) console.log(response);
+								
+								break;
+							case 0:
+								if (DEBUG) console.log(response);
+								
+								break;
+							default: 
+								if (DEBUG) console.error('??? reponse.connexion ???');
+						}
+					}
+					else {
+						if (DEBUG) console.error('Données invalides');
+					}
+				}
+				else if (!response.submit) {
+					if (DEBUG) console.log(response);
+					
+				} 
+			} catch (error) {
+				if (DEBUG) {
+					console.error('Erreur lors du parsing JSON:', error);
+					console.error('Réponse reçue:', responseText);
+				}
+			}
+		}
+	};
+	xhr.open('GET', 'PHP/get_auto_save.php', true);
+	xhr.responseType = "text";
+	xhr.send();
 }
