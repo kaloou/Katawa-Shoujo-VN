@@ -2,13 +2,14 @@
     session_start();
     include_once('connexion.php');
     header('Content-Type: text/plain; charset=utf-8');
-    $DEBUG = true;
+    $DEBUG = false;
 
     try 
     {
-        if(isset($_SESSION("username")))
+        if(isset($_SESSION["username"]))
         {
-            $usrname = $_SESSION("username");
+            $response["exist"] = true;
+            $usrname = $_SESSION["username"];
             $query = "SELECT auto_save FROM users WHERE users.username = :usrname";
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(':usrname', $usrname, PDO::PARAM_STR);
@@ -18,13 +19,16 @@
 
             if($info)
             {
-                //send l'autosafe
+                $_SESSION["save_to_load"] = $info["auto_save"];
+                // plus tard, au lieu de faire ça ↑ ,
+                // juste traduire les infos de $info["auto_save"] et mettre les données correspondantes dans $_SESSION["..."]
+                $response["found"] = true;
             }
-            else
-            {
-                //problème
-            }
+            else $response["found"] = false;
         }
+        else $response["exist"] = false;
+        
+        echo json_encode($response);
     } 
     catch (PDOException $e) 
     {

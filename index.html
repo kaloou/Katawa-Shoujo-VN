@@ -17,8 +17,9 @@
 		<script defer src="JS/init.js"></script>
         <script defer src="JS/menu.js"></script>
 		<script defer src="JS/game.js"></script>
-		<script defer src="JS/escape.js"></script>
 		<script defer src="JS/login.js"></script>
+		<script defer src="JS/save.js"></script>
+		<script defer src="JS/escape.js"></script>
         <script defer src="JS/debug.js"></script>
 	</head>
 	<body>
@@ -40,7 +41,7 @@
 				<div id="default_menu">
 					<div class="buttons">
 						<button id="connect_button" class="unselectable">Se Connecter</button>
-						<button id="start_button" class="unselectable">Démarrer</button>
+						<button id="start_button" class="unselectable">Jouer</button>
 						<button id="load_button" class="unselectable">Charger</button>
 						<button id="settings_button" class="unselectable">Options</button>
 						<button id="credits_button" class="unselectable">Crédits</button>
@@ -56,7 +57,7 @@
 						<li>Majuscule</li>
 						<li>Minuscule</li>
 						<li>Chiffre</li>
-						<li title="- . _ ! &quot ` ' # % & , : ; < > = @ { } ~ \ $ ( ) * + / ? [ ] ^ |">Caractère Spécial</li>
+						<li title="- . _ ! &quot ` ' # % & , : ; &lt &gt = @ { } ~ \ $ ( ) * + / ? [ ] ^ |">Caractère Spécial</li>
 					</ul>
 					<input type="submit" name="inp_submit" id="inp_submit" value="Envoyer" placeholder="Se Connecter">
 				</form>
@@ -70,7 +71,7 @@
 				<!--<button id="continue_button" class="unselectable">Continuer</button>-->
 				<button id="hide_button" class="unselectable" title="Cacher le dialogue en jeu">Cacher le dialogue</button>
 				<button id="save_button" class="unselectable">Sauvegarder</button>
-				<button id="load_button" class="unselectable">Charger</button>
+				<!--<button id="load_button" class="unselectable">Charger</button>-->
 				<button id="return_button" class="unselectable">Revenir au Menu</button>
 			</div>
 		</div>

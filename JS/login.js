@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	connectBtn = $('connect_button');
 	startBtn = $('start_button');
 	divMenu = $('menu_screen');
@@ -23,6 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	connectBtn.addEventListener('mouseenter', wantDisconnect);
 	connectBtn.addEventListener('mouseleave', printConnected);
+
+	if(await isConnectedinSession()) // https://www.w3schools.com/js/js_async.asp → "Basic Syntax" and "Waiting for a file"
+	{
+		connected = true;
+		printConnected();
+	}
+	
 });
 
 let connectBtn, startBtn, defMenu, formLogin, inputUsrName, helpUsrName, inputPswd, liHelpPswd, inputSubmit;
@@ -38,11 +45,35 @@ let regexUsrName = /^[-_a-zA-Z0-9]{3,15}$/;
 let listRegexPwd = [/^.{8,25}$/, /[A-Z]/, /[a-z]/, /[0-9]/, /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/u];
 //let regexPwd = /^[-A-Za-z0-9,?;.:/=+~ù%´µ£`^¨\[$*\]&|é@"#'(§^è!ç{à)°_}]{8,25}$/u;
 
-let greenColor = "#99B681"; 			//2c9e31 or 99B681
+// colors : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
+let greenColor = "#99B681"; //2c9e31 or 99B681
 let redColor = "#eb243b";
 let pinkColor = "#FF8D7C";
 
 let connected = false;
+
+async function isConnectedinSession() {
+	let xhr = getXHR(); // function from common.js
+	return await new Promise(function(resolve, reject) {
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				let responseText = xhr.responseText;
+				try {
+					let response = JSON.parse(responseText);
+					resolve(response.exist);
+				} catch (error) {
+					if (DEBUG) {
+						console.error('Erreur lors du parsing JSON:', error);
+						console.error('Réponse reçue:', responseText);
+					}
+				}
+			}
+		};
+		xhr.open('GET', 'PHP/is_connected.php', true);
+		xhr.responseType = "text";
+		xhr.send();
+	});
+}
 
 function connect() {
 	if (!connected) {
@@ -60,20 +91,19 @@ function disconnect() {
 	}
 }
 
-function start() {
+async function start() {
 	if (connected) {
-		//getAutoSave();
-		divMenu.style.display = 'none';
-		divGame.style.display = 'block';
-	} 
-	else {
-		notConnected();
+		if(await getAutoSave()) {
+			divMenu.style.display = 'none';
+			divGame.style.display = 'block';
+		} else notConnected();
 	}
+	else notConnected();
 }
 
 function notConnected() {
 	connectBtn.textContent = 'Se Connecter';
-	connectBtn.style.boxShadow = '0px 0px 0px 0.08vw '+ redColor; // code couleur : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
+	connectBtn.style.boxShadow = '0px 0px 0px 0.08vw '+ redColor;
 	connectBtn.style.backgroundColor = redColor;
 }
 
@@ -199,7 +229,7 @@ function tryConnexion() {
 						editSendButton("Unvalid datas");
 					}
 				}
-				else if (!response.submit) {
+				else {
 					if (DEBUG) console.log(response);
 					connected = false;
 				} 
@@ -216,45 +246,38 @@ function tryConnexion() {
 	xhr.send(data);
 }
 
-function getAutoSave() {
-let xhr = getXHR(); // function from common.js
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			let responseText = xhr.responseText;
-			try {
-				let response = JSON.parse(responseText);
-				if (response.submit) {
-					if (response.valid) {
-						switch (response.connexion) {
-							case 1:
-								if (DEBUG) console.log(response);
-								
-								break;
-							case 0:
-								if (DEBUG) console.log(response);
-								
-								break;
-							default: 
-								if (DEBUG) console.error('??? reponse.connexion ???');
+async function getAutoSave() {
+	let xhr = getXHR(); // function from common.js
+	return await new Promise(function(resolve, reject) {
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				let responseText = xhr.responseText;
+				try {
+					let response = JSON.parse(responseText);
+					if (response.exist) {
+						if (response.found) {
+							resolve(true);
+						}
+						else {
+							if (DEBUG) console.error('pas trouvé'); 
+							resolve(false);
 						}
 					}
-					else {
-						if (DEBUG) console.error('Données invalides');
+					else if (!response.exist) {
+						if (DEBUG) console.log(response);
+						resolve(false);
+					} 
+				} catch (error) {
+					if (DEBUG) {
+						console.error('Erreur lors du parsing JSON:', error);
+						console.error('Réponse reçue:', responseText);
+						resolve(false);
 					}
 				}
-				else if (!response.submit) {
-					if (DEBUG) console.log(response);
-					
-				} 
-			} catch (error) {
-				if (DEBUG) {
-					console.error('Erreur lors du parsing JSON:', error);
-					console.error('Réponse reçue:', responseText);
-				}
 			}
-		}
-	};
-	xhr.open('GET', 'PHP/get_auto_save.php', true);
-	xhr.responseType = "text";
-	xhr.send();
+		};
+		xhr.open('GET', 'PHP/get_auto_save.php', true);
+		xhr.responseType = "text";
+		xhr.send();
+	});
 }

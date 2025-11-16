@@ -1,28 +1,27 @@
 <?php
-// je teste des trucs TQT
-$DEBBUG = false;
+$DEBUG = false;
 //session_start();
 //include_once('connexion.php');
 //header('Content-Type: text/plain; charset=utf-8');
 
     try 
     {
-        //if($DEBBUG) var_dump($_SESSION);
+        //if($DEBUG) var_dump($_SESSION);
         if(isset($_SESSION["username"]))
         {
-            //if($DEBBUG) echo "avant_sql\n";
+            //if($DEBUG) echo "avant_sql\n";
             $usrname = $_SESSION["username"];
-            //if($DEBBUG) echo "user=session\n";
+            //if($DEBUG) echo "user=session\n";
             $query = "SELECT * FROM saves WHERE saves.user_id = :usrname";
             $stmt = $pdo->prepare($query);
-            //if($DEBBUG) echo "prepare\n";
+            //if($DEBUG) echo "prepare\n";
             $stmt->bindValue(':usrname', $usrname, PDO::PARAM_STR);
-            //if($DEBBUG) echo "bindValue\n";
+            //if($DEBUG) echo "bindValue\n";
             $stmt->execute();
-            //if($DEBBUG) echo "exe\n";
+            //if($DEBUG) echo "exe\n";
 
             $info = $stmt->fetch(PDO::FETCH_ASSOC);
-            //if($DEBBUG) echo "apres_sql\n";
+            //if($DEBUG) echo "apres_sql\n";
 
 
             if(!$info)
@@ -38,7 +37,7 @@ $DEBBUG = false;
 
                 for($i=0 ; $i < 5 ; $i++)
                 {
-                    //if($DEBBUG) echo "creer $i\n";
+                    //if($DEBUG) echo "creer $i\n";
                     $stmt->bindValue(':init_date', time(), PDO::PARAM_INT);
                     $stmt->execute();
                 }
