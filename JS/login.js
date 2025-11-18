@@ -1,30 +1,18 @@
-document.addEventListener('DOMContentLoaded', () => {
-	/*
-    let regex10Char = /.{10,}/;
-    let regexMin = /[]/;
-    let regexMaj = /[A-Z]/;
-    let regexNum = /[0-9]/;
-    let regexSpeChar = /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/; // https://stackoverflow.com/a/66435604
-    */
-    let regexUsrName = /^[a-zA-Z0-9]{3,}$/;
-	let listRegexPwd = [/.{8,}/, /[A-Z]/, /[a-z]/, /[0-9]/, /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|ùµ°]/];
-	let regexPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-._!"`'#%&,:;<>=@{}~$()*/\\?[\]^|ùµ°]).{8,}$/;
-
-	let connected = false;
-
-	const connectBtn = document.getElementById('connect_button');
-	const startBtn = document.getElementById('start_button');
-	const divMenu = document.getElementById('menu_screen');
-	const divGame = document.getElementById('game_screen');
-	const defMenu = document.getElementById('default_menu');
-	const formLogin = document.getElementById('login');
-	const inputUsrName = document.getElementById('inp_pseudo');
-    const helpUsrName = document.querySelector('#login p');
-	const inputPswd = document.getElementById('inp_pswd');
-	const liHelpPswd = document.querySelectorAll('#login ul>li');
-	const inputSubmit = document.getElementById('inp_submit');
+document.addEventListener('DOMContentLoaded', async () => {
+	connectBtn = $('connect_button');
+	startBtn = $('start_button');
+	divMenu = $('menu_screen');
+	divGame = $('game_screen');
+	defMenu = $('default_menu');
+	formLogin = $('login');
+	inputUsrName = $('inp_pseudo');
+    helpUsrName = document.querySelector('#login p');
+	inputPswd = $('inp_pswd');
+	liHelpPswd = document.querySelectorAll('#login ul>li');
+	inputSubmit = $('inp_submit');
 
 	inputSubmit.addEventListener('click', sendConnexion);
+    formLogin.addEventListener('submit', sendConnexion);
 
 	connectBtn.addEventListener('click', connect);
 
@@ -36,107 +24,260 @@ document.addEventListener('DOMContentLoaded', () => {
 	connectBtn.addEventListener('mouseenter', wantDisconnect);
 	connectBtn.addEventListener('mouseleave', printConnected);
 
-	function connect() {
-		if (!connected) {
-			formLogin.style.display = 'flex';
-			defMenu.style.display = 'none';
-			connected = true;
-			printConnected();
-		}
+	if(await isConnectedinSession()) // https://www.w3schools.com/js/js_async.asp → "Basic Syntax" and "Waiting for a file"
+	{
+		connected = true;
+		printConnected();
 	}
+	
+});
 
-	function disconnect() {
-		if (connected) {
-			connected = false;
-			notConnected();
-			connectBtn.removeEventListener('click', disconnect);
-		}
+let connectBtn, startBtn, defMenu, formLogin, inputUsrName, helpUsrName, inputPswd, liHelpPswd, inputSubmit;
+
+/*
+let regex10Char = /.{10,}/;
+let regexMin = /[]/;
+let regexMaj = /[A-Z]/;
+let regexNum = /[0-9]/;
+let regexSpeChar = /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/; // https://stackoverflow.com/a/66435604
+*/
+let regexUsrName = /^[-_a-zA-Z0-9]{3,15}$/;
+let listRegexPwd = [/^.{8,25}$/, /[A-Z]/, /[a-z]/, /[0-9]/, /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/u];
+//let regexPwd = /^[-A-Za-z0-9,?;.:/=+~ù%´µ£`^¨\[$*\]&|é@"#'(§^è!ç{à)°_}]{8,25}$/u;
+
+// colors : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
+let greenColor = "#99B681"; //2c9e31 or 99B681
+let redColor = "#eb243b";
+let pinkColor = "#FF8D7C";
+
+let connected = false;
+
+async function isConnectedinSession() {
+	let xhr = getXHR(); // function from common.js
+	return await new Promise(function(resolve, reject) {
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				let responseText = xhr.responseText;
+				try {
+					let response = JSON.parse(responseText);
+					resolve(response.exist);
+				} catch (error) {
+					if (DEBUG) {
+						console.error('Erreur lors du parsing JSON:', error);
+						console.error('Réponse reçue:', responseText);
+					}
+				}
+			}
+		};
+		xhr.open('GET', 'PHP/is_connected.php', true);
+		xhr.responseType = "text";
+		xhr.send();
+	});
+}
+
+function connect() {
+	if (!connected) {
+		formLogin.style.display = 'flex';
+		defMenu.style.display = 'none';
 	}
+}
 
-	function start() {
-		if (connected) {
+function disconnect() {
+	if (connected) {
+		connected = false;
+		notConnected();
+		destroySession();
+		connectBtn.removeEventListener('click', disconnect);
+	}
+}
+
+async function start() {
+	if (connected) {
+		if(await getAutoSave()) {
 			divMenu.style.display = 'none';
 			divGame.style.display = 'block';
-		} else {
-			notConnected();
+		} else notConnected();
+	}
+	else notConnected();
+}
+
+function notConnected() {
+	connectBtn.textContent = 'Se Connecter';
+	connectBtn.style.boxShadow = '0px 0px 0px 0.08vw '+ redColor;
+	connectBtn.style.backgroundColor = redColor;
+}
+
+function printConnected() {
+	if (connected) {
+		connectBtn.textContent = 'Vous êtes connecté';
+		connectBtn.style.boxShadow = '0px 0px 0px 0.08vw ' + greenColor;
+		connectBtn.style.backgroundColor = greenColor;
+	}
+}
+
+function wantDisconnect() {
+	if (connected) {
+		connectBtn.addEventListener('click', disconnect);
+		connectBtn.textContent = 'Se déconnecter ?';
+		connectBtn.style.boxShadow = '0px 0px 0px 0.08vw ' + pinkColor;
+		connectBtn.style.backgroundColor = pinkColor;
+	}
+}
+
+function checkValidPassword() {
+	var nbrErrors = 0;
+	var testInput = inputPswd.value.trim();
+
+	for (let i = 0; i < listRegexPwd.length; i++) {
+		if (listRegexPwd[i].test(testInput)) {
+			liHelpPswd[i].style.color = greenColor;
+		} 
+		else {
+			nbrErrors += 1;
+			liHelpPswd[i].style.color = redColor;
 		}
 	}
 
-	function notConnected() {
-		connectBtn.textContent = 'Se Connecter';
-		connectBtn.style.boxShadow = '0px 0px 0px 0.08vw #eb243b'; // code couleur : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
-		connectBtn.style.backgroundColor = '#eb243b';
+	if (nbrErrors === 0) {
+		inputPswd.style.color = greenColor;
+		inputPswd.style.borderColor = greenColor;
+		return true;
+	} 
+	else {
+		inputPswd.style.color = redColor;
+		inputPswd.style.borderColor = redColor;
+		return false;
 	}
+}
 
-	function printConnected() {
-		if (connected) {
-			connectBtn.textContent = 'Vous êtes connecté';
-			connectBtn.style.boxShadow = '0px 0px 0px 0.08vw #99B681';
-			connectBtn.style.backgroundColor = '#99B681';
-			//2c9e31
-			//99B681
-		}
+function checkValidUsrName() {
+	var testInput = inputUsrName.value.trim();
+
+	if (regexUsrName.test(testInput)) {
+		helpUsrName.style.color = greenColor;
+		inputUsrName.style.color = greenColor;
+		inputUsrName.style.borderColor = greenColor;
+		return true;
+	} 
+	else {
+		helpUsrName.style.color = redColor;
+		inputUsrName.style.color = redColor;
+		inputUsrName.style.borderColor = redColor;
+		return false;
 	}
+}
 
-	function wantDisconnect() {
-		if (connected) {
-			connectBtn.addEventListener('click', disconnect);
-			connectBtn.textContent = 'Se déconnecter ?';
-			connectBtn.style.boxShadow = '0px 0px 0px 0.08vw #FF8D7C';
-			connectBtn.style.backgroundColor = '#FF8D7C';
-		}
+function sendConnexion(event) {
+	event.preventDefault();
+	if(checkValidUsrName() && checkValidPassword())
+	{
+		tryConnexion();
 	}
+}
 
-	function checkValidPassword() {
-		var nbrErrors = 0;
-		text_input = inputPswd.value.trim();
+function editSendButton(text) {
+	inputSubmit.value = text;
+}
 
-		for (let i = 0; i < listRegexPwd.length; i++) {
-			if (listRegexPwd[i].test(text_input)) {
-				liHelpPswd[i].style.color = '#99B681';
-			} else {
-				nbrErrors += 1;
-				liHelpPswd[i].style.color = '#eb243b';
+function resetStyleElems(elems) {
+    for(let i=0 ; i < elems.length ; i++)
+    {
+        elems[i].style = " ";
+    }
+}
+
+function tryConnexion() {
+	let xhr = getXHR(); // function from common.js
+	var data = new FormData(formLogin);
+	data.append("inp_submit", "Envoyer"); //car FormData ne contient pas le submit
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			let responseText = xhr.responseText;
+			try {
+				let response = JSON.parse(responseText);
+				if (response.submit) {
+					if (response.valid) {
+						switch (response.connexion) {
+							case 1:
+								if (DEBUG) console.log(response);
+								editSendButton("Connexion réussie");
+                                inputSubmit.style.color = greenColor;
+                                inputSubmit.style.borderColor = greenColor;
+								connected = true;
+								printConnected();
+								formLogin.style.display = 'none';
+								defMenu.style.display = 'flex';
+								inputPswd.value = "";
+                                inputUsrName.value = "";
+                                resetStyleElems([inputPswd, inputUsrName, inputSubmit]);
+                                inputSubmit.style = "";
+								editSendButton("Envoyer");
+								break;
+							case 0:
+								if (DEBUG) console.log(response);
+								editSendButton("Informations incorrectes");
+                                inputSubmit.style.color = redColor;
+                                inputSubmit.style.borderColor = redColor;
+								connected = false;
+								break;
+							default: 
+								if (DEBUG) console.error('??? reponse.connexion ???');
+						}
+					}
+					else {
+						if (DEBUG) console.error('Données invalides');
+						editSendButton("Unvalid datas");
+					}
+				}
+				else {
+					if (DEBUG) console.log(response);
+					connected = false;
+				} 
+			} catch (error) {
+				if (DEBUG) {
+					console.error('Erreur lors du parsing JSON:', error);
+					console.error('Réponse reçue:', responseText);
+				}
 			}
 		}
+	};
+	xhr.open('POST', 'PHP/login.php', true);
+	xhr.responseType = "text";
+	xhr.send(data);
+}
 
-		if (nbrErrors == 0) {
-			inputPswd.style.color = '#99B681';
-			inputPswd.style.borderColor = '#99B681';
-			return true;
-		} else {
-			inputPswd.style.color = '#eb243b';
-			inputPswd.style.borderColor = '#eb243b';
-			return false;
-		}
-	}
-
-    function checkValidUsrName() {
-		text_input = inputUsrName.value.trim();
-
-        if (regexUsrName.test(text_input)) {
-            helpUsrName.style.color = '#99B681';
-            inputUsrName.style.color = '#99B681';
-            inputUsrName.style.borderColor = '#99B681';
-            return true;
-        } else {
-            helpUsrName.style.color = '#eb243b';
-            inputUsrName.style.color = '#eb243b';
-            inputUsrName.style.borderColor = '#eb243b';
-            return false;
-        }
-	}
-
-    function sendConnexion(event) {
-        event.preventDefault();
-        if(checkValidUsrName() && checkValidPassword())
-        {
-            formLogin.style.display = 'none';
-            defMenu.style.display = 'flex';
-            inputUsrName.value = '';
-            inputPswd.value = '';
-            checkValidUsrName();
-            checkValidPassword();
-        }
-    }
-});
+async function getAutoSave() {
+	let xhr = getXHR(); // function from common.js
+	return await new Promise(function(resolve, reject) {
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				let responseText = xhr.responseText;
+				try {
+					let response = JSON.parse(responseText);
+					if (response.exist) {
+						if (response.found) {
+							resolve(true);
+						}
+						else {
+							if (DEBUG) console.error('pas trouvé'); 
+							resolve(false);
+						}
+					}
+					else if (!response.exist) {
+						if (DEBUG) console.log(response);
+						resolve(false);
+					} 
+				} catch (error) {
+					if (DEBUG) {
+						console.error('Erreur lors du parsing JSON:', error);
+						console.error('Réponse reçue:', responseText);
+						resolve(false);
+					}
+				}
+			}
+		};
+		xhr.open('GET', 'PHP/get_auto_save.php', true);
+		xhr.responseType = "text";
+		xhr.send();
+	});
+}

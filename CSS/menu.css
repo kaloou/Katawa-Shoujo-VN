@@ -78,22 +78,3 @@
 	display: block;
 	justify-self: center;
 }
-
-.buttons button {
-	display: block;
-	width: 18vw;
-	height: 3vw;
-	margin: 2vw;
-	border: 0;
-	color: #fff2d4;
-	background-color: #948b7c;
-	border: 0.2vw solid #fff2d4;
-	box-shadow: 0px 0px 0px 0.08vw #948b7c;
-	font-size: 2vw;
-	justify-self: center;
-}
-
-.buttons button:hover {
-	text-decoration: underline;
-	text-decoration-color: #fff2d4;
-}
