@@ -52,7 +52,7 @@ function preloadImages() {
 // ==================== DEBUG TEST DE SESSION ===================
 function getSession() {
 	console.log('=== TEST DE SESSION ===');
-	fetch('PHP/get_session.php')
+	fetch('DEBUG/get_session.php')
 		.then((response) => response.json())
 		.then((data) => {
 			console.log('=== DONNÉES DE SESSION ===');

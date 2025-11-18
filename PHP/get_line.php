@@ -88,7 +88,7 @@ try {
             $response['music_name'] = $row['data'];
             break;
 
-        case 8:
+        case 8: //stop music (css style from db (fade))
             $response['fade'] = $row['data'];
             break;
     }

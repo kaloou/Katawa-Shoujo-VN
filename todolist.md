@@ -22,8 +22,9 @@ MENU POPUP AVEC ESC
 - -----------------
 - [ ] elid 2 -> cid 2 signifie avec tag 'n' signifie rester dans le centered mode j'usqu'a un nouveau cid 
 ou alors tag 'centered' a reglé dans la db et le mettre  tous en type 5 
-- [ ] optionnel mettre les type 3 en tag 'bg' en type 2 avec en tag 'noreset' pour ne pas enlever sprites actuelles
+- [ ] optionnel verifier si on meut mettre les type 3 en tag 'bg' en type 2 avec en tag 'noreset' pour ne pas enlever sprites actuelles
 - ou alors supprimer les lignes car selon moi il sont inutiles
+- [ ] regler ce genre de bug d'affichage dans la db -{w=1.5}{nw}
 --------------------
 - SAUVEGARDE CHARGER
 - -----------------
@@ -43,3 +44,5 @@ ou alors tag 'centered' a reglé dans la db et le mettre  tous en type 5
 - [ ] Optionnel ->creer animation fluide d'apparition quand on passe du menu au jeu et du jeu au menu ESC (animation powerpoint)
 - [ ] Implémenter la sauvegarde et chargement
 - [ ] optionnel ->Faire du responsive en temp réel au niveau de l'affichage 
+- [ ] Gérer le type 6 (html à interpreter)
+- [ ] Verifier si 

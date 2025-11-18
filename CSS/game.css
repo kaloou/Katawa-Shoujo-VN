@@ -36,6 +36,8 @@
 	display: flex;
 	align-items: flex-start;
 	mix-blend-mode: normal;
+    opacity:0;
+    transition:opacity 1s linear;
 }
 
 #text::after {
@@ -106,8 +108,7 @@
 	width: 22%;
 	height: 16%;
 	bottom: 9%;
-	display: flex;
-	align-items: flex-start;
+    align-items: flex-start;
 	justify-content: flex-start;
 	color: white;
 	font-size: 23px;
@@ -119,4 +120,27 @@
 	border-top: 3px solid #8b8275;
 	border-right: 3px solid #8b8275;
 	mix-blend-mode: normal;
+    opacity:0;
+    transition:opacity 1s linear;
+}
+
+#centered-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6vw;
+    background-image: url("../assets/extern/UI/bg-note.png");
+    background-size: cover;
+    background-position: center;
+    width: 30%;
+    display: none;
+}
+#centered-text span {
+    padding: 10%;
+    margin-left: 3%;
+    margin-right: 3%;
 }

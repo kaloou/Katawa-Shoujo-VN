@@ -519,3 +519,47 @@ document.addEventListener("keydown", (event) => {
 // later on add a button to toggle the fullscreen mode (will be in parameters menu)
 // like that also phones can use the fullscreen mode
 */
+
+
+//==== UI HELPERS (affichage texte / name / centered) ==================
+
+
+
+function showNameBox(characterName, characterColor = '#ffffff') {
+    nameElement.style.display = 'flex';
+    nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
+    nameElement.style.opacity = '1';
+}
+
+function hideNameBox() {
+    nameElement.style.display = 'none';
+    nameElement.innerHTML = '';
+    nameElement.style.opacity = '0';
+}
+
+function showTextBox(content) {
+    textElement.style.display = 'flex';
+    textElement.innerHTML = `<span>${content}</span>`;
+    textElement.style.opacity = '1';
+
+    triggerLogoEffect();
+}
+
+function hideTextBox() {
+    textElement.classList.remove('blink', 'pop');
+
+    textElement.style.display = 'none';
+    textElement.innerHTML = '';
+    textElement.style.opacity = '0';
+}
+
+function showCenteredText(content) {
+    centeredDiv.style.display = 'flex';
+    centeredDiv.innerHTML = `<span>${content}</span>`;
+    centeredDiv.style.opacity = '1';
+}
+function hideCenteredText() {
+    centeredDiv.style.display = 'none';
+    centeredDiv.innerHTML = '';
+    centeredDiv.style.opacity = '0';
+}
