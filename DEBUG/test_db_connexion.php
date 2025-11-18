@@ -1,5 +1,5 @@
 <?php
-include_once("connexion.php");
+include_once("../PHP/connexion.php");
 
 // Test connexion avec requête simple
 $requete = $pdo->query("SELECT NOW()");

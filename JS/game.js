@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	spriteStack = document.getElementById('sprite_stack');
 	hideBtn = document.getElementById('hide_button');
 	dialogContener = document.getElementById('dialog_container');
+    centeredDiv = document.getElementById('centered-text');
 
 	// EVENTS
 	document.addEventListener('keyup', pressKey);
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	divGame.addEventListener('click', getLine);
 });
 
-let divMenu, divGame, nameElement, textElement, divEscape, spriteStack, hideBtn, dialogContener;
+let divMenu, divGame, nameElement, textElement, divEscape, spriteStack, hideBtn, dialogContener, centeredDiv;
 //==========KEY PRESS FUNCTION==========
 function pressKey(event) {
 	event.preventDefault();
@@ -152,53 +153,24 @@ function update_dialogue(response) {
 
 //==== TYPE 1 FUNCTIONS ==================================
 function displayText(content, characterName = '', characterColor = '', character_code = '') {
-	//supp la div center si existe, si pas opti plus tard remplacer tout le css du textElement temporairement
-	const oldCenteredDiv = document.querySelector('.centered-text');
-	if (oldCenteredDiv) oldCenteredDiv.remove();
+    // erreur de db appelé type 5 function ou réglé db plus tard
+    if (character_code === 'centered') {
+        add_center_div(content);
+        return;
+    }
+    // on supprime un éventuel ancien texte centré
+    clearCenteredText();
 
-	if (characterName && characterColor && characterName !== '') {
-		textElement.style.display = 'flex';
-		nameElement.style.display = 'flex';
-		nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
-	} else if (character_code === 'centered') {
-		// game screen ref
-		const parent = textElement.parentNode;
+    // Cas personnage qui parle
+    if (characterName && characterColor && characterName !== '') {
+        showNameBox(characterName, characterColor);
+    } else {
+        // narrateur
+        hideNameBox();
+    }
 
-		nameElement.style.display = 'none';
-		nameElement.innerHTML = '';
-		textElement.style.display = 'none';
-		textElement.innerHTML = '';
-
-		const centeredDiv = document.createElement('div');
-		centeredDiv.classList.add('centered-text');
-		centeredDiv.innerHTML = `<span>${content}</span>`;
-
-		// css
-		Object.assign(centeredDiv.style, {
-			position: 'absolute',
-			top: '50%',
-			left: '50%',
-			transform: 'translate(-50%, -50%)',
-			textAlign: 'center',
-			color: 'white',
-			fontSize: '1.5rem'
-		});
-
-		// On ajoute la div dans game screen
-		parent.appendChild(centeredDiv);
-
-		return;
-	} else {
-		// narrateur
-		textElement.style.display = 'flex';
-		nameElement.style.display = 'none';
-		nameElement.innerHTML = `<span></span>`;
-	}
-	textElement.style.display = 'flex';
-	textElement.innerHTML = `<span>${content}</span>`;
-
-	// clignotement
-	triggerLogoEffect();
+    // affichage du texte
+    showTextBox(content);
 }
 
 //==== TYPE 2 FUNCTIONS ==================================
@@ -281,8 +253,8 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 }
 
 function handle_heartattck(image_name, image_tag, pos, z, width, height) {
-	textElement.style.display = 'none';
-	nameElement.style.display = 'none';
+    hideTextBox();
+    hideNameBox();
 
 	let heart = document.createElement('div');
 	heart.style.backgroundImage = `url("assets/internHD/${image_name}")`;
@@ -348,9 +320,11 @@ function remove_sprite(image_tag) {
 
 //==== TYPE 5 ==================================
 function add_center_div(content) {
-	//
-}
+    hideTextBox();
+    hideNameBox();
 
+    showCenteredText(content);
+}
 //==== TYPE 6 ==================================
 
 function htmlDialogueInterpreter(html_string) {
@@ -371,22 +345,23 @@ function stop_music(fadeout) {
 
 //==== UI FUNCTIONS ==================================
 function triggerLogoEffect() {
-	// reset opacité
-	textElement.classList.remove('blink', 'pop');
-	textElement.style.opacity = '1';
+    textElement.classList.remove('blink', 'pop');
+    textElement.style.opacity = '1';
 
-	// force reflow
-	void textElement.offsetWidth;
+    // 👉 si le name est visible, on le fade-in aussi
+    if (nameElement && nameElement.style.display !== 'none') {
+        nameElement.style.opacity = '1';
+    }
 
-	// mini pop une fois
-	textElement.classList.add('pop');
+    void textElement.offsetWidth;
 
-	// après le pop, lancer le clignotement
-	setTimeout(() => {
-		textElement.classList.remove('pop');
-		void textElement.offsetWidth; // reflow
-		textElement.classList.add('blink');
-	}, 300); // durée = durée de l'animation pop
+    textElement.classList.add('pop');
+
+    setTimeout(() => {
+        textElement.classList.remove('pop');
+        void textElement.offsetWidth;
+        textElement.classList.add('blink');
+    }, 300);
 }
 
 //==== UTILITY FUNCTIONS ==================================

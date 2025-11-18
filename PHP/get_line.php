@@ -3,6 +3,12 @@ session_start();
 include_once('connexion.php');
 header('Content-Type: text/plain; charset=utf-8');
 
+/*
+if ($_SESSION["game_state"]["get_line_loaded"] == false){
+    echo json_encode(['type' => 'not_loaded']);
+    exit;
+}
+$_SESSION["game_state"]["get_line_loaded"] = false;*/
 try {
     $seqid = $_SESSION["story"]["seqid"];
     $seqserial = $_SESSION["seqtext"]["seqserial"];
@@ -33,6 +39,7 @@ try {
         $_SESSION["story"]["seqid"]++;// later on update seqid with next parameter of story table
         $_SESSION["seqtext"]["seqserial"] = 1;
         echo json_encode(['type' => 'end']);
+        // here tester si question (qcm in the next seqid)
         exit;
     }
 
@@ -81,13 +88,13 @@ try {
             $response['music_name'] = $row['data'];
             break;
 
-        case 8:
+        case 8: //stop music (css style from db (fade))
             $response['fade'] = $row['data'];
             break;
     }
 
     echo json_encode($response);
-
+    //$_SESSION["game_state"]["get_line_loaded"] = true;
     exit;
 
 } catch (PDOException $e) {
