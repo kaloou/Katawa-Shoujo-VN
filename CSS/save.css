@@ -1,0 +1,12 @@
+#save {
+    display: flex;
+    position: fixed;
+
+    width: 40vw;
+    height: 30vw;
+    box-shadow: 0 0 30vw 5vw black;
+
+    z-index: 102;
+
+    flex-direction: column;
+}

@@ -6,13 +6,13 @@
 
     try 
     {
-        if(isset($_SESSION["username"]))
+        if(isset($_SESSION["user_id"]))
         {
             $response["exist"] = true;
-            $usrname = $_SESSION["username"];
-            $query = "SELECT auto_save FROM users WHERE users.username = :usrname";
+            $user_id = $_SESSION["user_id"];
+            $query = "SELECT auto_save FROM users WHERE users.id_user = :user_id";
             $stmt = $pdo->prepare($query);
-            $stmt->bindValue(':usrname', $usrname, PDO::PARAM_STR);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
             $stmt->execute();
 
             $info = $stmt->fetch(PDO::FETCH_ASSOC);
