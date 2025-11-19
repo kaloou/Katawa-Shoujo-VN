@@ -42,24 +42,24 @@ function getChildrenByTagName(elem, tag) {
 	return ret;
 }
 
-/**
- * Hides an element given either as parameter or through it's ID string
- * @param elem Element to hide
- * @return The hidden element
- */
+// /**
+//  * Hides an element given either as parameter or through it's ID string
+//  * @param elem Element to hide
+//  * @return The hidden element
+//  */
 
-function hide(elem) {
-	var el = $(elem);
+// function hide(elem) {
+// 	var el = $(elem);
 
-	if (!el.defdisplay) {
-		if (el.style.display != 'none' && el.style.display != 'block') {
-			el.defdisplay = el.style.display;
-		}
-	}
+// 	if (!el.defdisplay) {
+// 		if (el.style.display != 'none' && el.style.display != 'block') {
+// 			el.defdisplay = el.style.display;
+// 		}
+// 	}
 
-	el.style.display = 'none';
-	return el;
-}
+// 	el.style.display = 'none';
+// 	return el;
+// }
 
 /**
  * Shows an element given either as parameter or through it's ID string
@@ -562,4 +562,26 @@ function hideCenteredText() {
     centeredDiv.style.display = 'none';
     centeredDiv.innerHTML = '';
     centeredDiv.style.opacity = '0';
+}
+
+// ================= 
+
+function hide(elem) {
+	elem.style.display = 'none';
+}
+
+function showFlex(elem) {
+	elem.style.display = 'flex';
+}
+
+function showBlock(elem) {
+	elem.style.display = 'block';
+}
+
+function blur(elem) {
+    elem.style.filter = 'blur(5px)';
+}
+
+function deblur(elem) {
+	elem.style.filter = 'none';
 }

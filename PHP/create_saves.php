@@ -26,7 +26,7 @@ $DEBUG = false;
 
             if(!$info)
             {
-                $default_title = "Vide";
+                $default_title = "Nouvelle partie";
                 $default_save = "On vera après ce qu'on met dedans";
                 
                 $query = "INSERT INTO saves (user_id, title, init_date, content) VALUES (:user_id, :title, :init_date, :content)";
@@ -34,11 +34,11 @@ $DEBUG = false;
                 $stmt->bindValue(':user_id', $usr_id, PDO::PARAM_INT);
                 $stmt->bindValue(':title', $default_title, PDO::PARAM_STR);
                 $stmt->bindValue(':content', $default_save, PDO::PARAM_STR);
-
-                for($i=0 ; $i < 5 ; $i++)
+                $stmt->bindValue(':init_date', time(), PDO::PARAM_INT);
+                // ça ne sert à rien de bindValue la date
+                for($i=0 ; $i < 5 ; $i++)   
                 {
                     //if($DEBUG) echo "creer $i\n";
-                    $stmt->bindValue(':init_date', time(), PDO::PARAM_INT);
                     $stmt->execute();
                 }
             }

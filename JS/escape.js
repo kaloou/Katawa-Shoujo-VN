@@ -21,4 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
         divGame.style.display = "none";
         divEscape.style.display = "none";
     }
+
+    hide(divEscape);
 });
