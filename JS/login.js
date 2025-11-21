@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	inputSubmit.addEventListener('click', sendConnexion);
     formLogin.addEventListener('submit', sendConnexion);
 
-	connectBtn.addEventListener('click', connect);
+	connectBtn.addEventListener('click', openLoginForm);
 
 	startBtn.addEventListener('click', start);
 
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	connectBtn.addEventListener('mouseenter', wantDisconnect);
 	connectBtn.addEventListener('mouseleave', printConnected);
 
-	if(await isConnectedinSession()) // https://www.w3schools.com/js/js_async.asp → "Basic Syntax" and "Waiting for a file"
+	if(await isConnectedInSession()) // https://www.w3schools.com/js/js_async.asp → "Basic Syntax" and "Waiting for a file"
 	{
 		connected = true;
 		printConnected();
@@ -52,9 +52,11 @@ let pinkColor = "#FF8D7C";
 
 let connected = false;
 
-async function isConnectedinSession() {
+let isTryingToConnect = false;
+
+async function isConnectedInSession() {
 	let xhr = getXHR(); // function from common.js
-	return await new Promise(function(resolve, reject) {
+	return await new Promise(function(resolve) {
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				let responseText = xhr.responseText;
@@ -75,7 +77,7 @@ async function isConnectedinSession() {
 	});
 }
 
-function connect() {
+function openLoginForm() {
 	if (!connected) {
 		formLogin.style.display = 'flex';
 		defMenu.style.display = 'none';
@@ -85,7 +87,7 @@ function connect() {
 function disconnect() {
 	if (connected) {
 		connected = false;
-		notConnected();
+		printNotConnected();
 		destroySession();
 		connectBtn.removeEventListener('click', disconnect);
 	}
@@ -96,21 +98,24 @@ async function start() {
 		if(await getAutoSave()) {
 			divMenu.style.display = 'none';
 			divGame.style.display = 'block';
-		} else notConnected();
+		} else printNotConnected();
 	}
-	else notConnected();
+	else printNotConnected();
 }
 
-function notConnected() {
-	connectBtn.textContent = 'Se Connecter';
-	connectBtn.style.boxShadow = '0px 0px 0px 0.08vw '+ redColor;
-	connectBtn.style.backgroundColor = redColor;
+function printNotConnected() {
+	if(!connected)
+	{
+		connectBtn.textContent = 'Se Connecter';
+		connectBtn.style.boxShadow = '0 0 0 0.08vw '+ redColor;
+		connectBtn.style.backgroundColor = redColor;
+	}
 }
 
 function printConnected() {
 	if (connected) {
 		connectBtn.textContent = 'Vous êtes connecté';
-		connectBtn.style.boxShadow = '0px 0px 0px 0.08vw ' + greenColor;
+		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + greenColor;
 		connectBtn.style.backgroundColor = greenColor;
 	}
 }
@@ -119,7 +124,7 @@ function wantDisconnect() {
 	if (connected) {
 		connectBtn.addEventListener('click', disconnect);
 		connectBtn.textContent = 'Se déconnecter ?';
-		connectBtn.style.boxShadow = '0px 0px 0px 0.08vw ' + pinkColor;
+		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + pinkColor;
 		connectBtn.style.backgroundColor = pinkColor;
 	}
 }
@@ -167,11 +172,13 @@ function checkValidUsrName() {
 	}
 }
 
-function sendConnexion(event) {
+async function sendConnexion(event) {
 	event.preventDefault();
-	if(checkValidUsrName() && checkValidPassword())
+	if(!connected && !isTryingToConnect && checkValidUsrName() && checkValidPassword())
 	{
-		tryConnexion();
+        isTryingToConnect = true; // to be sure the user is'nt spamming connexion resquests
+		await tryConnexion();
+        isTryingToConnect = false;
 	}
 }
 
@@ -186,64 +193,67 @@ function resetStyleElems(elems) {
     }
 }
 
-function tryConnexion() {
+async function tryConnexion() {
 	let xhr = getXHR(); // function from common.js
-	var data = new FormData(formLogin);
-	data.append("inp_submit", "Envoyer"); //car FormData ne contient pas le submit
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			let responseText = xhr.responseText;
-			try {
-				let response = JSON.parse(responseText);
-				if (response.submit) {
-					if (response.valid) {
-						switch (response.connexion) {
-							case 1:
-								if (DEBUG) console.log(response);
-								editSendButton("Connexion réussie");
-                                inputSubmit.style.color = greenColor;
-                                inputSubmit.style.borderColor = greenColor;
-								connected = true;
-								printConnected();
-								formLogin.style.display = 'none';
-								defMenu.style.display = 'flex';
-								inputPswd.value = "";
-                                inputUsrName.value = "";
-                                resetStyleElems([inputPswd, inputUsrName, inputSubmit]);
-                                inputSubmit.style = "";
-								editSendButton("Envoyer");
-								break;
-							case 0:
-								if (DEBUG) console.log(response);
-								editSendButton("Informations incorrectes");
-                                inputSubmit.style.color = redColor;
-                                inputSubmit.style.borderColor = redColor;
-								connected = false;
-								break;
-							default: 
-								if (DEBUG) console.error('??? reponse.connexion ???');
+	return await new Promise(function(resolve) {
+		var data = new FormData(formLogin);
+		data.append("inp_submit", "Envoyer"); //car FormData ne contient pas le submit
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				let responseText = xhr.responseText;
+				try {
+					let response = JSON.parse(responseText);
+					if (response.submit) {
+						if (response.valid) {
+							switch (response.connexion) {
+								case 1:
+									if (DEBUG) console.log(response);
+									editSendButton("Connexion réussie");
+									inputSubmit.style.color = greenColor;
+									inputSubmit.style.borderColor = greenColor;
+									connected = true;
+									printConnected();
+									formLogin.style.display = 'none';
+									defMenu.style.display = 'flex';
+									inputPswd.value = "";
+									inputUsrName.value = "";
+									resetStyleElems([inputPswd, inputUsrName, inputSubmit]);
+									inputSubmit.style = "";
+									editSendButton("Envoyer");
+									break;
+								case 0:
+									if (DEBUG) console.log(response);
+									editSendButton("Informations incorrectes");
+									inputSubmit.style.color = redColor;
+									inputSubmit.style.borderColor = redColor;
+									connected = false;
+									break;
+								default: 
+									if (DEBUG) console.error('??? reponse.connexion ???');
+							}
+						}
+						else {
+							if (DEBUG) console.error('Données invalides');
+							editSendButton("Unvalid datas");
 						}
 					}
 					else {
-						if (DEBUG) console.error('Données invalides');
-						editSendButton("Unvalid datas");
+						if (DEBUG) console.log(response);
+						connected = false;
+					}
+					resolve(response.submit);
+				} catch (error) {
+					if (DEBUG) {
+						console.error('Erreur lors du parsing JSON:', error);
+						console.error('Réponse reçue:', responseText);
 					}
 				}
-				else {
-					if (DEBUG) console.log(response);
-					connected = false;
-				} 
-			} catch (error) {
-				if (DEBUG) {
-					console.error('Erreur lors du parsing JSON:', error);
-					console.error('Réponse reçue:', responseText);
-				}
 			}
-		}
-	};
-	xhr.open('POST', 'PHP/login.php', true);
-	xhr.responseType = "text";
-	xhr.send(data);
+		};
+		xhr.open('POST', 'PHP/login.php', true);
+		xhr.responseType = "text";
+		xhr.send(data);
+	});
 }
 
 async function getAutoSave() {

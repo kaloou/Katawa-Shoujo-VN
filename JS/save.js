@@ -19,25 +19,30 @@ let saveDiv, saveMenuBtn, loadMenuBtn, autoSaveBtn, listResetBtn, listSaveBtn, s
 function clickOnSave(n) {
     var textTitle;
     saveDivMode = n;
-    switch(n)
-    {
-        case 0: 
-            textTitle ="";
-            break;
-        case 1:
-            textTitle = "Sauvegarder";
-            addListenerForSave();
-            break;
-        case 2:
-            textTitle = "Charger";
-            addListenerForLoad();
-            break;
-        default:
-            textTitle = "[ERROR] Reload the page";
-            break;
+    if (connected) {
+        switch(n)
+        {
+            case 0: 
+                textTitle ="";
+                break;
+            case 1:
+                textTitle = "Sauvegarder";
+                addListenerForSave();
+                break;
+            case 2:
+                textTitle = "Charger";
+                addListenerForLoad();
+                break;
+            default:
+                textTitle = "[ERROR] Reload the page";
+                break;
+        }
+        extractSaves();
+        closeOrOpenMenu(textTitle);
     }
-    extractSaves();
-    closeOrOpenMenu(textTitle);
+    else {
+        printNotConnected();
+    }
 }
 
 

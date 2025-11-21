@@ -16,7 +16,7 @@
   background-size: cover;
 }
 
-#continue_button {
+#quit_esc_button {
   display: block;
   margin: 3vw 5vw;
   position: absolute;
@@ -30,6 +30,6 @@
   background-size: cover;
 }
 
-#continue_button:hover {
+#quit_esc_button:hover {
   cursor: pointer;
 }
