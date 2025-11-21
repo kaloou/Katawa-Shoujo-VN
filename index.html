@@ -14,14 +14,14 @@
 		<link rel="stylesheet" href="CSS/login.css" />
 		<link rel="stylesheet" href="CSS/save.css" />
 		<!-- JS-->
-        <script defer src="JS/common.js"></script>
+		<script defer src="JS/common.js"></script>
 		<script defer src="JS/init.js"></script>
-        <script defer src="JS/menu.js"></script>
+		<script defer src="JS/menu.js"></script>
 		<script defer src="JS/game.js"></script>
 		<script defer src="JS/login.js"></script>
 		<script defer src="JS/save.js"></script>
 		<script defer src="JS/escape.js"></script>
-        <script defer src="DEBUG/debug.js"></script>
+		<script defer src="DEBUG/debug.js"></script>
 	</head>
 	<body>
 		<!-- Menu Principal-->
@@ -50,24 +50,26 @@
 				</div>
 
 				<form method="post" action="" name="login" id="login" autocomplete="off">
-					<input type="text" name="inp_pseudo" id="inp_pseudo" placeholder="Pseudo" required >
+					<input type="text" name="inp_pseudo" id="inp_pseudo" placeholder="Pseudo" required />
 					<p>3 à 15 Caractères normaux</p>
-					<input type="password" name="inp_pswd" id="inp_pswd" placeholder="Mot de Passe" required>
+					<input type="password" name="inp_pswd" id="inp_pswd" placeholder="Mot de Passe" required />
 					<ul>
 						<li>8 à 25 Caractères</li>
 						<li>Majuscule</li>
 						<li>Minuscule</li>
 						<li>Chiffre</li>
-						<li title="- . _ ! &quot ` ' # % & , : ; &lt &gt = @ { } ~ \ $ ( ) * + / ? [ ] ^ |">Caractère Spécial</li>
+						<li title="- . _ ! &quot ` ' # % & , : ; &lt &gt = @ { } ~ \ $ ( ) * + / ? [ ] ^ |">
+							Caractère Spécial
+						</li>
 					</ul>
-					<input type="submit" name="inp_submit" id="inp_submit" value="Envoyer" placeholder="Se Connecter">
+					<input type="submit" name="inp_submit" id="inp_submit" value="Envoyer" placeholder="Se Connecter" />
 				</form>
 			</div>
 		</div>
 
 		<div id="escape">
 			<!--Il faut mettre le style="display: none;" pour que le ESCAPE marche toujours-->
-			<img src="assets/extern/UI/bt-del.png" id="quit_esc_button" title="Fermer"/>
+			<img src="assets/extern/UI/bt-del.png" id="quit_esc_button" title="Fermer" />
 			<div class="buttons">
 				<!--<button id="continue_button" class="unselectable">Continuer</button>-->
 				<button id="hide_button" class="unselectable" title="Cacher le dialogue en jeu">Cacher le dialogue</button>
@@ -78,9 +80,8 @@
 		</div>
 
 		<div id="save_div">
-			<img src="assets/extern/UI/bt-del.png" id="close_save_button" title="Fermer"/>
+			<img src="assets/extern/UI/bt-del.png" id="close_save_button" title="Fermer" />
 			<div class="buttons">
-
 				<button id="automatic_save_button" class="unselectable">Automatique</button>
 				<button class="reset_save unselectable" title="Réinitialiser la partie">↺</button>
 				<div class="separate_saves">
@@ -123,17 +124,26 @@
 		<!-- Ecran de Jeu -->
 		<div id="game_screen">
 			<div id="sprite_stack"></div>
-            <div id="centered-text">
-                <span>"Salut Hicchan. Nous avons déballé tes affaires et fait ton lit. Ils nous ont dit que si celles-ci ne vont pas, alors tu devras aller à l'accueil demain. Si tu as le moindre problème, tu peux toujours nous appeler. Bisous, Maman et Papa."</span>
-            </div>
-            <div id="text_overlay"></div>
+			<div id="centered-text">
+				<span
+					>"Salut Hicchan. Nous avons déballé tes affaires et fait ton lit. Ils nous ont dit que si celles-ci ne
+					vont pas, alors tu devras aller à l'accueil demain. Si tu as le moindre problème, tu peux toujours nous
+					appeler. Bisous, Maman et Papa."</span
+				>
+			</div>
+			<div id="text_overlay">
+				Pendant tout ce temps, j'ai probablement pu compter sur les doigts d'une main le nombre de fois que j'ai
+				quitté cette chambre d'hôpital sans surveillance
+				<br />
+				<br />
+				<br />
+				Quatre mois est un délai assez long quand on reste seul avec ses pensées. Donc, j'ai eu beaucoup de temps
+				pour m'habituer à ma situation.
+			</div>
 			<div id="dialog_container">
-
 				<div id="name"></div>
 				<!-- texte le plus long de la db-->
-				<div id="text">
-
-				</div>
+				<div id="text"></div>
 			</div>
 		</div>
 

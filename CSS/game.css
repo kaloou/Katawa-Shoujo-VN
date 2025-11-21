@@ -1,146 +1,166 @@
 #game_screen {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('../assets/internHD/bg_op_snowywoods.png');
-  background-size: cover;
-  background-position: center;
+	display: none;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-image: url('../assets/internHD/bg_op_snowywoods.png');
+	background-size: cover;
+	background-position: center;
 }
 
 #dialog_container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.7;
-  isolation: isolate;
-  z-index: 999;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.7;
+	isolation: isolate;
+	z-index: 999;
 }
 #text {
-  position: fixed;
-  bottom: 3%;
-  left: 2%;
-  width: 90%;
-  height: 16%;
-  background-color: black;
-  border: 3px solid #8b8275;
-  color: white;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  padding: 2% 5%;
-  z-index: 1001;
-  display: flex;
-  align-items: flex-start;
-  mix-blend-mode: normal;
-  opacity:0;
-  transition:opacity 1s linear;
+	position: fixed;
+	bottom: 3%;
+	left: 2%;
+	width: 90%;
+	height: 16%;
+	background-color: black;
+	border: 3px solid #8b8275;
+	color: white;
+	font-size: 1.2rem;
+	line-height: 1.5;
+	padding: 2% 5%;
+	z-index: 1001;
+	display: flex;
+	align-items: flex-start;
+	mix-blend-mode: normal;
+	opacity: 0;
+	transition: opacity 1s linear;
 }
 
 #text::after {
-  content: '';
-  position: absolute;
-  right: 10px;
-  top: 85%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  background-image: url('../assets/extern/UI/ctc.png');
-  background-size: contain;
-  background-repeat: no-repeat;
+	content: '';
+	position: absolute;
+	right: 10px;
+	top: 85%;
+	transform: translateY(-50%);
+	width: 24px;
+	height: 24px;
+	background-image: url('../assets/extern/UI/ctc.png');
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 
 #text.blink::after {
-  animation: blink 1.5s infinite;
+	animation: blink 1.5s infinite;
 }
 
 #text.pop::after {
-  animation: pop 0.15s forwards;
+	animation: pop 0.15s forwards;
 }
 
 @keyframes blink {
-  0%,
-  100% {
-  opacity: 1;
-  }
-  50% {
-  opacity: 0;
-  }
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
 }
 
 @keyframes pop {
-  0% {
-  transform: translateY(-50%) scale(1);
-  }
-  50% {
-  transform: translateY(-50%) scale(1.2);
-  }
-  100% {
-  transform: translateY(-50%) scale(1);
-  }
+	0% {
+		transform: translateY(-50%) scale(1);
+	}
+	50% {
+		transform: translateY(-50%) scale(1.2);
+	}
+	100% {
+		transform: translateY(-50%) scale(1);
+	}
 }
 
 #sprite_stack {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 100;
+	position: relative;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+	z-index: 100;
 }
 
 .sprite {
-  position: absolute;
-  bottom: 0;
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  image-rendering: auto;
-  user-select: none;
+	position: absolute;
+	bottom: 0;
+	display: block;
+	max-width: 100%;
+	max-height: 100%;
+	image-rendering: auto;
+	user-select: none;
 }
 
 #name {
-  position: fixed;
-  width: 22%;
-  height: 16%;
-  bottom: 9%;
-  align-items: flex-start;
-  justify-content: flex-start;
-  color: white;
-  font-size: 23px;
-  z-index: 1000;
-  padding-left: 1%;
-  padding-top: 1%;
-  background-color: black;
-  border-bottom: 3px solid #8b8275;
-  border-top: 3px solid #8b8275;
-  border-right: 3px solid #8b8275;
-  mix-blend-mode: normal;
-  opacity:0;
-  transition:opacity 1s linear;
+	position: fixed;
+	width: 22%;
+	height: 16%;
+	bottom: 9%;
+	align-items: flex-start;
+	justify-content: flex-start;
+	color: white;
+	font-size: 23px;
+	z-index: 1000;
+	padding-left: 1%;
+	padding-top: 1%;
+	background-color: black;
+	border-bottom: 3px solid #8b8275;
+	border-top: 3px solid #8b8275;
+	border-right: 3px solid #8b8275;
+	mix-blend-mode: normal;
+	opacity: 0;
+	transition: opacity 1s linear;
 }
 
 #centered-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.6vw;
-  background-image: url("../assets/extern/UI/bg-note.png");
-  background-size: cover;
-  background-position: center;
-  width: 30%;
-  display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.6vw;
+	background-image: url('../assets/extern/UI/bg-note.png');
+	background-size: cover;
+	background-position: center;
+	width: 30%;
+	display: none;
 }
 #centered-text span {
-  padding: 10%;
-  margin-left: 3%;
-  margin-right: 3%;
+	padding: 10%;
+	margin-left: 3%;
+	margin-right: 3%;
+}
+
+#text_overlay {
+	position: fixed;
+	bottom: 2%;
+	width: 100%;
+	height: 96%;
+	background-color: black;
+	border-top: 3px solid #8b8275;
+	border-bottom: 3px solid #8b8275;
+	color: white;
+	font-size: 1.2rem;
+	line-height: 1.5;
+	padding: 2% 5%;
+	z-index: 1001;
+	display: flex;
+	align-items: flex-start;
+	mix-blend-mode: normal;
+	opacity: 0.7;
+	transition: opacity 1s linear;
 }
