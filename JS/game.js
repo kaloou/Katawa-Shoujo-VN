@@ -159,7 +159,7 @@ function displayText(content, characterName = '', characterColor = '', character
         return;
     }
     // on supprime un éventuel ancien texte centré
-    clearCenteredText();
+    hideCenteredText();
 
     // Cas personnage qui parle
     if (characterName && characterColor && characterName !== '') {
