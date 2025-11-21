@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	hideBtn = document.getElementById('hide_button');
 	dialogContener = document.getElementById('dialog_container');
     centeredDiv = document.getElementById('centered-text');
+    OverlayDiv = document.getElementById("text_overlay");
 
 	// EVENTS
 	document.addEventListener('keyup', pressKey);
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	divGame.addEventListener('click', getLine);
 });
 
-let divMenu, divGame, nameElement, textElement, divEscape, spriteStack, hideBtn, dialogContener, centeredDiv;
+let divMenu, divGame, nameElement, textElement, divEscape, spriteStack, hideBtn, dialogContener, centeredDiv, OverlayDiv;
 //==========KEY PRESS FUNCTION==========
 function pressKey(event) {
 	event.preventDefault();
@@ -153,12 +154,15 @@ function update_dialogue(response) {
 
 //==== TYPE 1 FUNCTIONS ==================================
 function displayText(content, characterName = '', characterColor = '', character_code = '') {
-    // erreur de db appelé type 5 function ou réglé db plus tard
-    if (character_code === 'centered') {
-        add_center_div(content);
+    // cas spécial sequence 1 overlay noir
+    if (character_code === 'overlay')
+    {
+        hideTextBox();
+		showOverlayText(content);
         return;
     }
-    // on supprime un éventuel ancien texte centré
+    // on supprime un éventuel ancien texte centré type 5 ou overlay text
+    hideOverlayText();
     hideCenteredText();
 
     // Cas personnage qui parle
@@ -182,6 +186,10 @@ function change_bg(img_name, reset) {
 			divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 			divGame.style.opacity = 1;
 			reset_sprite_stack();
+			hideTextBox();
+			hideOverlayText();
+			hideNameBox();
+			hideCenteredText();
 		}, 200);
 	} // j'hésite de carrement rien faire car quasiment sur que les tag 'bg' sont inutiles...bref
 	else {
@@ -343,25 +351,6 @@ function stop_music(fadeout) {
 	//
 }
 
-//==== UI FUNCTIONS ==================================
-function triggerLogoEffect() {
-    textElement.classList.remove('blink', 'pop');
-    textElement.style.opacity = '1';
 
-    // 👉 si le name est visible, on le fade-in aussi
-    if (nameElement && nameElement.style.display !== 'none') {
-        nameElement.style.opacity = '1';
-    }
-
-    void textElement.offsetWidth;
-
-    textElement.classList.add('pop');
-
-    setTimeout(() => {
-        textElement.classList.remove('pop');
-        void textElement.offsetWidth;
-        textElement.classList.add('blink');
-    }, 300);
-}
 
 //==== UTILITY FUNCTIONS ==================================

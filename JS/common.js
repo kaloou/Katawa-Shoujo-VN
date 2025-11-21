@@ -523,7 +523,9 @@ document.addEventListener("keydown", (event) => {
 
 //==== UI HELPERS (affichage texte / name / centered) ==================
 
-
+// text box -> type 1 normal
+// centeredText -> type 5 (note papier)
+// overlaytext -> overlay debut de jeu
 
 function showNameBox(characterName, characterColor = '#ffffff') {
     nameElement.style.display = 'flex';
@@ -542,12 +544,11 @@ function showTextBox(content) {
     textElement.innerHTML = `<span>${content}</span>`;
     textElement.style.opacity = '1';
 
-    triggerLogoEffect();
+    triggerLogoEffect(textElement);
 }
 
-function hideTextBox() {
+function hideTextBox() { //texte normal type 1
     textElement.classList.remove('blink', 'pop');
-
     textElement.style.display = 'none';
     textElement.innerHTML = '';
     textElement.style.opacity = '0';
@@ -562,6 +563,40 @@ function hideCenteredText() {
     centeredDiv.style.display = 'none';
     centeredDiv.innerHTML = '';
     centeredDiv.style.opacity = '0';
+}
+
+let cpt = 0;
+function showOverlayText(content) {
+    cpt++;
+    if (!(cpt <= 7))
+    {
+        OverlayDiv.innerHTML = '';
+        cpt = 0;
+    }
+    OverlayDiv.style.display = 'flex';
+    OverlayDiv.innerHTML += `<br><span>${content}</span>`;
+    OverlayDiv.style.opacity = '0.7';
+    triggerLogoEffect(OverlayDiv, 'pop2');
+}
+function hideOverlayText() {
+    OverlayDiv.classList.remove('blink', 'pop2');
+    OverlayDiv.style.display = 'none';
+    OverlayDiv.innerHTML = '';
+    OverlayDiv.style.opacity = '0';
+}
+
+//======================================
+
+function triggerLogoEffect(element, animationClass = 'pop') {
+    element.classList.remove('blink', 'pop', 'pop2');
+
+    element.classList.add(animationClass, "blink");
+
+    setTimeout(() => {
+        element.classList.remove(animationClass);
+        void element.offsetWidth;
+        element.classList.add('blink');
+    }, 300);
 }
 
 // ================= 
