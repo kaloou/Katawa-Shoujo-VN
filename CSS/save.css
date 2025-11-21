@@ -1,12 +1,94 @@
-#save {
-    display: flex;
-    position: fixed;
+#save_div {
+  display: none;
+  position: fixed;
 
-    width: 40vw;
-    height: 30vw;
-    box-shadow: 0 0 30vw 5vw black;
+  width: 35vw;
+  height: 45vw;
+  box-shadow: 0 0 30vw 5vw black;
 
-    z-index: 102;
+  z-index: 102;
 
-    flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url(../assets/extern/UI/main/background.png);
+  background-position-y: center;
+  background-position-x: center;
+  background-size: cover;
+}
+
+#close_save_button {
+  display: block;
+  margin: 1vw 1vw;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2vw;
+  height: 2vw;
+  background-image: url(../assets/extern/UI/bt-del.png);
+  background-position-y: center;
+  background-position-x: center;
+  background-size: cover;
+}
+
+#close_save_button:hover {
+  cursor: pointer;
+}
+
+#save_div .buttons {
+  display: flex;
+  flex-direction: row;
+  width: 31.4vw;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#save_div .buttons h1 {
+  color: var(--ui-red);
+  font-size: 3vw;
+  margin-bottom: 1vw;
+}
+
+#save_div .buttons button {
+  width: 25vw;
+	margin: 1vw 0.7vw 0.1vw 1vw;
+}
+
+#save_div .buttons .reset_save {
+  width: 3vw;
+	margin-left: 0.7vw;
+  margin-right: 1vw;
+	color: #fff2d4;
+	background-color: var(--ui-red);
+	border: 0.2vw solid #fff2d4;
+	box-shadow: 0px 0px 0px 0.08vw var(--ui-red);
+}
+
+.buttons .reset_save:hover {
+	text-decoration: none;
+	background-color: var(--ui-pink) !important;
+	box-shadow: 0px 0px 0px 0.08vw var(--ui-pink) !important;
+}
+
+#save_div .buttons .separate_saves {
+  width: 100%; 
+  height: 1vw;
+	margin: 0.1vw 0 1vw 0;
+}
+
+#save_div .buttons .separate_saves p {
+	display: block;
+	width: 25vw;
+	height: 1vw;
+  font-size: 1vw;
+	margin: 0.1vw 0.7vw 1vw 1vw;
+  text-align: center;
+  
+}
+
+#save_div .buttons .separate_saves div {
+	display: block;
+	width: 3vw;
+	height: 1vw;
+	margin: 0.1vw 1vw 1vw 0.7vw;
 }

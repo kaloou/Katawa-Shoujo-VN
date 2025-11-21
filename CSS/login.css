@@ -17,28 +17,28 @@
   padding: 0.5vw;
 
   border: 0;
-  color: #fff2d4;
-  background-color: #948b7c;
-  border: 0.2vw solid #fff2d4;
-  box-shadow: 0px 0px 0px 0.08vw #948b7c;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border: 0.2vw solid var(--primary-color);
+  box-shadow: 0px 0px 0px 0.08vw var(--secondary-color);
   
   text-align: center;
   font-size: 1.5vw;
 }
 
 #login input::placeholder{
-  color: #fff2d4;
+  color: var(--primary-color);
   text-align: center;
-  border-color: #fff2d4;
+  border-color: var(--primary-color);
 }
 
 #login input:focus, #login input:hover{
   outline: none;
-  border-color: #eb243b;
+  border-color: var(--ui-red);
 }
 
 #login input:focus::placeholder{
-  color: #eb243b;
+  color: var(--ui-red);
 }
 
 #login #inp_submit{
@@ -47,8 +47,8 @@
 
 #login #inp_submit:hover, #login #inp_submit:focus{
   text-decoration: underline;
-  text-decoration-color: #fff2d4;
-  border-color: #fff2d4;
+  text-decoration-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 #login ul{
@@ -63,7 +63,7 @@
   display: block;
   align-self: center;
 
-  color: #eb243b;
+  color: var(--ui-red);
   font-size: 1vw;
 
   margin: 0 1vw 1.2vw 1vw;
