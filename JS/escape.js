@@ -1,28 +1,21 @@
-document.addEventListener("DOMContentLoaded", () => {
-    divMenu = $("menu_screen");
-    divGame = $("game_screen");
-    divEscape = $("escape");
-    quitEscBtn = $("quit_esc_button");
-    saveBtn = $("save_button");
-    loadBtn = $("load_button");
-    returnBtn = $("return_button");
+import {el} from './loaded.js';
+import {hide} from './common.js';
 
-    quitEscBtn.addEventListener("click", () => {
-        divMenu.style.filter = "none";
-        divGame.style.filter = "none";
-        divEscape.style.display = "none"; 
-    });
-    returnBtn.addEventListener("click", GameToMenu);
-
-
-    hide(divEscape);
+// EVENTS
+el.quitEscButton.addEventListener('click', () => {
+	el.menuScreen.style.filter = 'none';
+	el.gameScreen.style.filter = 'none';
+	el.escape.style.display = 'none';
 });
-let returnBtn, quitEscBtn, saveBtn, loadBtn;
+
+el.returnButton.addEventListener('click', GameToMenu);
+
+hide(el.escape);
 
 function GameToMenu() {
-    divMenu.style.filter = "none";
-    divGame.style.filter = "none";
-    divMenu.style.display = "flex";
-    divGame.style.display = "none";
-    divEscape.style.display = "none";
+	el.menuScreen.style.filter = 'none';
+	el.gameScreen.style.filter = 'none';
+	el.menuScreen.style.display = 'flex';
+	el.gameScreen.style.display = 'none';
+	el.escape.style.display = 'none';
 }

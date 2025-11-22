@@ -1,19 +1,13 @@
-document.addEventListener('DOMContentLoaded', () => {
-	window.onload = function () {
-		const creditsBtn = document.getElementById('credits_button');
-		const settingsBtn = document.getElementById('settings_button');
-		const divEscape = document.getElementById('escape');
-		const divMenu = document.getElementById('menu_screen');
-		const divGame = document.getElementById('game_screen');
+import {el} from './loaded.js';
+import {blur, showFlex } from './common.js'
 
-		creditsBtn.addEventListener('click', () => {
-			window.location.href = 'HTML/credits.html';
-		});
+// EVENTS
+el.creditsButton.addEventListener('click', () => {
+	window.location.href = 'HTML/credits.html';
+});
 
-		settingsBtn.addEventListener('click', () => {
-			divEscape.style.display = 'flex';
-			divMenu.style.filter = 'blur(5px)';
-			divGame.style.filter = 'blur(5px)';
-		});
-	};
+el.settingsButton.addEventListener('click', () => {
+    showFlex(el.escape);
+    blur(el.menuScreen);
+    blur(el.gameScreen);
 });
