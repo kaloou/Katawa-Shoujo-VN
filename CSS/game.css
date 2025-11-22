@@ -38,6 +38,7 @@
 	mix-blend-mode: normal;
 	opacity: 0;
 	transition: opacity 1s linear;
+    user-select: none;
 }
 
 #text::after {
@@ -134,6 +135,7 @@
 	mix-blend-mode: normal;
 	opacity: 0;
 	transition: opacity 1s linear;
+    user-select: none;
 }
 
 #centered-text {
@@ -150,6 +152,7 @@
 	background-position: center;
 	width: 30%;
 	display: none;
+    user-select: none;
 }
 #centered-text span {
 	padding: 10%;
@@ -176,6 +179,7 @@
 	opacity: 0.7;
 	transition: opacity 1s linear;
     flex-direction: column;
+    user-select: none;
 }
 
 #text_overlay::after {
