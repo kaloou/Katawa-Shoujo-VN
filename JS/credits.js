@@ -1,4 +1,4 @@
-import {el} from './loaded.js';
+import {el} from './elements.js';
 
 // EVENTS
 document.addEventListener('click', playPause);

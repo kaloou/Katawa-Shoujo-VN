@@ -1,6 +1,6 @@
-import {el} from './loaded.js';
-import {preloadImages, blur, deblur, showFlex, hide, showBlock} from './common.js'
-import {DEBUG} from './init.js'
+import {el} from './elements.js';
+import {preloadImages, blur, deblur, showFlex, hide, showBlock} from './common.js';
+import {DEBUG} from './init.js';
 // EVENTS
 document.addEventListener('keyup', pressKey);
 el.gameScreen.addEventListener('click', getLine);
@@ -307,32 +307,31 @@ function fullScreen() {
 
 function openEscape() {
 	if (el.escape.style.display === 'none') {
-        showFlex(el.escape)
-        blur(el.menuScreen);
-        blur(el.gameScreen);
+		showFlex(el.escape);
+		blur(el.menuScreen);
+		blur(el.gameScreen);
 	} else if (el.escape.style.display === 'flex') {
-        hide(el.escape)
-        deblur(el.menuScreen);
-        deblur(el.gameScreen);
+		hide(el.escape);
+		deblur(el.menuScreen);
+		deblur(el.gameScreen);
 	}
 }
 
 function hideButton() {
-    hide(el.escape);
-    deblur(el.menuScreen);
-    deblur(el.gameScreen);
-    hide(el.dialogContainer);
+	hide(el.escape);
+	deblur(el.menuScreen);
+	deblur(el.gameScreen);
+	hide(el.dialogContainer);
 
-    document.addEventListener('keydown', showDialog);
-    el.gameScreen.addEventListener('click', showDialog);
+	document.addEventListener('keydown', showDialog);
+	el.gameScreen.addEventListener('click', showDialog);
 }
 
-
 function showDialog() {
-    showBlock(el.dialogContainer);
+	showBlock(el.dialogContainer);
 
-    el.gameScreen.removeEventListener('click', showDialog);
-    document.removeEventListener('keydown', showDialog);
+	el.gameScreen.removeEventListener('click', showDialog);
+	document.removeEventListener('keydown', showDialog);
 }
 
 //==== UI HELPERS (affichage texte / name / centered) ==================
@@ -342,69 +341,66 @@ function showDialog() {
 // overlaytext -> overlay debut de jeu
 
 function showNameBox(characterName, characterColor = '#ffffff') {
-    showFlex(el.nameElement);
-    el.nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
-    el.nameElement.style.opacity = '1';
+	showFlex(el.nameElement);
+	el.nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
+	el.nameElement.style.opacity = '1';
 }
 
 function hideNameBox() {
-    hide(el.nameElement);
-    el.nameElement.innerHTML = '';
-    el.nameElement.style.opacity = '0';
+	hide(el.nameElement);
+	el.nameElement.innerHTML = '';
+	el.nameElement.style.opacity = '0';
 }
 
 function showTextBox(content) {
-    showFlex(el.textElement);
-    el.textElement.innerHTML = `<span>${content}</span>`;
-    el.textElement.style.opacity = '1';
+	showFlex(el.textElement);
+	el.textElement.innerHTML = `<span>${content}</span>`;
+	el.textElement.style.opacity = '1';
 
-    triggerLogoEffect(el.textElement);
+	triggerLogoEffect(el.textElement);
 }
 
 function hideTextBox() {
-    el.textElement.classList.remove('blink', 'pop');
-    hide(el.textElement);
-    el.textElement.innerHTML = '';
-    el.textElement.style.opacity = '0';
+	el.textElement.classList.remove('blink', 'pop');
+	hide(el.textElement);
+	el.textElement.innerHTML = '';
+	el.textElement.style.opacity = '0';
 }
 
-
 function showCenteredText(content) {
-    showFlex(el.centeredText);
-    el.centeredText.innerHTML = `<span>${content}</span>`;
-    el.centeredText.style.opacity = '1';
+	showFlex(el.centeredText);
+	el.centeredText.innerHTML = `<span>${content}</span>`;
+	el.centeredText.style.opacity = '1';
 }
 
 function hideCenteredText() {
-    hide(el.centeredText);
-    el.centeredText.innerHTML = '';
-    el.centeredText.style.opacity = '0';
+	hide(el.centeredText);
+	el.centeredText.innerHTML = '';
+	el.centeredText.style.opacity = '0';
 }
-
 
 let cpt = 0;
 function showOverlayText(content) {
-    cpt++;
-    if (cpt > 7) {
-        el.textOverlay.innerHTML = '';
-        cpt = 1;
-    }
+	cpt++;
+	if (cpt > 7) {
+		el.textOverlay.innerHTML = '';
+		cpt = 1;
+	}
 
-    showFlex(el.textOverlay);
-    el.textOverlay.innerHTML += `<br><span>${content}</span>`;
-    el.textOverlay.style.opacity = '0.7';
+	showFlex(el.textOverlay);
+	el.textOverlay.innerHTML += `<br><span>${content}</span>`;
+	el.textOverlay.style.opacity = '0.7';
 
-    triggerLogoEffect(el.textOverlay, 'pop2');
+	triggerLogoEffect(el.textOverlay, 'pop2');
 }
 
 function hideOverlayText() {
-    el.textOverlay.classList.remove('blink', 'pop2');
-    hide(el.textOverlay);
-    el.textOverlay.innerHTML = '';
-    el.textOverlay.style.opacity = '0';
-    cpt = 0;
+	el.textOverlay.classList.remove('blink', 'pop2');
+	hide(el.textOverlay);
+	el.textOverlay.innerHTML = '';
+	el.textOverlay.style.opacity = '0';
+	cpt = 0;
 }
-
 
 //======================================
 

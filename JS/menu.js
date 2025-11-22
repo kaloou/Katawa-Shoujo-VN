@@ -1,5 +1,5 @@
-import {el} from './loaded.js';
-import {blur, showFlex } from './common.js'
+import {el} from './elements.js';
+import {blur, showFlex} from './common.js';
 
 // EVENTS
 el.creditsButton.addEventListener('click', () => {
@@ -7,7 +7,7 @@ el.creditsButton.addEventListener('click', () => {
 });
 
 el.settingsButton.addEventListener('click', () => {
-    showFlex(el.escape);
-    blur(el.menuScreen);
-    blur(el.gameScreen);
+	showFlex(el.escape);
+	blur(el.menuScreen);
+	blur(el.gameScreen);
 });

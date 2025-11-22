@@ -1,11 +1,13 @@
-import {el} from './loaded.js';
-import {preloadImages } from './common.js'
+import {el} from './elements.js';
+import {preloadImages} from './common.js';
 export const DEBUG = true;
 
 document.addEventListener('DOMContentLoaded', function () {
 	initGame();
 	preloadImages();
-	if (DEBUG) {initTestButtons();}
+	if (DEBUG) {
+		initTestButtons();
+	}
 });
 
 window.addEventListener('load', () => {
@@ -25,8 +27,6 @@ function initGame() {
 	};
 	xhr.send();
 }
-
-
 
 // ==================== DEBUG TEST DE SESSION ===================
 function getSession() {
