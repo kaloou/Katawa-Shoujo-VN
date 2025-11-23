@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 	window.onload = function () {
-		const creditsBtn = document.getElementById('credits_button');
-		const settingsBtn = document.getElementById('settings_button');
-		const divEscape = document.getElementById('escape');
-		const divMenu = document.getElementById('menu_screen');
-		const divGame = document.getElementById('game_screen');
+		creditsBtn = document.getElementById('credits_button');
+		settingsBtn = document.getElementById('settings_button');
+		divEscape = document.getElementById('escape');
+		divMenu = document.getElementById('menu_screen');
+		divGame = document.getElementById('game_screen');
 
 		creditsBtn.addEventListener('click', () => {
 			window.location.href = 'HTML/credits.html';
@@ -17,3 +17,5 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	};
 });
+
+let creditsBtn, settingsBtn;

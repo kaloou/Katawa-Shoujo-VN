@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	// IDS
 	divMenu = document.getElementById('menu_screen');
 	divGame = document.getElementById('game_screen');
@@ -17,8 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let divMenu, divGame, nameElement, textElement, divEscape, spriteStack, hideBtn, dialogContener, centeredDiv;
+
+let isTextLoading = false;
+
 //==========KEY PRESS FUNCTION==========
-function pressKey(event) {
+async function pressKey(event) {
 	event.preventDefault();
 	if (event.key === 'Escape') {
 		openEscape();
@@ -68,36 +71,46 @@ function showDialog() {
 	document.removeEventListener('keydown', showDialog);
 }
 //==== MAIN FUNCTIONS ==================================
-function getLine() {
-	let xhr = getXHR(); // function from common.js
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			let responseText = xhr.responseText;
+async function getLine() {
+	if(!isTextLoading) {
+		isTextLoading = true;
+		let xhr = getXHR(); // function from common.js
+		return await new Promise(function(resolve) {
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					let responseText = xhr.responseText;
 
-			try {
-				let response = JSON.parse(responseText);
+					try {
+						let response = JSON.parse(responseText);
 
-				if (response.type === 'error') {
-					if (DEBUG) console.error('Une erreur est survenue:', response.message);
-				} else if (response.type === 'end') {
-					if (DEBUG) console.log('Fin de la séquence, redémarrage...');
-					getLine();
-				} else {
-					if (response.seqserial === 1) {
-						preloadImages();
+						if (response.type === 'error') {
+							if (DEBUG) console.error('Une erreur est survenue:', response.message);
+						} else if (response.type === 'end') {
+							if (DEBUG) console.log('Fin de la séquence, redémarrage...');
+							isTextLoading = false;
+							getLine();
+						} else {
+							if (response.seqserial === 1) {
+								preloadImages();
+							}
+							update_dialogue(response);
+						}
+						isTextLoading = false;
+						resolve();
+					} catch (error) {
+						if (DEBUG) {
+							console.error('Erreur lors du parsing JSON:', error);
+							console.error('Réponse reçue:', responseText);
+						}
 					}
-					update_dialogue(response);
 				}
-			} catch (error) {
-				if (DEBUG) {
-					console.error('Erreur lors du parsing JSON:', error);
-					console.error('Réponse reçue:', responseText);
-				}
-			}
-		}
-	};
-	xhr.open('GET', 'PHP/get_line.php', true);
-	xhr.send();
+			};
+			xhr.open('GET', 'PHP/get_line.php', true);
+			xhr.send();
+		});	
+	} else {
+		if (DEBUG) console.error("attend");
+	}
 }
 
 function update_dialogue(response) {

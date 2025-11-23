@@ -196,6 +196,7 @@ function resetStyleElems(elems) {
 async function tryConnexion() {
 	let xhr = getXHR();
 	return await new Promise(function(resolve) {
+		editSendButton("Connexion en cours");
 		var data = new FormData(formLogin);
 		data.append("inp_submit", "Envoyer"); //car FormData ne contient pas le submit
 		xhr.onreadystatechange = function () {
@@ -230,11 +231,12 @@ async function tryConnexion() {
 									break;
 								default: 
 									if (DEBUG) console.error('??? reponse.connexion ???');
+									editSendButton("[ERROR] Reload Page");
 							}
 						}
 						else {
 							if (DEBUG) console.error('Données invalides');
-							editSendButton("Unvalid datas");
+							editSendButton("[ERROR] Respecter les conditions des champs");
 						}
 					}
 					else {
