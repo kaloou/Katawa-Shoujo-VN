@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	saveBtn = $('save_button');
 	loadBtn = $('load_button');
     closeSaveDiv = $('close_save_button');
-    autoSaveBtn = $('automatic_save_button');
+    resetAutoSaveBtn = $('reset_auto_save_button');
 	divButtonInSaveMenu = document.querySelector("#save_div .buttons");
 	listResetBtn = document.querySelectorAll(".reset_save");
     
@@ -11,10 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
     loadBtn.addEventListener('click', () => {clickOnSave(2)});
     closeSaveDiv.addEventListener('click', () => {clickOnSave(0)});
 
-    
+    // window.addEventListener('beforeunload', (event) => {
+    //     event.preventDefault();
+    //     keepInAutoSave();
+    // });
 });
 
-let saveDiv, saveMenuBtn, loadMenuBtn, autoSaveBtn, listResetBtn, listSaveBtn, saveDivMode;
+let saveDiv, saveMenuBtn, loadMenuBtn, resetAutoSaveBtn, listResetBtn, listSaveBtn, saveDivMode;
 
 function clickOnSave(n) {
     var textTitle;
@@ -38,33 +41,44 @@ function clickOnSave(n) {
                 break;
         }
         extractSaves();
-        closeOrOpenMenu(textTitle);
+        toggleSaveMenu(textTitle);
     }
     else {
         printNotConnected();
     }
 }
 
-
 function appendTitleOnSavesMenu(content) { // https://www.w3schools.com/jsref/met_element_before.asp
     var title = document.createElement("h1");
     title.id = "titleForSaveMenu"
-    autoSaveBtn.before(title);
+    resetAutoSaveBtn.before(title);
     title.append(content);
 }
 
-function closeOrOpenMenu(content) {
-    try {
+function toggleSaveMenu(content) {
+    if(isDisplay(saveDiv))
+    {
         $('titleForSaveMenu').remove();
         hide(saveDiv);
+        document.removeEventListener('keyup', closeSaveWithEsc);
+        document.addEventListener('keyup', pressKey);
     }
-    catch {
+    else {
         var title = document.createElement("h1");
         title.id = "titleForSaveMenu";
-        autoSaveBtn.before(title);
+        resetAutoSaveBtn.before(title);
         title.append(content);
         showFlex(saveDiv)
+        document.addEventListener('keyup', closeSaveWithEsc);
+        document.removeEventListener('keyup', pressKey);
     }
+}
+
+function closeSaveWithEsc(event) {
+	event.preventDefault();
+	if (event.key === 'Escape') {
+		toggleSaveMenu();
+	}
 }
 
 function closeSavesMenu() {

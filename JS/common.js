@@ -578,10 +578,18 @@ function showBlock(elem) {
 	elem.style.display = 'block';
 }
 
+function isDisplay(elem) {
+	return elem.style.display === 'flex' || elem.style.display === 'block';
+}
+
+function isNotDisplay(elem) {
+	return elem.style.display === 'none';
+}
+
 function blur(elem) {
     elem.style.filter = 'blur(5px)';
 }
 
-function deblur(elem) {
+function noFilter(elem) {
 	elem.style.filter = 'none';
 }

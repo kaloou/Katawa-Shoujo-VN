@@ -23,13 +23,11 @@ function pressKey(event) {
 	if (event.key === 'Escape') {
 		openEscape();
 	} else if (
-		(event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') &&
-		divGame.style.display === 'block'
-	) {
+		(event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(divGame)) {
 		getLine();
-	} else if (event.key === 'ArrowLeft' && divGame.style.display === 'block') {
+	} else if (event.key === 'ArrowLeft' && isDisplay(divGame)) {
 		// revenir au diagolgue précédent
-	} else if (event.key.toLowerCase() === 'f' && divGame.style.display === 'block') {
+	} else if (event.key.toLowerCase() === 'f' && isDisplay(divGame)) {
 		fullScreen();
 	}
 }
@@ -44,22 +42,22 @@ function fullScreen() {
 }
 
 function openEscape() {
-	if (divEscape.style.display === 'none') {
-		divEscape.style.display = 'flex';
-		divMenu.style.filter = 'blur(5px)';
-		divGame.style.filter = 'blur(5px)';
-	} else if (divEscape.style.display === 'flex') {
-		divEscape.style.display = 'none';
-		divMenu.style.filter = 'none';
-		divGame.style.filter = 'none';
+	if (isDisplay(divEscape)) {
+		hide(divEscape);
+		noFilter(divMenu);
+		noFilter(divGame);
+	} else {
+		showFlex(divEscape);
+		blur(divMenu);
+		blur(divGame);
 	}
 }
 
 function hideButton() {
-	divEscape.style.display = 'none';
-	divMenu.style.filter = 'none';
-	divGame.style.filter = 'none';
-	dialogContener.style.display = 'none';
+	hide(divEscape);
+	noFilter(divMenu);
+	noFilter(divGame);
+	hide(dialogContener);
 	document.addEventListener('keydown', showDialog);
 	divGame.addEventListener('click', showDialog);
 }

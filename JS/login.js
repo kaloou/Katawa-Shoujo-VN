@@ -55,7 +55,7 @@ let connected = false;
 let isTryingToConnect = false;
 
 async function isConnectedInSession() {
-	let xhr = getXHR(); // function from common.js
+	let xhr = getXHR();
 	return await new Promise(function(resolve) {
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
@@ -79,8 +79,8 @@ async function isConnectedInSession() {
 
 function openLoginForm() {
 	if (!connected) {
-		formLogin.style.display = 'flex';
-		defMenu.style.display = 'none';
+		showFlex(formLogin);
+		hide(defMenu);
 	}
 }
 
@@ -96,8 +96,8 @@ function disconnect() {
 async function start() {
 	if (connected) {
 		if(await getAutoSave()) {
-			divMenu.style.display = 'none';
-			divGame.style.display = 'block';
+			hide(divMenu);
+			showBlock(divGame);
 		} else printNotConnected();
 	}
 	else printNotConnected();
@@ -194,7 +194,7 @@ function resetStyleElems(elems) {
 }
 
 async function tryConnexion() {
-	let xhr = getXHR(); // function from common.js
+	let xhr = getXHR();
 	return await new Promise(function(resolve) {
 		var data = new FormData(formLogin);
 		data.append("inp_submit", "Envoyer"); //car FormData ne contient pas le submit
@@ -213,8 +213,8 @@ async function tryConnexion() {
 									inputSubmit.style.borderColor = greenColor;
 									connected = true;
 									printConnected();
-									formLogin.style.display = 'none';
-									defMenu.style.display = 'flex';
+									hide(formLogin);
+									showFlex(defMenu);
 									inputPswd.value = "";
 									inputUsrName.value = "";
 									resetStyleElems([inputPswd, inputUsrName, inputSubmit]);
@@ -257,8 +257,8 @@ async function tryConnexion() {
 }
 
 async function getAutoSave() {
-	let xhr = getXHR(); // function from common.js
-	return await new Promise(function(resolve, reject) {
+	let xhr = getXHR();
+	return await new Promise(function(resolve) {
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				let responseText = xhr.responseText;

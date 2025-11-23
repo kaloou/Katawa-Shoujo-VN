@@ -8,21 +8,19 @@ document.addEventListener("DOMContentLoaded", () => {
     returnBtn = $("return_button");
 
     quitEscBtn.addEventListener("click", () => {
-        divMenu.style.filter = "none";
-        divGame.style.filter = "none";
-        divEscape.style.display = "none"; 
+        noFilter(divMenu);
+        noFilter(divGame);
+        hide(divEscape); 
     });
     returnBtn.addEventListener("click", GameToMenu);
-
-
-    hide(divEscape);
 });
+
 let returnBtn, quitEscBtn, saveBtn, loadBtn;
 
 function GameToMenu() {
-    divMenu.style.filter = "none";
-    divGame.style.filter = "none";
-    divMenu.style.display = "flex";
-    divGame.style.display = "none";
-    divEscape.style.display = "none";
+    noFilter(divMenu);
+    noFilter(divGame);
+    showFlex(divMenu);
+    hide(divGame);
+    hide(divEscape);
 }
