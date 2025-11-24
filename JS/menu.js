@@ -7,7 +7,7 @@ el.creditsButton.addEventListener('click', () => {
 });
 
 el.settingsButton.addEventListener('click', () => {
-	showFlex(el.escape);
-	blur(el.menuScreen);
-	blur(el.gameScreen);
+	showFlex(el.divEscape);
+	blur(el.divMenu);
+	blur(el.divGame);
 });

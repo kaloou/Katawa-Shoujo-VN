@@ -5,15 +5,15 @@ import {DEBUG} from './init.js';
 let isTextLoading = false;
 
 //==========KEY PRESS FUNCTION==========
-async function pressKey(event) {
+export async function pressKey(event) {
 	event.preventDefault();
 	if (event.key === 'Escape') {
 		openEscape();
-	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(divGame)) {
+	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(el.divGame)) {
 		getLine();
-	} else if (event.key === 'ArrowLeft' && isDisplay(divGame)) {
+	} else if (event.key === 'ArrowLeft' && isDisplay(el.divGame)) {
 		// revenir au diagolgue précédent
-	} else if (event.key.toLowerCase() === 'f' && isDisplay(divGame)) {
+	} else if (event.key.toLowerCase() === 'f' && isDisplay(el.divGame)) {
 		fullScreen();
 	}
 }
@@ -28,29 +28,29 @@ function fullScreen() {
 }
 
 function openEscape() {
-	if (isDisplay(divEscape)) {
-		hide(divEscape);
-		noFilter(divMenu);
-		noFilter(divGame);
+	if (isDisplay(el.divEscape)) {
+		hide(el.divEscape);
+		noFilter(el.divMenu);
+		noFilter(el.divGame);
 	} else {
-		showFlex(divEscape);
-		blur(divMenu);
-		blur(divGame);
+		showFlex(el.divEscape);
+		blur(el.divMenu);
+		blur(el.divGame);
 	}
 }
 
 function hideButton() {
-	hide(divEscape);
-	noFilter(divMenu);
-	noFilter(divGame);
-	hide(dialogContener);
+	hide(el.divEscape);
+	noFilter(el.divMenu);
+	noFilter(el.divGame);
+	hide(el.dialogContener);
 	document.addEventListener('keydown', showDialog);
-	divGame.addEventListener('click', showDialog);
+	el.divGame.addEventListener('click', showDialog);
 }
 
 function showDialog() {
-	dialogContener.style.display = 'block';
-	divGame.removeEventListener('click', showDialog);
+	el.dialogContener.style.display = 'block';
+	el.divGame.removeEventListener('click', showDialog);
 	document.removeEventListener('keydown', showDialog);
 }
 //==== MAIN FUNCTIONS ==================================
@@ -174,16 +174,16 @@ function displayText(content, characterName = '', characterColor = '', character
 //==== TYPE 2 FUNCTIONS ==================================
 function change_bg(img_name, reset) {
 	if (reset) {
-		el.gameScreen.style.transition = 'opacity 0.3s ease-in';
-		el.gameScreen.style.opacity = 0;
+		el.divGame.style.transition = 'opacity 0.3s ease-in';
+		el.divGame.style.opacity = 0;
 		setTimeout(() => {
-			el.gameScreen.style.backgroundImage = `url("assets/internHD/${img_name}")`;
-			el.gameScreen.style.opacity = 1;
+			el.divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
+			el.divGame.style.opacity = 1;
 			reset_sprite_stack();
 		}, 300);
 	} // j'hésite de carrement rien faire car quasiment sur que les tag 'bg' sont inutiles...bref
 	else {
-		el.gameScreen.style.backgroundImage = `url("assets/internHD/${img_name}")`;
+		el.divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 	}
 }
 

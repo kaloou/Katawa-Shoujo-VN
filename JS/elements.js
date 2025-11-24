@@ -1,24 +1,25 @@
 export const el = {
 	// === Éléments du menu principal ===
-	menuScreen: document.getElementById('menu_screen'),
+	divMenu: document.getElementById('menu_screen'),
 	mainMenu: document.getElementById('main_menu'),
 	defaultMenu: document.getElementById('default_menu'),
 
 	// === Éléments du jeu ===
-	gameScreen: document.getElementById('game_screen'),
+	divGame: document.getElementById('game_screen'),
+    gameScreen: document.getElementById('game_screen'),
 	spriteStack: document.getElementById('sprite_stack'),
 	nameElement: document.getElementById('name'),
 	textElement: document.getElementById('text'),
 	centeredText: document.getElementById('centered-text'),
 	textOverlay: document.getElementById('text_overlay'),
-	dialogContainer: document.getElementById('dialog_container'),
+	dialogContener: document.getElementById('dialog_container'),
 
 	// === Éléments de l'écran d'échappement ===
-	escape: document.getElementById('escape'),
-	quitEscButton: document.getElementById('quit_esc_button'),
+	divEscape: document.getElementById('escape'),
+	quitEscBtn: document.getElementById('quit_esc_button'),
 	hideButton: document.getElementById('hide_button'),
 	saveButton: document.getElementById('save_button'),
-	returnButton: document.getElementById('return_button'),
+	returnBtn: document.getElementById('return_button'),
 
 	// === Éléments du menu ===
 	connectButton: document.getElementById('connect_button'),
@@ -37,7 +38,7 @@ export const el = {
 	saveDiv: document.getElementById('save_div'),
 	saveBtn: document.getElementById('save_button'),
 	loadBtn: document.getElementById('load_button'),
-	closeSaveDiv: document.getElementById('close_save_button'),
+	closeSaveBtn: document.getElementById('close_save_button'),
 	resetAutoSaveBtn: document.getElementById('reset_auto_save_button'),
 	divButtonInSaveMenu: document.querySelector('#save_div .buttons'),
 	listResetBtn: document.querySelectorAll('.reset_save'),

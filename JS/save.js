@@ -1,5 +1,7 @@
 import {el} from './elements.js';
 import {hide, showFlex} from './common.js';
+import {connected, printNotConnected} from "./login.js";
+import {pressKey} from "./game.js"
 
 // EVENTS
 el.saveButton.addEventListener('click', () => {
@@ -8,7 +10,7 @@ el.saveButton.addEventListener('click', () => {
 el.loadButton.addEventListener('click', () => {
 	clickOnSave(2);
 });
-el.closeSaveButton.addEventListener('click', () => {
+el.closeSaveBtn.addEventListener('click', () => {
 	clickOnSave(0);
 });
 
