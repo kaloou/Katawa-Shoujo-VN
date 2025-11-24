@@ -1,42 +1,99 @@
 import {el} from './elements.js';
-import {preloadImages, blur, deblur, showFlex, hide, showBlock} from './common.js';
+import {preloadImages, blur, showFlex, hide, showBlock, isDisplay, noFilter} from './common.js';
 import {DEBUG} from './init.js';
-// EVENTS
-document.addEventListener('keyup', pressKey);
-el.gameScreen.addEventListener('click', getLine);
-el.hideButton.addEventListener('click', hideButton);
 
+let isTextLoading = false;
+
+//==========KEY PRESS FUNCTION==========
+async function pressKey(event) {
+	event.preventDefault();
+	if (event.key === 'Escape') {
+		openEscape();
+	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(divGame)) {
+		getLine();
+	} else if (event.key === 'ArrowLeft' && isDisplay(divGame)) {
+		// revenir au diagolgue précédent
+	} else if (event.key.toLowerCase() === 'f' && isDisplay(divGame)) {
+		fullScreen();
+	}
+}
+
+function fullScreen() {
+	if (!document.fullscreenElement) {
+		// Plein écran sur tout le document
+		document.documentElement.requestFullscreen();
+	} else {
+		document.exitFullscreen();
+	}
+}
+
+function openEscape() {
+	if (isDisplay(divEscape)) {
+		hide(divEscape);
+		noFilter(divMenu);
+		noFilter(divGame);
+	} else {
+		showFlex(divEscape);
+		blur(divMenu);
+		blur(divGame);
+	}
+}
+
+function hideButton() {
+	hide(divEscape);
+	noFilter(divMenu);
+	noFilter(divGame);
+	hide(dialogContener);
+	document.addEventListener('keydown', showDialog);
+	divGame.addEventListener('click', showDialog);
+}
+
+function showDialog() {
+	dialogContener.style.display = 'block';
+	divGame.removeEventListener('click', showDialog);
+	document.removeEventListener('keydown', showDialog);
+}
 //==== MAIN FUNCTIONS ==================================
-function getLine() {
-	let xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			let responseText = xhr.responseText;
+async function getLine() {
+	if (!isTextLoading) {
+		isTextLoading = true;
+		let xhr = new XMLHttpRequest();
+		return await new Promise(function (resolve) {
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					let responseText = xhr.responseText;
 
-			try {
-				let response = JSON.parse(responseText);
+					try {
+						let response = JSON.parse(responseText);
 
-				if (response.type === 'error') {
-					if (DEBUG) console.error('Une erreur est survenue:', response.message);
-				} else if (response.type === 'end') {
-					if (DEBUG) console.log('Fin de la séquence, redémarrage...');
-					getLine();
-				} else {
-					if (response.seqserial === 1) {
-						preloadImages();
+						if (response.type === 'error') {
+							if (DEBUG) console.error('Une erreur est survenue:', response.message);
+						} else if (response.type === 'end') {
+							if (DEBUG) console.log('Fin de la séquence, redémarrage...');
+							isTextLoading = false;
+							getLine();
+						} else {
+							if (response.seqserial === 1) {
+								preloadImages();
+							}
+							update_dialogue(response);
+						}
+						isTextLoading = false;
+						resolve();
+					} catch (error) {
+						if (DEBUG) {
+							console.error('Erreur lors du parsing JSON:', error);
+							console.error('Réponse reçue:', responseText);
+						}
 					}
-					update_dialogue(response);
 				}
-			} catch (error) {
-				if (DEBUG) {
-					console.error('Erreur lors du parsing JSON:', error);
-					console.error('Réponse reçue:', responseText);
-				}
-			}
-		}
-	};
-	xhr.open('GET', 'PHP/get_line.php', true);
-	xhr.send();
+			};
+			xhr.open('GET', 'PHP/get_line.php', true);
+			xhr.send();
+		});
+	} else {
+		if (DEBUG) console.error('attend');
+	}
 }
 
 function update_dialogue(response) {
@@ -279,61 +336,6 @@ function stop_music(fadeout) {
 }
 
 //==== UTILITY FUNCTIONS ==================================
-//==========KEY PRESS FUNCTIONS==========
-function pressKey(event) {
-	event.preventDefault();
-	if (event.key === 'Escape') {
-		openEscape();
-	} else if (
-		(event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') &&
-		el.gameScreen.style.display === 'block'
-	) {
-		getLine();
-	} else if (event.key === 'ArrowLeft' && el.gameScreen.style.display === 'block') {
-		// revenir au diagolgue précédent
-	} else if (event.key.toLowerCase() === 'f' && el.gameScreen.style.display === 'block') {
-		fullScreen();
-	}
-}
-
-function fullScreen() {
-	if (!document.fullscreenElement) {
-		// Plein écran sur tout le document
-		document.documentElement.requestFullscreen();
-	} else {
-		document.exitFullscreen();
-	}
-}
-
-function openEscape() {
-	if (el.escape.style.display === 'none') {
-		showFlex(el.escape);
-		blur(el.menuScreen);
-		blur(el.gameScreen);
-	} else if (el.escape.style.display === 'flex') {
-		hide(el.escape);
-		deblur(el.menuScreen);
-		deblur(el.gameScreen);
-	}
-}
-
-function hideButton() {
-	hide(el.escape);
-	deblur(el.menuScreen);
-	deblur(el.gameScreen);
-	hide(el.dialogContainer);
-
-	document.addEventListener('keydown', showDialog);
-	el.gameScreen.addEventListener('click', showDialog);
-}
-
-function showDialog() {
-	showBlock(el.dialogContainer);
-
-	el.gameScreen.removeEventListener('click', showDialog);
-	document.removeEventListener('keydown', showDialog);
-}
-
 //==== UI HELPERS (affichage texte / name / centered) ==================
 
 // text box -> type 1 normal

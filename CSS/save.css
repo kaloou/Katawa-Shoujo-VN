@@ -3,24 +3,30 @@
   position: fixed;
 
   width: 35vw;
-  height: 45vw;
-  box-shadow: 0 0 30vw 5vw black;
+  height: 32vw;
+  /* box-shadow: 0 0 30vw 5vw black; */
 
   z-index: 102;
 
-  align-items: center;
+  align-items: start;
   justify-content: center;
 
-  background-image: url(../assets/extern/UI/main/background.png);
+  background-image: url(../assets/extern/UI/main/background-unsatured.png);
   background-position-y: center;
   background-position-x: center;
   background-size: cover;
+  background-repeat: repeat;
+
+	border: 0.4vw solid var(--secondary-color);
+
+  overflow-y: auto;
 }
 
 #close_save_button {
   display: block;
   margin: 1vw 1vw;
   position: absolute;
+  z-index: 104;
   top: 0;
   right: 0;
   width: 2vw;
@@ -37,6 +43,7 @@
 
 #save_div .buttons {
   display: flex;
+  position: relative;
   flex-direction: row;
   width: 31.4vw;
   flex-wrap: wrap;
@@ -44,9 +51,12 @@
 }
 
 #save_div .buttons h1 {
-  color: var(--ui-red);
-  font-size: 3vw;
+  color: var(--secondary-color);
+  font-size: 4vw;
+  margin-top: 1vw;
   margin-bottom: 1vw;
+  text-shadow: -0.1vw -0.1vw 0 #48443c, 0.1vw -0.1vw 0 #48443c, -0.1vw 0.1vw 0 #48443c, 0.1vw 0.1vw 0 #48443c;  /* From https://stackoverflow.com/a/4919231 */
+  
 }
 
 #save_div .buttons button {
@@ -54,13 +64,19 @@
 	margin: 1vw 0.7vw 0.1vw 1vw;
 }
 
+#save_div .buttons #reset_auto_save_button {
+  width: 100%;
+  background-color: var(--ui-red); 
+	box-shadow: 0px 0px 0px 0.08vw var(--ui-red);
+}
+
 #save_div .buttons .reset_save {
   width: 3vw;
 	margin-left: 0.7vw;
   margin-right: 1vw;
-	color: #fff2d4;
+	color: var(--primary-color);
 	background-color: var(--ui-red);
-	border: 0.2vw solid #fff2d4;
+	border: 0.2vw solid var(--primary-color);
 	box-shadow: 0px 0px 0px 0.08vw var(--ui-red);
 }
 

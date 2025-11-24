@@ -1,5 +1,6 @@
-import {$} from './common.js'
-import {DEBUG} from './init.js'
+import {$, showFlex, hide, showBlock} from './common.js';
+import {DEBUG} from './init.js';
+// ici il faut importer elements en verifiant que tout est chargé dans le element.js et donc supprimer tout le domContentLoaded
 document.addEventListener('DOMContentLoaded', async () => {
 	connectBtn = $('connect_button');
 	startBtn = $('start_button');
@@ -33,7 +34,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 	}
 });
 
-let connectBtn, startBtn, defMenu, formLogin, inputUsrName, helpUsrName, inputPswd, liHelpPswd, inputSubmit,divMenu, divGame;
+let connectBtn,
+	startBtn,
+	defMenu,
+	formLogin,
+	inputUsrName,
+	helpUsrName,
+	inputPswd,
+	liHelpPswd,
+	inputSubmit,
+	divMenu,
+	divGame;
 
 /*
 let regex10Char = /.{10,}/;
@@ -80,8 +91,8 @@ async function isConnectedInSession() {
 
 function openLoginForm() {
 	if (!connected) {
-		formLogin.style.display = 'flex';
-		defMenu.style.display = 'none';
+		showFlex(formLogin);
+		hide(defMenu);
 	}
 }
 
@@ -97,8 +108,8 @@ function disconnect() {
 async function start() {
 	if (connected) {
 		if (await getAutoSave()) {
-			divMenu.style.display = 'none';
-			divGame.style.display = 'block';
+			hide(divMenu);
+			showBlock(divGame);
 		} else printNotConnected();
 	} else printNotConnected();
 }
@@ -188,8 +199,9 @@ function resetStyleElems(elems) {
 }
 
 async function tryConnexion() {
-	let xhr = new XMLHttpRequest(); // function from common.js
+	let xhr = new XMLHttpRequest();
 	return await new Promise(function (resolve) {
+		editSendButton('Connexion en cours');
 		var data = new FormData(formLogin);
 		data.append('inp_submit', 'Envoyer'); //car FormData ne contient pas le submit
 		xhr.onreadystatechange = function () {
@@ -207,8 +219,8 @@ async function tryConnexion() {
 									inputSubmit.style.borderColor = greenColor;
 									connected = true;
 									printConnected();
-									formLogin.style.display = 'none';
-									defMenu.style.display = 'flex';
+									hide(formLogin);
+									showFlex(defMenu);
 									inputPswd.value = '';
 									inputUsrName.value = '';
 									resetStyleElems([inputPswd, inputUsrName, inputSubmit]);
@@ -224,10 +236,11 @@ async function tryConnexion() {
 									break;
 								default:
 									if (DEBUG) console.error('??? reponse.connexion ???');
+									editSendButton('[ERROR] Reload Page');
 							}
 						} else {
 							if (DEBUG) console.error('Données invalides');
-							editSendButton('Unvalid datas');
+							editSendButton('[ERROR] Respecter les conditions des champs');
 						}
 					} else {
 						if (DEBUG) console.log(response);
@@ -249,8 +262,8 @@ async function tryConnexion() {
 }
 
 async function getAutoSave() {
-	let xhr = new XMLHttpRequest(); // function from common.js
-	return await new Promise(function (resolve, reject) {
+	let xhr = new XMLHttpRequest();
+	return await new Promise(function (resolve) {
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				let responseText = xhr.responseText;

@@ -1,21 +1,17 @@
 import {el} from './elements.js';
-import {hide} from './common.js';
+import {hide, noFilter, showFlex} from './common.js';
 
-// EVENTS
-el.quitEscButton.addEventListener('click', () => {
-	el.menuScreen.style.filter = 'none';
-	el.gameScreen.style.filter = 'none';
-	el.escape.style.display = 'none';
+el.quitEscBtn.addEventListener('click', () => {
+	noFilter(divMenu);
+	noFilter(divGame);
+	hide(divEscape);
 });
-
-el.returnButton.addEventListener('click', GameToMenu);
-
-hide(el.escape);
+el.returnBtn.addEventListener('click', GameToMenu);
 
 function GameToMenu() {
-	el.menuScreen.style.filter = 'none';
-	el.gameScreen.style.filter = 'none';
-	el.menuScreen.style.display = 'flex';
-	el.gameScreen.style.display = 'none';
-	el.escape.style.display = 'none';
+	noFilter(divMenu);
+	noFilter(divGame);
+	showFlex(divMenu);
+	hide(divGame);
+	hide(divEscape);
 }

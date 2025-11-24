@@ -35,8 +35,12 @@ export const el = {
 
 	// === Éléments de sauvegarde ===
 	saveDiv: document.getElementById('save_div'),
-	closeSaveButton: document.getElementById('close_save_button'),
-	automaticSaveButton: document.getElementById('automatic_save_button'),
+	saveBtn: document.getElementById('save_button'),
+	loadBtn: document.getElementById('load_button'),
+	closeSaveDiv: document.getElementById('close_save_button'),
+	resetAutoSaveBtn: document.getElementById('reset_auto_save_button'),
+	divButtonInSaveMenu: document.querySelector('#save_div .buttons'),
+	listResetBtn: document.querySelectorAll('.reset_save'),
 
 	// === Éléments des crédits ===
 	videoCredit: document.getElementById('bg-video'),

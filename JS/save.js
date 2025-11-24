@@ -35,7 +35,7 @@ function clickOnSave(n) {
 				break;
 		}
 		extractSaves();
-		closeOrOpenMenu(textTitle);
+		toggleSaveMenu(textTitle);
 	} else {
 		printNotConnected();
 	}
@@ -45,20 +45,31 @@ function appendTitleOnSavesMenu(content) {
 	// https://www.w3schools.com/jsref/met_element_before.asp
 	var title = document.createElement('h1');
 	title.id = 'titleForSaveMenu';
-	el.automaticSaveButton.before(title);
+	el.resetAutoSaveBtn.before(title);
 	title.append(content);
 }
 
-function closeOrOpenMenu(content) {
-	try {
-		document.getElementById('titleForSaveMenu')?.remove();
+function toggleSaveMenu(content) {
+	if (isDisplay(el.saveDiv)) {
+		$('titleForSaveMenu').remove();
 		hide(el.saveDiv);
-	} catch {
+		document.removeEventListener('keyup', closeSaveWithEsc);
+		document.addEventListener('keyup', pressKey);
+	} else {
 		var title = document.createElement('h1');
 		title.id = 'titleForSaveMenu';
-		el.automaticSaveButton.before(title);
+		el.resetAutoSaveBtn.before(title);
 		title.append(content);
 		showFlex(el.saveDiv);
+		document.addEventListener('keyup', closeSaveWithEsc);
+		document.removeEventListener('keyup', pressKey);
+	}
+}
+
+function closeSaveWithEsc(event) {
+	event.preventDefault();
+	if (event.key === 'Escape') {
+		toggleSaveMenu();
 	}
 }
 
