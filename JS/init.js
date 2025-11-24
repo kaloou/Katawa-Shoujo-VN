@@ -1,4 +1,6 @@
-const DEBUG = true;
+import {el} from './elements.js';
+import {preloadImages} from './common.js';
+export const DEBUG = true;
 
 document.addEventListener('DOMContentLoaded', function () {
 	initGame();
@@ -24,29 +26,6 @@ function initGame() {
 		}
 	};
 	xhr.send();
-}
-
-//============= Preload image function =============
-function preloadImages() {
-	// preload les images de la séquence actuelle
-	fetch('PHP/image_preloader.php')
-		.then((response) => response.json())
-		.then((data) => {
-			if (data.images && data.images.length > 0) {
-				data.images.forEach((image) => {
-					const img = new Image(); // creer une image pour chaque nom trouvé
-					img.src = 'assets/internHD/' + image.image_name;
-					img.onload = function () {
-						console.log('Image préchargée:', image.image_name);
-					};
-				});
-			} else {
-				console.log('Aucune image trouvée.');
-			}
-		})
-		.catch((error) => {
-			console.error('Erreur lors du préchargement des images:', error);
-		});
 }
 
 // ==================== DEBUG TEST DE SESSION ===================
@@ -136,27 +115,46 @@ function initTestButtons() {
 		</div>
 	`;
 
-	// Vérifie si le conteneur n’existe pas déjà pour éviter les doublons
-	if (!document.getElementById('session_buttons_container')) {
+	// Vérifie si le conteneur n'existe pas déjà pour éviter les doublons
+	if (!el.sessionButtonsContainer) {
 		document.body.insertAdjacentHTML('beforeend', html);
 		console.log('✅ Boutons de test ajoutés au DOM');
-	}
+		// Les éléments seront disponibles après le rendu.
+		const sessionContainer = document.getElementById('session_buttons_container');
+		const testBtn = document.getElementById('test_session_btn');
+		const resetBtn = document.getElementById('reset_session_btn');
 
-	// --- 2️⃣ Attachement des événements ---
-	const testBtn = document.getElementById('test_session_btn');
-	if (testBtn) {
-		testBtn.addEventListener('click', getSession);
-		console.log('✅ Bouton Test Session initialisé');
-	} else {
-		console.warn('⚠️ Bouton test_session_btn non trouvé');
-	}
+		// --- 2️⃣ Attachement des événements ---
+		if (testBtn) {
+			testBtn.addEventListener('click', getSession);
+			console.log('✅ Bouton Test Session initialisé');
+		} else {
+			console.warn('⚠️ Bouton test_session_btn non trouvé');
+		}
 
-	const resetBtn = document.getElementById('reset_session_btn');
-	if (resetBtn) {
-		resetBtn.addEventListener('click', destroySession);
-		console.log('✅ Bouton Reset Session initialisé');
+		if (resetBtn) {
+			resetBtn.addEventListener('click', destroySession);
+			console.log('✅ Bouton Reset Session initialisé');
+		} else {
+			console.warn('⚠️ Bouton reset_session_btn non trouvé');
+		}
 	} else {
-		console.warn('⚠️ Bouton reset_session_btn non trouvé');
+		// --- 2️⃣ Attachement des événements ---
+		const testBtn = el.testSessionBtn;
+		if (testBtn) {
+			testBtn.addEventListener('click', getSession);
+			console.log('✅ Bouton Test Session initialisé');
+		} else {
+			console.warn('⚠️ Bouton test_session_btn non trouvé');
+		}
+
+		const resetBtn = el.resetSessionBtn;
+		if (resetBtn) {
+			resetBtn.addEventListener('click', destroySession);
+			console.log('✅ Bouton Reset Session initialisé');
+		} else {
+			console.warn('⚠️ Bouton reset_session_btn non trouvé');
+		}
 	}
 
 	// --- 3️⃣ Optionnel : Test auto si DEBUG actif ---

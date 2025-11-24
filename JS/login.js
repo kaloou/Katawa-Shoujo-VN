@@ -1,3 +1,6 @@
+import {$, showFlex, hide, showBlock} from './common.js';
+import {DEBUG} from './init.js';
+// ici il faut importer elements en verifiant que tout est chargé dans le element.js et donc supprimer tout le domContentLoaded
 document.addEventListener('DOMContentLoaded', async () => {
 	connectBtn = $('connect_button');
 	startBtn = $('start_button');
@@ -6,33 +9,42 @@ document.addEventListener('DOMContentLoaded', async () => {
 	defMenu = $('default_menu');
 	formLogin = $('login');
 	inputUsrName = $('inp_pseudo');
-    helpUsrName = document.querySelector('#login p');
+	helpUsrName = document.querySelector('#login p');
 	inputPswd = $('inp_pswd');
 	liHelpPswd = document.querySelectorAll('#login ul>li');
 	inputSubmit = $('inp_submit');
 
 	inputSubmit.addEventListener('click', sendConnexion);
-    formLogin.addEventListener('submit', sendConnexion);
+	formLogin.addEventListener('submit', sendConnexion);
 
 	connectBtn.addEventListener('click', openLoginForm);
 
 	startBtn.addEventListener('click', start);
 
-    inputUsrName.addEventListener('keyup', checkValidUsrName);
+	inputUsrName.addEventListener('keyup', checkValidUsrName);
 	inputPswd.addEventListener('keyup', checkValidPassword);
 
 	connectBtn.addEventListener('mouseenter', wantDisconnect);
 	connectBtn.addEventListener('mouseleave', printConnected);
 
-	if(await isConnectedInSession()) // https://www.w3schools.com/js/js_async.asp → "Basic Syntax" and "Waiting for a file"
-	{
+	if (await isConnectedInSession()) {
+		// https://www.w3schools.com/js/js_async.asp → "Basic Syntax" and "Waiting for a file"
 		connected = true;
 		printConnected();
 	}
-	
 });
 
-let connectBtn, startBtn, defMenu, formLogin, inputUsrName, helpUsrName, inputPswd, liHelpPswd, inputSubmit;
+let connectBtn,
+	startBtn,
+	defMenu,
+	formLogin,
+	inputUsrName,
+	helpUsrName,
+	inputPswd,
+	liHelpPswd,
+	inputSubmit,
+	divMenu,
+	divGame;
 
 /*
 let regex10Char = /.{10,}/;
@@ -46,17 +58,17 @@ let listRegexPwd = [/^.{8,25}$/, /[A-Z]/, /[a-z]/, /[0-9]/, /[-._!"`'#%&,:;<>=@{
 //let regexPwd = /^[-A-Za-z0-9,?;.:/=+~ù%´µ£`^¨\[$*\]&|é@"#'(§^è!ç{à)°_}]{8,25}$/u;
 
 // colors : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
-let greenColor = "#99B681"; //2c9e31 or 99B681
-let redColor = "#eb243b";
-let pinkColor = "#FF8D7C";
+let greenColor = '#99B681'; //2c9e31 or 99B681
+let redColor = '#eb243b';
+let pinkColor = '#FF8D7C';
 
 let connected = false;
 
 let isTryingToConnect = false;
 
 async function isConnectedInSession() {
-	let xhr = getXHR();
-	return await new Promise(function(resolve) {
+	let xhr = new XMLHttpRequest();
+	return await new Promise(function (resolve) {
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				let responseText = xhr.responseText;
@@ -72,7 +84,7 @@ async function isConnectedInSession() {
 			}
 		};
 		xhr.open('GET', 'PHP/is_connected.php', true);
-		xhr.responseType = "text";
+		xhr.responseType = 'text';
 		xhr.send();
 	});
 }
@@ -95,19 +107,17 @@ function disconnect() {
 
 async function start() {
 	if (connected) {
-		if(await getAutoSave()) {
+		if (await getAutoSave()) {
 			hide(divMenu);
 			showBlock(divGame);
 		} else printNotConnected();
-	}
-	else printNotConnected();
+	} else printNotConnected();
 }
 
 function printNotConnected() {
-	if(!connected)
-	{
+	if (!connected) {
 		connectBtn.textContent = 'Se Connecter';
-		connectBtn.style.boxShadow = '0 0 0 0.08vw '+ redColor;
+		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + redColor;
 		connectBtn.style.backgroundColor = redColor;
 	}
 }
@@ -136,8 +146,7 @@ function checkValidPassword() {
 	for (let i = 0; i < listRegexPwd.length; i++) {
 		if (listRegexPwd[i].test(testInput)) {
 			liHelpPswd[i].style.color = greenColor;
-		} 
-		else {
+		} else {
 			nbrErrors += 1;
 			liHelpPswd[i].style.color = redColor;
 		}
@@ -147,8 +156,7 @@ function checkValidPassword() {
 		inputPswd.style.color = greenColor;
 		inputPswd.style.borderColor = greenColor;
 		return true;
-	} 
-	else {
+	} else {
 		inputPswd.style.color = redColor;
 		inputPswd.style.borderColor = redColor;
 		return false;
@@ -163,8 +171,7 @@ function checkValidUsrName() {
 		inputUsrName.style.color = greenColor;
 		inputUsrName.style.borderColor = greenColor;
 		return true;
-	} 
-	else {
+	} else {
 		helpUsrName.style.color = redColor;
 		inputUsrName.style.color = redColor;
 		inputUsrName.style.borderColor = redColor;
@@ -174,11 +181,10 @@ function checkValidUsrName() {
 
 async function sendConnexion(event) {
 	event.preventDefault();
-	if(!connected && !isTryingToConnect && checkValidUsrName() && checkValidPassword())
-	{
-        isTryingToConnect = true; // to be sure the user is'nt spamming connexion resquests
+	if (!connected && !isTryingToConnect && checkValidUsrName() && checkValidPassword()) {
+		isTryingToConnect = true; // to be sure the user is'nt spamming connexion resquests
 		await tryConnexion();
-        isTryingToConnect = false;
+		isTryingToConnect = false;
 	}
 }
 
@@ -187,18 +193,17 @@ function editSendButton(text) {
 }
 
 function resetStyleElems(elems) {
-    for(let i=0 ; i < elems.length ; i++)
-    {
-        elems[i].style = " ";
-    }
+	for (let i = 0; i < elems.length; i++) {
+		elems[i].style = ' ';
+	}
 }
 
 async function tryConnexion() {
-	let xhr = getXHR();
-	return await new Promise(function(resolve) {
-		editSendButton("Connexion en cours");
+	let xhr = new XMLHttpRequest();
+	return await new Promise(function (resolve) {
+		editSendButton('Connexion en cours');
 		var data = new FormData(formLogin);
-		data.append("inp_submit", "Envoyer"); //car FormData ne contient pas le submit
+		data.append('inp_submit', 'Envoyer'); //car FormData ne contient pas le submit
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				let responseText = xhr.responseText;
@@ -209,37 +214,35 @@ async function tryConnexion() {
 							switch (response.connexion) {
 								case 1:
 									if (DEBUG) console.log(response);
-									editSendButton("Connexion réussie");
+									editSendButton('Connexion réussie');
 									inputSubmit.style.color = greenColor;
 									inputSubmit.style.borderColor = greenColor;
 									connected = true;
 									printConnected();
 									hide(formLogin);
 									showFlex(defMenu);
-									inputPswd.value = "";
-									inputUsrName.value = "";
+									inputPswd.value = '';
+									inputUsrName.value = '';
 									resetStyleElems([inputPswd, inputUsrName, inputSubmit]);
-									inputSubmit.style = "";
-									editSendButton("Envoyer");
+									inputSubmit.style = '';
+									editSendButton('Envoyer');
 									break;
 								case 0:
 									if (DEBUG) console.log(response);
-									editSendButton("Informations incorrectes");
+									editSendButton('Informations incorrectes');
 									inputSubmit.style.color = redColor;
 									inputSubmit.style.borderColor = redColor;
 									connected = false;
 									break;
-								default: 
+								default:
 									if (DEBUG) console.error('??? reponse.connexion ???');
-									editSendButton("[ERROR] Reload Page");
+									editSendButton('[ERROR] Reload Page');
 							}
-						}
-						else {
+						} else {
 							if (DEBUG) console.error('Données invalides');
-							editSendButton("[ERROR] Respecter les conditions des champs");
+							editSendButton('[ERROR] Respecter les conditions des champs');
 						}
-					}
-					else {
+					} else {
 						if (DEBUG) console.log(response);
 						connected = false;
 					}
@@ -253,14 +256,14 @@ async function tryConnexion() {
 			}
 		};
 		xhr.open('POST', 'PHP/login.php', true);
-		xhr.responseType = "text";
+		xhr.responseType = 'text';
 		xhr.send(data);
 	});
 }
 
 async function getAutoSave() {
-	let xhr = getXHR();
-	return await new Promise(function(resolve) {
+	let xhr = new XMLHttpRequest();
+	return await new Promise(function (resolve) {
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				let responseText = xhr.responseText;
@@ -269,16 +272,14 @@ async function getAutoSave() {
 					if (response.exist) {
 						if (response.found) {
 							resolve(true);
-						}
-						else {
-							if (DEBUG) console.error('pas trouvé'); 
+						} else {
+							if (DEBUG) console.error('pas trouvé');
 							resolve(false);
 						}
-					}
-					else if (!response.exist) {
+					} else if (!response.exist) {
 						if (DEBUG) console.log(response);
 						resolve(false);
-					} 
+					}
 				} catch (error) {
 					if (DEBUG) {
 						console.error('Erreur lors du parsing JSON:', error);
@@ -289,7 +290,7 @@ async function getAutoSave() {
 			}
 		};
 		xhr.open('GET', 'PHP/get_auto_save.php', true);
-		xhr.responseType = "text";
+		xhr.responseType = 'text';
 		xhr.send();
 	});
 }

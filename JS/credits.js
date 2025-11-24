@@ -1,24 +1,16 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let videoCredit = document.getElementById("bg-video");
-    let playButton = document.getElementById("play_button_credits");
-    //playPause();
-    //playButton.addEventListener("click", playPause);
-    document.addEventListener("click", playPause);
+import {el} from './elements.js';
 
-    function playPause() { 
-        if (videoCredit.paused)
-        {
-            videoCredit.play();
-            playButton.style.display = "none";
-        }
-        else 
-        {
-            videoCredit.pause();
-            playButton.style.display = "block";
-        }
-    } 
+// EVENTS
+document.addEventListener('click', playPause);
 
-    videoCredit.onload = function () {
-        playPause();
-    };
-});
+function playPause() {
+	if (el.videoCredit.paused) {
+		el.videoCredit.play();
+		el.playButtonCredits.style.display = 'none';
+	} else {
+		el.videoCredit.pause();
+		el.playButtonCredits.style.display = 'block';
+	}
+}
+
+el.videoCredit.addEventListener('loadeddata', playPause);

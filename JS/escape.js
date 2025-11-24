@@ -1,26 +1,17 @@
-document.addEventListener("DOMContentLoaded", () => {
-    divMenu = $("menu_screen");
-    divGame = $("game_screen");
-    divEscape = $("escape");
-    quitEscBtn = $("quit_esc_button");
-    saveBtn = $("save_button");
-    loadBtn = $("load_button");
-    returnBtn = $("return_button");
+import {el} from './elements.js';
+import {hide, noFilter, showFlex} from './common.js';
 
-    quitEscBtn.addEventListener("click", () => {
-        noFilter(divMenu);
-        noFilter(divGame);
-        hide(divEscape); 
-    });
-    returnBtn.addEventListener("click", GameToMenu);
+el.quitEscBtn.addEventListener('click', () => {
+	noFilter(divMenu);
+	noFilter(divGame);
+	hide(divEscape);
 });
-
-let returnBtn, quitEscBtn, saveBtn, loadBtn;
+el.returnBtn.addEventListener('click', GameToMenu);
 
 function GameToMenu() {
-    noFilter(divMenu);
-    noFilter(divGame);
-    showFlex(divMenu);
-    hide(divGame);
-    hide(divEscape);
+	noFilter(divMenu);
+	noFilter(divGame);
+	showFlex(divMenu);
+	hide(divGame);
+	hide(divEscape);
 }
