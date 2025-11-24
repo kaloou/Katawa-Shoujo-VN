@@ -1,5 +1,5 @@
 import {el} from './elements.js';
-import {hide, showFlex} from './common.js';
+import {$, hide, showFlex, isDisplay} from './common.js';
 import {connected, printNotConnected} from "./login.js";
 import {pressKey} from "./game.js"
 
