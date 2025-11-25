@@ -4,6 +4,8 @@ import {DEBUG} from './init.js';
 
 let isTextLoading = false;
 
+document.addEventListener('keyup', pressKey);
+
 //==========KEY PRESS FUNCTION==========
 export async function pressKey(event) {
 	event.preventDefault();
@@ -81,10 +83,8 @@ async function getLine() {
 						isTextLoading = false;
 						resolve();
 					} catch (error) {
-						if (DEBUG) {
-							console.error('Erreur lors du parsing JSON:', error);
-							console.error('Réponse reçue:', responseText);
-						}
+						if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+						resolve();
 					}
 				}
 			};
@@ -92,7 +92,7 @@ async function getLine() {
 			xhr.send();
 		});
 	} else {
-		if (DEBUG) console.error('attend');
+		if (DEBUG) console.log('attend');
 	}
 }
 

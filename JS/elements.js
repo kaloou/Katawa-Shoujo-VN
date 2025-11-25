@@ -39,9 +39,11 @@ export const el = {
 	saveBtn: document.getElementById('save_button'),
 	loadBtn: document.getElementById('load_button'),
 	closeSaveBtn: document.getElementById('close_save_button'),
-	resetAutoSaveBtn: document.getElementById('reset_auto_save_button'),
 	divButtonInSaveMenu: document.querySelector('#save_div .buttons'),
-	listResetBtn: document.querySelectorAll('.reset_save'),
+	resetAutoSaveBtn: document.getElementById('reset_auto_save_button'),
+	listOfSaveBtn: document.querySelectorAll('#save_div .save_list'),
+	listOfResetBtn: document.querySelectorAll('#save_div .reset_save'),
+	listOfSaveSeparator: document.querySelectorAll('#save_div separate_saves'),
 
 	// === Éléments des crédits ===
 	videoCredit: document.getElementById('bg-video'),

@@ -1,5 +1,6 @@
 <?php
 include('config.php');
+$DEBUG = false;
 try
 {
     $pdo = new PDO($source_bd, $utilisateur_bd, $passe_bd, $options);

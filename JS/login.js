@@ -74,12 +74,10 @@ async function isConnectedInSession() {
 				let responseText = xhr.responseText;
 				try {
 					let response = JSON.parse(responseText);
-					resolve(response.exist);
+					resolve(response);
 				} catch (error) {
-					if (DEBUG) {
-						console.error('Erreur lors du parsing JSON:', error);
-						console.error('Réponse reçue:', responseText);
-					}
+					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+					resolve(false);
 				}
 			}
 		};
@@ -194,7 +192,7 @@ function editSendButton(text) {
 
 function resetStyleElems(elems) {
 	for (let i = 0; i < elems.length; i++) {
-		elems[i].style = ' ';
+		elems[i].style = '';
 	}
 }
 
@@ -248,10 +246,8 @@ async function tryConnexion() {
 					}
 					resolve(response.submit);
 				} catch (error) {
-					if (DEBUG) {
-						console.error('Erreur lors du parsing JSON:', error);
-						console.error('Réponse reçue:', responseText);
-					}
+					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+					resolve(false);
 				}
 			}
 		};
@@ -281,11 +277,8 @@ async function getAutoSave() {
 						resolve(false);
 					}
 				} catch (error) {
-					if (DEBUG) {
-						console.error('Erreur lors du parsing JSON:', error);
-						console.error('Réponse reçue:', responseText);
-						resolve(false);
-					}
+					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+					resolve(false);
 				}
 			}
 		};

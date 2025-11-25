@@ -1,7 +1,7 @@
 import {el} from './elements.js';
 import {$, hide, showFlex, isDisplay} from './common.js';
 import {connected, printNotConnected} from "./login.js";
-import {pressKey} from "./game.js"
+import {pressKey} from "./game.js";
 
 // EVENTS
 el.saveButton.addEventListener('click', () => {
@@ -14,57 +14,66 @@ el.closeSaveBtn.addEventListener('click', () => {
 	clickOnSave(0);
 });
 
-let saveDivMode;
+el.resetAutoSaveBtn.addEventListener('click', () => {
+    resetSave();
+});
 
-function clickOnSave(n) {
+
+
+let saveDivMode, saves;
+
+async function clickOnSave(n) {
 	var textTitle;
-	saveDivMode = n;
-	if (connected) {
+	if(!connected) {
 		switch (n) {
 			case 0:
-				textTitle = '';
 				break;
 			case 1:
 				textTitle = 'Sauvegarder';
+	            saveDivMode = 1;
 				addListenerForSave();
 				break;
 			case 2:
 				textTitle = 'Charger';
+	            saveDivMode = 2;
 				addListenerForLoad();
 				break;
 			default:
 				textTitle = '[ERROR] Reload the page';
 				break;
 		}
-		extractSaves();
+		saves = await extractSaves();
 		toggleSaveMenu(textTitle);
 	} else {
 		printNotConnected();
 	}
 }
 
-function appendTitleOnSavesMenu(content) {
-	// https://www.w3schools.com/jsref/met_element_before.asp
-	var title = document.createElement('h1');
-	title.id = 'titleForSaveMenu';
-	el.resetAutoSaveBtn.before(title);
-	title.append(content);
-}
-
 function toggleSaveMenu(content) {
-	if (isDisplay(el.saveDiv)) {
+	if(isDisplay(el.saveDiv)) {
 		$('titleForSaveMenu').remove();
 		hide(el.saveDiv);
 		document.removeEventListener('keyup', closeSaveWithEsc);
 		document.addEventListener('keyup', pressKey);
+        switch(saveDivMode) {
+            case 1:
+                removeListenerForSave();
+                break;
+            case 2:
+                removeListenerForLoad();
+                break;
+            default:
+                location.reload();
+                break;
+        }
 	} else {
 		var title = document.createElement('h1');
 		title.id = 'titleForSaveMenu';
 		el.resetAutoSaveBtn.before(title);
 		title.append(content);
 		showFlex(el.saveDiv);
-		document.addEventListener('keyup', closeSaveWithEsc);
 		document.removeEventListener('keyup', pressKey);
+		document.addEventListener('keyup', closeSaveWithEsc);
 	}
 }
 
@@ -77,8 +86,62 @@ function closeSaveWithEsc(event) {
 
 function closeSavesMenu() {}
 
-async function extractSaves() {}
+async function extractSaves() {
+	let xhr = new XMLHttpRequest();
+	return await new Promise(function (resolve) {
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				let responseText = xhr.responseText;
+				try {
+					let response = JSON.parse(responseText);
+					if (response.received) {
+						if (response.found) {
+							// récup
+						} else {
+							if (DEBUG) console.error('Pas de save trouvées');
+							location.reload();
+						}
+					} else {
+						if (DEBUG) console.log(response);
+						connected = false;
+					}
+					resolve(response.received);
+				} catch (error) {
+					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+					resolve(false);
+				}
+			}
+		};
+		xhr.open('POST', 'PHP/get_saves.php', true);
+		xhr.responseType = 'text';
+		xhr.send(data);
+	});
+}
 
-function addListenerForSave() {}
+function addListenerForSave() {
+    for(i=0 ; i < 5 ; i++) {
+        
+    }
+}
 
-function addListenerForLoad() {}
+function addListenerForLoad() {
+    for(i=0 ; i < 5 ; i++) {
+        
+    }
+}
+
+function removeListenerForSave() {
+    for(i=0 ; i < 5 ; i++) {
+        
+    }
+}
+
+function removeListenerForLoad() {
+    for(i=0 ; i < 5 ; i++) {
+        
+    }
+}
+
+function resetSave() {
+
+}

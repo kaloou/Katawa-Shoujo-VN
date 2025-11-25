@@ -1,5 +1,4 @@
 <?php
-$DEBUG = false;
 //if($DEBUG) session_start();
 //if($DEBUG) include_once('connexion.php');
 //if($DEBUG) header('Content-Type: text/plain; charset=utf-8');
