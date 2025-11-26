@@ -25,14 +25,6 @@ export function isNotDisplay(elem) {
 	return elem.style.display === 'none';
 }
 
-export function isDisplay(elem) {
-	return elem.style.display === 'flex' || elem.style.display === 'block';
-}
-
-export function isNotDisplay(elem) {
-	return elem.style.display === 'none';
-}
-
 export function blur(elem) {
 	elem.style.filter = 'blur(5px)';
 }

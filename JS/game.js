@@ -1,7 +1,7 @@
 import {el} from './elements.js';
 import {preloadImages, blur, showFlex, hide, showBlock, isDisplay, noFilter} from './common.js';
 import {DEBUG} from './init.js';
-
+document.addEventListener('keyup', pressKey);
 let isTextLoading = false;
 
 //==========KEY PRESS FUNCTION==========
@@ -229,8 +229,19 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	spriteImg.style.backgroundSize = 'contain';
 	spriteImg.style.backgroundRepeat = 'no-repeat';
 
-	const originalX = pos % 800;
-	const convertedX = convert_x_on_current_format(originalX);
+	let convertedX;
+    if (pos === 800) {
+        const baseX = 750;
+        convertedX = convert_x_on_current_format(baseX);
+    }
+	else if (pos > 800) {
+		// Si pos > 800, convertir 800 puis convertir le reste et additionner
+		const baseX = 800;
+		const remainderX = pos - 800;
+		convertedX = convert_x_on_current_format(baseX) + convert_x_on_current_format(remainderX);
+	} else {
+		convertedX = convert_x_on_current_format(pos);
+	}
 
 	spriteImg.style.left = convertedX - convert_x_on_current_format_hd(width) / 2 + 'px';
 	spriteImg.style.bottom = '0';
