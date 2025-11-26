@@ -7,7 +7,7 @@ let isTextLoading = false;
 document.addEventListener('keyup', pressKey);
 
 //==========KEY PRESS FUNCTION==========
-export async function pressKey(event) {
+export function pressKey(event) {
 	event.preventDefault();
 	if (event.key === 'Escape') {
 		openEscape();
@@ -56,41 +56,36 @@ function showDialog() {
 	document.removeEventListener('keydown', showDialog);
 }
 //==== MAIN FUNCTIONS ==================================
-async function getLine() {
+function getLine() {
 	if (!isTextLoading) {
 		isTextLoading = true;
 		let xhr = new XMLHttpRequest();
-		return await new Promise(function (resolve) {
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === 4 && xhr.status === 200) {
-					let responseText = xhr.responseText;
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				let responseText = xhr.responseText;
+				try {
+					let response = JSON.parse(responseText);
 
-					try {
-						let response = JSON.parse(responseText);
-
-						if (response.type === 'error') {
-							if (DEBUG) console.error('Une erreur est survenue:', response.message);
-						} else if (response.type === 'end') {
-							if (DEBUG) console.log('Fin de la séquence, redémarrage...');
-							isTextLoading = false;
-							getLine();
-						} else {
-							if (response.seqserial === 1) {
-								preloadImages();
-							}
-							update_dialogue(response);
-						}
+					if (response.type === 'error') {
+						if (DEBUG) console.error('Une erreur est survenue:', response.message);
+					} else if (response.type === 'end') {
+						if (DEBUG) console.log('Fin de la séquence, redémarrage...');
 						isTextLoading = false;
-						resolve();
-					} catch (error) {
-						if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
-						resolve();
+						getLine();
+					} else {
+						if (response.seqserial === 1) {
+							preloadImages();
+						}
+						update_dialogue(response);
 					}
+					isTextLoading = false;
+				} catch (error) {
+					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
 				}
-			};
-			xhr.open('GET', 'PHP/get_line.php', true);
-			xhr.send();
-		});
+			}
+		};
+		xhr.open('GET', 'PHP/get_line.php', true);
+		xhr.send();
 	} else {
 		if (DEBUG) console.log('attend');
 	}

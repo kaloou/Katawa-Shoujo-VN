@@ -4,10 +4,10 @@ import {connected, printNotConnected} from "./login.js";
 import {pressKey} from "./game.js";
 
 // EVENTS
-el.saveButton.addEventListener('click', () => {
+el.saveBtn.addEventListener('click', () => {
 	clickOnSave(1);
 });
-el.loadButton.addEventListener('click', () => {
+el.loadBtn.addEventListener('click', () => {
 	clickOnSave(2);
 });
 el.closeSaveBtn.addEventListener('click', () => {
@@ -18,38 +18,41 @@ el.resetAutoSaveBtn.addEventListener('click', () => {
     resetSave();
 });
 
+const DEBUG = true;
 
+let saveDivMode, saves, textTitle, saveAreLoading=false;
 
-let saveDivMode, saves;
-
-async function clickOnSave(n) {
-	var textTitle;
-	if(!connected) {
+function clickOnSave(n) {
+	if(connected && !saveAreLoading) {
+		textTitle = null;
 		switch (n) {
 			case 0:
+                toggleSaveMenu();
 				break;
 			case 1:
+				saveAreLoading = true;
 				textTitle = 'Sauvegarder';
 	            saveDivMode = 1;
+                extractSaves();
 				addListenerForSave();
 				break;
 			case 2:
+				saveAreLoading = true;
 				textTitle = 'Charger';
 	            saveDivMode = 2;
+                extractSaves();
 				addListenerForLoad();
 				break;
 			default:
 				textTitle = '[ERROR] Reload the page';
 				break;
 		}
-		saves = await extractSaves();
-		toggleSaveMenu(textTitle);
 	} else {
 		printNotConnected();
 	}
 }
 
-function toggleSaveMenu(content) {
+function toggleSaveMenu() {
 	if(isDisplay(el.saveDiv)) {
 		$('titleForSaveMenu').remove();
 		hide(el.saveDiv);
@@ -70,7 +73,7 @@ function toggleSaveMenu(content) {
 		var title = document.createElement('h1');
 		title.id = 'titleForSaveMenu';
 		el.resetAutoSaveBtn.before(title);
-		title.append(content);
+		title.append(textTitle);
 		showFlex(el.saveDiv);
 		document.removeEventListener('keyup', pressKey);
 		document.addEventListener('keyup', closeSaveWithEsc);
@@ -86,58 +89,58 @@ function closeSaveWithEsc(event) {
 
 function closeSavesMenu() {}
 
-async function extractSaves() {
+function extractSaves() {
 	let xhr = new XMLHttpRequest();
-	return await new Promise(function (resolve) {
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState === 4 && xhr.status === 200) {
-				let responseText = xhr.responseText;
-				try {
-					let response = JSON.parse(responseText);
-					if (response.received) {
-						if (response.found) {
-							// récup
-						} else {
-							if (DEBUG) console.error('Pas de save trouvées');
-							location.reload();
-						}
-					} else {
-						if (DEBUG) console.log(response);
-						connected = false;
-					}
-					resolve(response.received);
-				} catch (error) {
-					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
-					resolve(false);
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			let responseText = xhr.responseText;
+			try {
+				let response = JSON.parse(responseText);
+				if (response.received && response.found) {
+						saves = response.saves;
+						toggleSaveMenu();
+						if (DEBUG) console.error(response);
+				} else {
+					if (DEBUG) console.error('Pas de save trouvées' + response);
+					connected = false;
+					printNotConnected();
+					location.reload();
 				}
+			} catch (error) {
+				if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+				connected = false;
+				printNotConnected();
+				location.reload();
 			}
-		};
-		xhr.open('POST', 'PHP/get_saves.php', true);
-		xhr.responseType = 'text';
-		xhr.send(data);
-	});
+			saveAreLoading = false;
+			xhr = null;
+		}
+	};
+	xhr.open('GET', 'PHP/get_saves.php', true);
+	xhr.responseType = 'text';
+	xhr.send();
 }
 
 function addListenerForSave() {
-    for(i=0 ; i < 5 ; i++) {
+    for(var i=0 ; i < 5 ; i++) {
         
     }
 }
 
 function addListenerForLoad() {
-    for(i=0 ; i < 5 ; i++) {
+    for(var i=0 ; i < 5 ; i++) {
         
     }
 }
 
 function removeListenerForSave() {
-    for(i=0 ; i < 5 ; i++) {
+    for(var i=0 ; i < 5 ; i++) {
         
     }
 }
 
 function removeListenerForLoad() {
-    for(i=0 ; i < 5 ; i++) {
+    for(var i=0 ; i < 5 ; i++) {
         
     }
 }
