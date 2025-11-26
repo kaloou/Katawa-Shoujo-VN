@@ -2,7 +2,6 @@
     session_start();
     include_once('connexion.php');
     header('Content-Type: text/plain; charset=utf-8');
-    $DEBUG = false;
 
     try 
     {
@@ -12,7 +11,7 @@
             $user_id = $_SESSION["user_id"];
             $query = "SELECT auto_save FROM users WHERE users.id_user = :user_id";
             $stmt = $pdo->prepare($query);
-            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->execute();
 
             $info = $stmt->fetch(PDO::FETCH_ASSOC);

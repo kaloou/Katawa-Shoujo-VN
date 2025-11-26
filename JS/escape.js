@@ -1,6 +1,8 @@
 import {el} from './elements.js';
 import {hide, noFilter, showFlex} from './common.js';
 
+hide(el.divEscape);
+
 el.quitEscBtn.addEventListener('click', () => {
 	noFilter(el.divMenu);
 	noFilter(el.divGame);

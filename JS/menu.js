@@ -2,11 +2,11 @@ import {el} from './elements.js';
 import {blur, showFlex} from './common.js';
 
 // EVENTS
-el.creditsButton.addEventListener('click', () => {
+el.creditsBtn.addEventListener('click', () => {
 	window.location.href = 'HTML/credits.html';
 });
 
-el.settingsButton.addEventListener('click', () => {
+el.settingsBtn.addEventListener('click', () => {
 	showFlex(el.divEscape);
 	blur(el.divMenu);
 	blur(el.divGame);
