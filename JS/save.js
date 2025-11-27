@@ -20,7 +20,7 @@ el.resetAutoSaveBtn.addEventListener('click', () => {
 
 const DEBUG = true;
 
-let saveDivMode, saves, textTitle, saveAreLoading=false;
+let saveDivMode, saves, textTitle, max_save = 5, saveAreLoading = false;
 
 function clickOnSave(n) {
 	if(connected && !saveAreLoading) {
@@ -56,27 +56,18 @@ function toggleSaveMenu() {
 	if(isDisplay(el.saveDiv)) {
 		$('titleForSaveMenu').remove();
 		hide(el.saveDiv);
-		document.removeEventListener('keyup', closeSaveWithEsc);
-		document.addEventListener('keyup', pressKey);
-        switch(saveDivMode) {
-            case 1:
-                removeListenerForSave();
-                break;
-            case 2:
-                removeListenerForLoad();
-                break;
-            default:
-                location.reload();
-                break;
-        }
+		document.onkeyup = (event) => {
+			pressKey(event);
+		};
 	} else {
 		var title = document.createElement('h1');
 		title.id = 'titleForSaveMenu';
 		el.resetAutoSaveBtn.before(title);
 		title.append(textTitle);
 		showFlex(el.saveDiv);
-		document.removeEventListener('keyup', pressKey);
-		document.addEventListener('keyup', closeSaveWithEsc);
+		document.onkeyup = (event) => {
+			closeSaveWithEsc(event);
+		};
 	}
 }
 
@@ -86,8 +77,6 @@ function closeSaveWithEsc(event) {
 		toggleSaveMenu();
 	}
 }
-
-function closeSavesMenu() {}
 
 function extractSaves() {
 	let xhr = new XMLHttpRequest();
@@ -104,13 +93,11 @@ function extractSaves() {
 					if (DEBUG) console.error('Pas de save trouvées' + response);
 					connected = false;
 					printNotConnected();
-					location.reload();
 				}
 			} catch (error) {
 				if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
 				connected = false;
 				printNotConnected();
-				location.reload();
 			}
 			saveAreLoading = false;
 			xhr = null;
@@ -121,30 +108,36 @@ function extractSaves() {
 	xhr.send();
 }
 
-function addListenerForSave() {
-    for(var i=0 ; i < 5 ; i++) {
-        
-    }
+function saveThisSave(n) {
+	console.error("Save" + n);
 }
 
-function addListenerForLoad() {
-    for(var i=0 ; i < 5 ; i++) {
-        
-    }
-}
-
-function removeListenerForSave() {
-    for(var i=0 ; i < 5 ; i++) {
-        
-    }
-}
-
-function removeListenerForLoad() {
-    for(var i=0 ; i < 5 ; i++) {
-        
-    }
+function loadThisSave(n) {
+	console.error("Load" + n);
 }
 
 function resetSave() {
 
+}
+
+function addListenerForSave() {
+    for(let i=0 ; i < max_save ; i++) {
+        el.listOfSaveBtn[i].onclick = () => {
+			saveThisSave(i);
+		};
+    }
+}
+
+function addListenerForLoad() {
+    for(let i=0 ; i < max_save ; i++) {
+        el.listOfSaveBtn[i].onclick = () => {
+			loadThisSave(i);
+		};
+    }
+}
+
+function addListenerForReset() {
+	for(var i=0 ; i < max_save ; i++) {
+        
+    }
 }

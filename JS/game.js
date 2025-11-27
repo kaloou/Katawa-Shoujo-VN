@@ -1,10 +1,11 @@
 import {el} from './elements.js';
 import {preloadImages, blur, showFlex, hide, showBlock, isDisplay, noFilter} from './common.js';
 import {DEBUG} from './init.js';
-document.addEventListener('keyup', pressKey);
 let isTextLoading = false;
 
-document.addEventListener('keyup', pressKey);
+document.onkeyup = (event) => {
+	pressKey(event);
+};
 
 //==========KEY PRESS FUNCTION==========
 export function pressKey(event) {
