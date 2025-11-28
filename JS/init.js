@@ -1,17 +1,63 @@
 import {el} from './elements.js';
 import {preloadImages} from './common.js';
+import {GameToMenu, openEscape} from './escape.js'
+import {pressKey} from "./game.js";
+import {sendConnexion, openLoginForm, start, checkValidUsrName, checkValidPassword, wantDisconnect, printConnected} from "./login.js";
+//import {showEscapeMenu} from "./menu.js";
+import {clickOnSave, resetAutoSave} from "./save.js";
+
 export const DEBUG = true;
 
 document.addEventListener('DOMContentLoaded', function () {
-	initGame();
-	preloadImages();
-	if (DEBUG) {
-		initTestButtons();
-	}
+    initGame();
+    preloadImages();
+    if (DEBUG) {
+        initTestButtons();
+    }
+    //========EVENTS=======
+    // ESCAPE
+    el.returnBtn.addEventListener('click', GameToMenu);
+    // GAME
+   	document.onkeyup = (event) => {
+		pressKey(event);
+	};
+    // LOGIN
+    el.inputSubmit.addEventListener('click', sendConnexion);
+    el.formLogin.addEventListener('submit', sendConnexion);
+
+    el.connectBtn.addEventListener('click', openLoginForm);
+
+    el.startBtn.addEventListener('click', start);
+
+    el.inputUsrName.addEventListener('keyup', checkValidUsrName);
+    el.inputPswd.addEventListener('keyup', checkValidPassword);
+
+    el.connectBtn.addEventListener('mouseenter', wantDisconnect);
+    el.connectBtn.addEventListener('mouseleave', printConnected);
+    // MENU
+    el.settingsBtn.addEventListener('click', openEscape);
+    el.creditsBtn.addEventListener('click', () => {
+        window.location.href = 'HTML/credits.html';
+    });
+    // SAVE
+    el.saveBtn.addEventListener('click', () => {
+        clickOnSave(1);
+    });
+    el.loadBtn.addEventListener('click', () => {
+        clickOnSave(2);
+    });
+    el.closeSaveBtn.addEventListener('click', () => {
+        clickOnSave(0);
+    });
+
+    el.resetAutoSaveBtn.addEventListener('click', () => {
+        resetAutoSave();
+    });
+
 });
 
 window.addEventListener('load', () => {
-	//ici rendre visible une page de chargement temporaire
+
 });
 
 function initGame() {

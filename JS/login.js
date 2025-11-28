@@ -3,18 +3,18 @@ import {$, showFlex, hide, showBlock} from './common.js';
 import {DEBUG} from './init.js';
 // ici il faut importer elements en verifiant que tout est chargé dans le element.js et donc supprimer tout le domContentLoaded
 
-el.inputSubmit.addEventListener('click', sendConnexion);
-el.formLogin.addEventListener('submit', sendConnexion);
+// el.inputSubmit.addEventListener('click', sendConnexion);
+// el.formLogin.addEventListener('submit', sendConnexion);
 
-el.connectBtn.addEventListener('click', openLoginForm);
+// el.connectBtn.addEventListener('click', openLoginForm);
 
-el.startBtn.addEventListener('click', start);
+// el.startBtn.addEventListener('click', start);
 
-el.inputUsrName.addEventListener('keyup', checkValidUsrName);
-el.inputPswd.addEventListener('keyup', checkValidPassword);
+// el.inputUsrName.addEventListener('keyup', checkValidUsrName);
+// el.inputPswd.addEventListener('keyup', checkValidPassword);
 
-el.connectBtn.addEventListener('mouseenter', wantDisconnect);
-el.connectBtn.addEventListener('mouseleave', printConnected);
+// el.connectBtn.addEventListener('mouseenter', wantDisconnect);
+// el.connectBtn.addEventListener('mouseleave', printConnected);
 
 isConnectedInSession();
 
@@ -73,7 +73,7 @@ function isConnectedInSession() {
 	xhr.send();
 }
 
-function openLoginForm() {
+export function openLoginForm() {
 	if (!connected) {
 		showFlex(el.formLogin);
 		hide(el.defMenu);
@@ -89,7 +89,7 @@ function disconnect() {
 	}
 }
 
-function start() {
+export function start() {
 	if (connected) {
 		getAutoSave();
 	} else printNotConnected();
@@ -103,7 +103,7 @@ export function printNotConnected() {
 	}
 }
 
-function printConnected() {
+export function printConnected() {
 	if (connected) {
 		el.connectBtn.textContent = 'Vous êtes connecté';
 		el.connectBtn.style.boxShadow = '0 0 0 0.08vw ' + greenColor;
@@ -111,7 +111,7 @@ function printConnected() {
 	}
 }
 
-function wantDisconnect() {
+export function wantDisconnect() {
 	if (connected) {
 		el.connectBtn.addEventListener('click', disconnect);
 		el.connectBtn.textContent = 'Se déconnecter ?';
@@ -120,7 +120,7 @@ function wantDisconnect() {
 	}
 }
 
-function checkValidPassword() {
+export function checkValidPassword() {
 	var nbrErrors = 0;
 	var testInput = el.inputPswd.value.trim();
 
@@ -144,7 +144,7 @@ function checkValidPassword() {
 	}
 }
 
-function checkValidUsrName() {
+export function checkValidUsrName() {
 	var testInput = el.inputUsrName.value.trim();
 
 	if (regexUsrName.test(testInput)) {
@@ -160,7 +160,7 @@ function checkValidUsrName() {
 	}
 }
 
-function sendConnexion(event) {
+export function sendConnexion(event) {
 	event.preventDefault();
 	if (!connected && !isTryingToConnect && checkValidUsrName() && checkValidPassword()) {
 		isTryingToConnect = true; // to be sure the user is'nt spamming connexion resquests

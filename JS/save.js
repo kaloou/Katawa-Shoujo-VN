@@ -4,25 +4,28 @@ import {connected, printNotConnected} from "./login.js";
 import {pressKey} from "./game.js";
 
 // EVENTS
-el.saveBtn.addEventListener('click', () => {
-	clickOnSave(1);
-});
-el.loadBtn.addEventListener('click', () => {
-	clickOnSave(2);
-});
-el.closeSaveBtn.addEventListener('click', () => {
-	clickOnSave(0);
-});
+// el.saveBtn.addEventListener('click', () => {
+// 	clickOnSave(1);
+// });
+// el.loadBtn.addEventListener('click', () => {
+// 	clickOnSave(2);
+// });
+// el.closeSaveBtn.addEventListener('click', () => {
+// 	clickOnSave(0);
+// });
 
-el.resetAutoSaveBtn.addEventListener('click', () => {
-    resetSave();
-});
+// el.resetAutoSaveBtn.addEventListener('click', () => {
+//     Auto();
+// });
 
 const DEBUG = true;
 
-let saveDivMode, saves, textTitle, max_save = 5, saveAreLoading = false;
+let saveDivMode, saves, textTitle;
+let saveAreLoading = false;
 
-function clickOnSave(n) {
+const max_save = 5; 
+
+export function clickOnSave(n) {
 	if(connected && !saveAreLoading) {
 		textTitle = null;
 		switch (n) {
@@ -33,6 +36,7 @@ function clickOnSave(n) {
 				saveAreLoading = true;
 				textTitle = 'Sauvegarder';
 	            saveDivMode = 1;
+				el.saveBtn.textContent = "chargement...";
                 extractSaves();
 				addListenerForSave();
 				break;
@@ -40,6 +44,7 @@ function clickOnSave(n) {
 				saveAreLoading = true;
 				textTitle = 'Charger';
 	            saveDivMode = 2;
+				el.loadBtn.textContent = "chargement...";
                 extractSaves();
 				addListenerForLoad();
 				break;
@@ -68,6 +73,8 @@ function toggleSaveMenu() {
 		document.onkeyup = (event) => {
 			closeSaveWithEsc(event);
 		};
+		el.saveBtn.textContent = "Sauvegarder";
+		el.loadBtn.textContent = "Charger";
 	}
 }
 
@@ -116,7 +123,7 @@ function loadThisSave(n) {
 	console.error("Load" + n);
 }
 
-function resetSave() {
+export function resetAutoSave() {
 
 }
 

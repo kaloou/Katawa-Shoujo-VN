@@ -1,17 +1,19 @@
 import {el} from './elements.js';
 import {preloadImages, blur, showFlex, hide, showBlock, isDisplay, noFilter} from './common.js';
+import {openEscape} from './escape.js';
 import {DEBUG} from './init.js';
 let isTextLoading = false;
 
-document.onkeyup = (event) => {
-	pressKey(event);
-};
+// document.onkeyup = (event) => {
+// 	pressKey(event);
+// };
 
 //==========KEY PRESS FUNCTION==========
 export function pressKey(event) {
 	event.preventDefault();
 	if (event.key === 'Escape') {
-		openEscape();
+		openEscape(); 
+		// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
 	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(el.divGame)) {
 		getLine();
 	} else if (event.key === 'ArrowLeft' && isDisplay(el.divGame)) {
@@ -27,18 +29,6 @@ function fullScreen() {
 		document.documentElement.requestFullscreen();
 	} else {
 		document.exitFullscreen();
-	}
-}
-
-function openEscape() {
-	if (isDisplay(el.divEscape)) {
-		hide(el.divEscape);
-		noFilter(el.divMenu);
-		noFilter(el.divGame);
-	} else {
-		showFlex(el.divEscape);
-		blur(el.divMenu);
-		blur(el.divGame);
 	}
 }
 
