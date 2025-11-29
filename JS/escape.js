@@ -1,19 +1,16 @@
-import {el} from './elements.js';
-import {hide, noFilter, showFlex} from './common.js';
+hide(divEscape);
 
-hide(el.divEscape);
-
-el.quitEscBtn.addEventListener('click', () => {
-	noFilter(el.divMenu);
-	noFilter(el.divGame);
-	hide(el.divEscape);
+quitEscBtn.addEventListener('click', () => {
+	noFilter(divMenu);
+	noFilter(divGame);
+	hide(divEscape);
 });
-el.returnBtn.addEventListener('click', GameToMenu);
+returnBtn.addEventListener('click', GameToMenu);
 
 function GameToMenu() {
-	noFilter(el.divMenu);
-	noFilter(el.divGame);
-	showFlex(el.divMenu);
-	hide(el.divGame);
-	hide(el.divEscape);
+	noFilter(divMenu);
+	noFilter(divGame);
+	showFlex(divMenu);
+	hide(divGame);
+	hide(divEscape);
 }

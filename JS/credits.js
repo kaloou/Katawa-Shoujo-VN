@@ -8,12 +8,12 @@ document.addEventListener('click', playPause);
 videoCredit.addEventListener('loadeddata', playPause);
 
 function playPause() {
-	if (el.videoCredit.paused) {
-		el.videoCredit.play();
-		el.playButtonCredits.style.display = 'none';
+	if (videoCredit.paused) {
+		videoCredit.play();
+		playButtonCredits.style.display = 'none';
 	} else {
-		el.videoCredit.pause();
-		el.playButtonCredits.style.display = 'block';
+		videoCredit.pause();
+		playButtonCredits.style.display = 'block';
 	}
 }
 

@@ -1,46 +1,45 @@
-import {el} from './elements.js';
-import {$, hide, showFlex, isDisplay} from './common.js';
-import {connected, printNotConnected} from "./login.js";
-import {pressKey} from "./game.js";
-
 // EVENTS
-el.saveBtn.addEventListener('click', () => {
+saveBtn.addEventListener('click', () => {
 	clickOnSave(1);
 });
-el.loadBtn.addEventListener('click', () => {
+loadBtn.addEventListener('click', () => {
 	clickOnSave(2);
 });
-el.closeSaveBtn.addEventListener('click', () => {
+closeSaveBtn.addEventListener('click', () => {
 	clickOnSave(0);
 });
 
-el.resetAutoSaveBtn.addEventListener('click', () => {
-    resetSave();
+resetAutoSaveBtn.addEventListener('click', () => {
+	resetSave();
 });
 
 const DEBUG = true;
 
-let saveDivMode, saves, textTitle, max_save = 5, saveAreLoading = false;
+let saveDivMode,
+	saves,
+	textTitle,
+	max_save = 5,
+	saveAreLoading = false;
 
 function clickOnSave(n) {
-	if(connected && !saveAreLoading) {
+	if (connected && !saveAreLoading) {
 		textTitle = null;
 		switch (n) {
 			case 0:
-                toggleSaveMenu();
+				toggleSaveMenu();
 				break;
 			case 1:
 				saveAreLoading = true;
 				textTitle = 'Sauvegarder';
-	            saveDivMode = 1;
-                extractSaves();
+				saveDivMode = 1;
+				extractSaves();
 				addListenerForSave();
 				break;
 			case 2:
 				saveAreLoading = true;
 				textTitle = 'Charger';
-	            saveDivMode = 2;
-                extractSaves();
+				saveDivMode = 2;
+				extractSaves();
 				addListenerForLoad();
 				break;
 			default:
@@ -53,18 +52,18 @@ function clickOnSave(n) {
 }
 
 function toggleSaveMenu() {
-	if(isDisplay(el.saveDiv)) {
+	if (isDisplay(saveDiv)) {
 		$('titleForSaveMenu').remove();
-		hide(el.saveDiv);
+		hide(saveDiv);
 		document.onkeyup = (event) => {
 			pressKey(event);
 		};
 	} else {
 		var title = document.createElement('h1');
 		title.id = 'titleForSaveMenu';
-		el.resetAutoSaveBtn.before(title);
+		resetAutoSaveBtn.before(title);
 		title.append(textTitle);
-		showFlex(el.saveDiv);
+		showFlex(saveDiv);
 		document.onkeyup = (event) => {
 			closeSaveWithEsc(event);
 		};
@@ -86,9 +85,9 @@ function extractSaves() {
 			try {
 				let response = JSON.parse(responseText);
 				if (response.received && response.found) {
-						saves = response.saves;
-						toggleSaveMenu();
-						if (DEBUG) console.error(response);
+					saves = response.saves;
+					toggleSaveMenu();
+					if (DEBUG) console.error(response);
 				} else {
 					if (DEBUG) console.error('Pas de save trouvées' + response);
 					connected = false;
@@ -109,35 +108,31 @@ function extractSaves() {
 }
 
 function saveThisSave(n) {
-	console.error("Save" + n);
+	console.error('Save' + n);
 }
 
 function loadThisSave(n) {
-	console.error("Load" + n);
+	console.error('Load' + n);
 }
 
-function resetSave() {
-
-}
+function resetSave() {}
 
 function addListenerForSave() {
-    for(let i=0 ; i < max_save ; i++) {
-        el.listOfSaveBtn[i].onclick = () => {
+	for (let i = 0; i < max_save; i++) {
+		listOfSaveBtn[i].onclick = () => {
 			saveThisSave(i);
 		};
-    }
+	}
 }
 
 function addListenerForLoad() {
-    for(let i=0 ; i < max_save ; i++) {
-        el.listOfSaveBtn[i].onclick = () => {
+	for (let i = 0; i < max_save; i++) {
+		listOfSaveBtn[i].onclick = () => {
 			loadThisSave(i);
 		};
-    }
+	}
 }
 
 function addListenerForReset() {
-	for(var i=0 ; i < max_save ; i++) {
-        
-    }
+	for (var i = 0; i < max_save; i++) {}
 }
