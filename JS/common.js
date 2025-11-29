@@ -1,39 +1,39 @@
-export function $(elem) {
+function $(elem) {
 	var type = typeof elem;
 	if (type == 'string') {
 		return document.getElementById(elem);
 	}
 	return elem;
 }
-export function hide(elem) {
+function hide(elem) {
 	elem.style.display = 'none';
 }
 
-export function showFlex(elem) {
+function showFlex(elem) {
 	elem.style.display = 'flex';
 }
 
-export function showBlock(elem) {
+function showBlock(elem) {
 	elem.style.display = 'block';
 }
 
-export function isDisplay(elem) {
+function isDisplay(elem) {
 	return elem.style.display === 'flex' || elem.style.display === 'block';
 }
 
-export function isNotDisplay(elem) {
+function isNotDisplay(elem) {
 	return elem.style.display === 'none';
 }
 
-export function blur(elem) {
+function blur(elem) {
 	elem.style.filter = 'blur(5px)';
 }
 
-export function noFilter(elem) {
+function noFilter(elem) {
 	elem.style.filter = 'none';
 }
 
-export function toggle(elem, display = 'block') {
+function toggle(elem, display = 'block') {
 	if (elem.style.display === 'none') {
 		elem.style.display = display;
 	} else {
@@ -42,7 +42,7 @@ export function toggle(elem, display = 'block') {
 }
 
 //============= Preload image function =============
-export function preloadImages() {
+function preloadImages() {
 	// preload les images de la séquence actuelle
 	fetch('PHP/image_preloader.php')
 		.then((response) => response.json())
