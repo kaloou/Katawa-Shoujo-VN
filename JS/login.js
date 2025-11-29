@@ -41,7 +41,7 @@ let greenColor = '#99B681'; //2c9e31 or 99B681
 let redColor = '#eb243b';
 let pinkColor = '#FF8D7C';
 
-export let connected = false;
+let connected = false;
 
 let isTryingToConnect = false;
 
@@ -90,7 +90,7 @@ function start() {
 	} else printNotConnected();
 }
 
-export function printNotConnected() {
+function printNotConnected() {
 	if (!connected) {
 		connectBtn.textContent = 'Se Connecter';
 		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + redColor;

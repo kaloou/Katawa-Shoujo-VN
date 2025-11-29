@@ -13,7 +13,6 @@ resetAutoSaveBtn.addEventListener('click', () => {
 	resetSave();
 });
 
-const DEBUG = true;
 
 let saveDivMode,
 	saves,
