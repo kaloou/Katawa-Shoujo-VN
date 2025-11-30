@@ -68,7 +68,7 @@ function isConnectedInSession() {
 	xhr.send();
 }
 
-export function openLoginForm() {
+function openLoginForm() {
 	if (!connected) {
 		showFlex(formLogin);
 		hide(defMenu);
@@ -84,7 +84,7 @@ function disconnect() {
 	}
 }
 
-export function start() {
+function start() {
 	if (connected) {
 		getAutoSave();
 	} else printNotConnected();
@@ -98,7 +98,7 @@ function printNotConnected() {
 	}
 }
 
-export function printConnected() {
+function printConnected() {
 	if (connected) {
 		connectBtn.textContent = 'Vous êtes connecté';
 		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + greenColor;
@@ -106,7 +106,7 @@ export function printConnected() {
 	}
 }
 
-export function wantDisconnect() {
+function wantDisconnect() {
 	if (connected) {
 		connectBtn.addEventListener('click', disconnect);
 		connectBtn.textContent = 'Se déconnecter ?';
@@ -115,7 +115,7 @@ export function wantDisconnect() {
 	}
 }
 
-export function checkValidPassword() {
+function checkValidPassword() {
 	var nbrErrors = 0;
 	var testInput = inputPswd.value.trim();
 
@@ -155,7 +155,7 @@ function checkValidUsrName() {
 	}
 }
 
-export function sendConnexion(event) {
+function sendConnexion(event) {
 	event.preventDefault();
 	if (!connected && !isTryingToConnect && checkValidUsrName() && checkValidPassword()) {
 		isTryingToConnect = true; // to be sure the user is'nt spamming connexion resquests

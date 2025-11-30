@@ -8,41 +8,41 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     //========EVENTS=======
     // ESCAPE
-    el.returnBtn.addEventListener('click', GameToMenu);
+    returnBtn.addEventListener('click', GameToMenu);
     // GAME
    	document.onkeyup = (event) => {
 		pressKey(event);
 	};
     // LOGIN
-    el.inputSubmit.addEventListener('click', sendConnexion);
-    el.formLogin.addEventListener('submit', sendConnexion);
+    inputSubmit.addEventListener('click', sendConnexion);
+    formLogin.addEventListener('submit', sendConnexion);
 
-    el.connectBtn.addEventListener('click', openLoginForm);
+    connectBtn.addEventListener('click', openLoginForm);
 
-    el.startBtn.addEventListener('click', start);
+    startBtn.addEventListener('click', start);
 
-    el.inputUsrName.addEventListener('keyup', checkValidUsrName);
-    el.inputPswd.addEventListener('keyup', checkValidPassword);
+    inputUsrName.addEventListener('keyup', checkValidUsrName);
+    inputPswd.addEventListener('keyup', checkValidPassword);
 
-    el.connectBtn.addEventListener('mouseenter', wantDisconnect);
-    el.connectBtn.addEventListener('mouseleave', printConnected);
+    connectBtn.addEventListener('mouseenter', wantDisconnect);
+    connectBtn.addEventListener('mouseleave', printConnected);
     // MENU
-    el.settingsBtn.addEventListener('click', openEscape);
-    el.creditsBtn.addEventListener('click', () => {
+    settingsBtn.addEventListener('click', openEscape);
+    creditsBtn.addEventListener('click', () => {
         window.location.href = 'HTML/credits.html';
     });
     // SAVE
-    el.saveBtn.addEventListener('click', () => {
+    saveBtn.addEventListener('click', () => {
         clickOnSave(1);
     });
-    el.loadBtn.addEventListener('click', () => {
+    loadBtn.addEventListener('click', () => {
         clickOnSave(2);
     });
-    el.closeSaveBtn.addEventListener('click', () => {
+    closeSaveBtn.addEventListener('click', () => {
         clickOnSave(0);
     });
 
-    el.resetAutoSaveBtn.addEventListener('click', () => {
+    resetAutoSaveBtn.addEventListener('click', () => {
         resetAutoSave();
     });
 
