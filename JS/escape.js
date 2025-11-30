@@ -5,6 +5,9 @@ quitEscBtn.addEventListener('click', () => {
 	noFilter(divGame);
 	hide(divEscape);
 });
+
+hideBtn.addEventListener('click', hideButton);
+
 returnBtn.addEventListener('click', GameToMenu);
 
 function GameToMenu() {
