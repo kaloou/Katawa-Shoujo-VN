@@ -72,7 +72,7 @@ function getLine() {
 						getLine();
 					} else {
 						if (response.seqserial === 1) {
-							preloadImages();
+							preloadImagesGame();
 						}
 						update_dialogue(response);
 					}
@@ -243,8 +243,39 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	spriteImg.style.height = (height > 0 ? height : 200) + 'px';
 
 	let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
-	if (existingSprite) existingSprite.replaceWith(spriteImg);
-	else spriteStack.appendChild(spriteImg);
+    if (existingSprite) existingSprite.replaceWith(spriteImg);
+    else spriteStack.appendChild(spriteImg);
+
+    if (existingSprite) { // check for transition of the sprite if already there
+        const oldPos = parseFloat(existingSprite.dataset.pos);
+        const newPos = parseFloat(pos);
+
+        if (oldPos !== newPos) {
+            const oldLeft = parseFloat(existingSprite.style.left);
+            const newLeft = parseFloat(spriteImg.style.left);
+
+            existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
+            existingSprite.dataset.pos = pos;
+            existingSprite.dataset.z = z;
+            existingSprite.style.zIndex = z;
+            existingSprite.style.width = spriteImg.style.width;
+            existingSprite.style.height = spriteImg.style.height;
+
+            existingSprite.style.transition = 'left 0.5s ease-in-out';
+
+            existingSprite.style.left = newLeft + 'px';
+
+            setTimeout(() => {
+                existingSprite.style.transition = '';
+            }, 500);
+        } else {
+            existingSprite.replaceWith(spriteImg);
+        }
+    } else {
+        // Nouveau sprite l'ajouter directement
+        spriteStack.appendChild(spriteImg);
+    }
+
 }
 
 function handle_heartattack(image_name, image_tag, pos, z, width, height) {
