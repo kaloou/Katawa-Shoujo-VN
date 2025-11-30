@@ -1,5 +1,3 @@
-hide(divEscape);
-
 quitEscBtn.addEventListener('click', () => {
 	noFilter(divMenu);
 	noFilter(divGame);

@@ -1,14 +1,15 @@
 let isTextLoading = false;
 
-document.onkeyup = (event) => {
-	pressKey(event);
-};
+// document.onkeyup = (event) => {
+// 	pressKey(event);
+// };
 
 //==========KEY PRESS FUNCTION==========
 function pressKey(event) {
 	event.preventDefault();
 	if (event.key === 'Escape') {
-		openEscape();
+		openEscape(); 
+		// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
 	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(divGame)) {
 		getLine();
 	} else if (event.key === 'ArrowLeft' && isDisplay(divGame)) {

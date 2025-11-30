@@ -30,15 +30,17 @@ function clickOnSave(n) {
 			case 1:
 				saveAreLoading = true;
 				textTitle = 'Sauvegarder';
-				saveDivMode = 1;
-				extractSaves();
+	            saveDivMode = 1;
+				saveBtn.textContent = "chargement...";
+                extractSaves();
 				addListenerForSave();
 				break;
 			case 2:
 				saveAreLoading = true;
 				textTitle = 'Charger';
-				saveDivMode = 2;
-				extractSaves();
+	            saveDivMode = 2;
+				loadBtn.textContent = "chargement...";
+                extractSaves();
 				addListenerForLoad();
 				break;
 			default:
@@ -66,6 +68,8 @@ function toggleSaveMenu() {
 		document.onkeyup = (event) => {
 			closeSaveWithEsc(event);
 		};
+		el.saveBtn.textContent = "Sauvegarder";
+		el.loadBtn.textContent = "Charger";
 	}
 }
 
