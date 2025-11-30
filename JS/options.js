@@ -1,67 +1,49 @@
-// === Variables globales pour les options ===
-let optionsDiv;
-let closeOptionsBtn;
-let fullscreenToggle;
-let resolutionSelect;
-let autoModeToggle;
-let textSpeedSlider;
-let textSpeedValue;
-let musicVolumeSlider;
-let musicVolumeValue;
-
+// === Variables pour les options ===
 let autoModeInterval = null;
-let autoModeDelay = 3000; // 3 sec
-let textDisplaySpeed = 50; // default
+let autoModeDelay = 3000;
+let textDisplaySpeed = 50;
 
-// Charger les options
+// Init
 loadOptions();
-
-// Events
 optionsBtn.addEventListener('click', toggleOptionsMenu);
 closeOptionsBtn.addEventListener('click', toggleOptionsMenu);
 
-// Mode plein écran
 fullscreenToggle.addEventListener('change', (e) => {
-    if (e.target.checked) {
-        enterFullscreen();
-    } else {
-        exitFullscreen();
-    }
-    saveOptions();
+	if (e.target.checked) {
+		enterFullscreen();
+	} else {
+		exitFullscreen();
+	}
+	saveOptions();
 });
 
-// Résolution
 resolutionSelect.addEventListener('change', (e) => {
-    changeResolution(e.target.value);
-    saveOptions();
+	changeResolution(e.target.value);
+	saveOptions();
 });
 
-// Mode automatique
 autoModeToggle.addEventListener('change', (e) => {
-    if (e.target.checked) {
-        startAutoMode();
-    } else {
-        stopAutoMode();
-    }
-    saveOptions();
+	if (e.target.checked) {
+		startAutoMode();
+	} else {
+		stopAutoMode();
+	}
+	saveOptions();
 });
 
-// Vitesse de lecture
 textSpeedSlider.addEventListener('input', (e) => {
-    textDisplaySpeed = parseInt(e.target.value);
-    textSpeedValue.textContent = textDisplaySpeed;
-    saveOptions();
+	textDisplaySpeed = parseInt(e.target.value);
+	textSpeedValue.textContent = textDisplaySpeed;
+	saveOptions();
 });
 
-// Volume de la musique
 musicVolumeSlider.addEventListener('input', (e) => {
-    const volume = parseInt(e.target.value);
-    musicVolumeValue.textContent = volume;
-    setMusicVolume(volume);
-    saveOptions();
+	const volume = parseInt(e.target.value);
+	musicVolumeValue.textContent = volume;
+	setMusicVolume(volume);
+	saveOptions();
 });
 
-// Détecter les changements de plein écran (par ex: touche F11 ou Escape)
 document.addEventListener('fullscreenchange', updateFullscreenToggle);
 document.addEventListener('webkitfullscreenchange', updateFullscreenToggle);
 document.addEventListener('mozfullscreenchange', updateFullscreenToggle);
