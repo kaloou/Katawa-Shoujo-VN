@@ -1,17 +1,17 @@
-// EVENTS
-saveBtn.addEventListener('click', () => {
-	clickOnSave(1);
-});
-loadBtn.addEventListener('click', () => {
-	clickOnSave(2);
-});
-closeSaveBtn.addEventListener('click', () => {
-	clickOnSave(0);
-});
-
-resetAutoSaveBtn.addEventListener('click', () => {
-	resetSave();
-});
+// // EVENTS
+// saveBtn.addEventListener('click', () => {
+// 	clickOnSave(1);
+// });
+// loadBtn.addEventListener('click', () => {
+// 	clickOnSave(2);
+// });
+// closeSaveBtn.addEventListener('click', () => {
+// 	clickOnSave(0);
+// });
+//
+// resetAutoSaveBtn.addEventListener('click', () => {
+// 	resetSave();
+// });
 
 
 let saveDivMode,
@@ -68,8 +68,8 @@ function toggleSaveMenu() {
 		document.onkeyup = (event) => {
 			closeSaveWithEsc(event);
 		};
-		el.saveBtn.textContent = "Sauvegarder";
-		el.loadBtn.textContent = "Charger";
+		saveBtn.textContent = "Sauvegarder";
+		loadBtn.textContent = "Charger";
 	}
 }
 
