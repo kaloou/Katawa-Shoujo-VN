@@ -50,3 +50,14 @@ listOfSaveSeparator = document.querySelectorAll('#save_div .separate_saves');
 sessionButtonsContainer = document.getElementById('session_buttons_container');
 testSessionBtn = document.getElementById('test_session_btn');
 resetSessionBtn = document.getElementById('reset_session_btn');
+
+// === Elements du menu option ======
+optionsDiv = document.getElementById('options_div');
+closeOptionsBtn = document.getElementById('close_options_button');
+fullscreenToggle = document.getElementById('fullscreen_toggle');
+resolutionSelect = document.getElementById('resolution_select');
+autoModeToggle = document.getElementById('auto_mode_toggle');
+textSpeedSlider = document.getElementById('text_speed_slider');
+textSpeedValue = document.getElementById('text_speed_value');
+musicVolumeSlider = document.getElementById('music_volume_slider');
+musicVolumeValue = document.getElementById('music_volume_value');
