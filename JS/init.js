@@ -2,7 +2,8 @@ const DEBUG = true;
 
 document.addEventListener('DOMContentLoaded', function () {
 	initGame();
-	preloadImages();
+    preloadImagesUi();
+	preloadImagesGame();
 	if (DEBUG) {
 		initTestButtons();
 	}
@@ -158,4 +159,10 @@ function initTestButtons() {
 			getSession();
 		}, 1000);
 	}
+}
+
+// ==================== PRELOAD IMAGES FROM PATHS ===================
+function preloadImagesUi(){
+    preloadImage('assets/extern/UI/bg-config-gallery.png');
+    preloadImage('assets/extern/UI/main/background-unsatured.png');
 }
