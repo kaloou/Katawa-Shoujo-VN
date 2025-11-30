@@ -1,19 +1,3 @@
-// // EVENTS
-// saveBtn.addEventListener('click', () => {
-// 	clickOnSave(1);
-// });
-// loadBtn.addEventListener('click', () => {
-// 	clickOnSave(2);
-// });
-// closeSaveBtn.addEventListener('click', () => {
-// 	clickOnSave(0);
-// });
-//
-// resetAutoSaveBtn.addEventListener('click', () => {
-// 	resetSave();
-// });
-
-
 let saveDivMode,
 	saves,
 	textTitle,
@@ -118,7 +102,7 @@ function loadThisSave(n) {
 	console.error('Load' + n);
 }
 
-function resetSave() {}
+function resetAutoSave() {}
 
 function addListenerForSave() {
 	for (let i = 0; i < max_save; i++) {
