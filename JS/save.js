@@ -1,19 +1,4 @@
 // EVENTS
-<<<<<<< HEAD
-// el.saveBtn.addEventListener('click', () => {
-// 	clickOnSave(1);
-// });
-// el.loadBtn.addEventListener('click', () => {
-// 	clickOnSave(2);
-// });
-// el.closeSaveBtn.addEventListener('click', () => {
-// 	clickOnSave(0);
-// });
-
-// el.resetAutoSaveBtn.addEventListener('click', () => {
-//     Auto();
-// });
-=======
 saveBtn.addEventListener('click', () => {
 	clickOnSave(1);
 });
@@ -27,18 +12,8 @@ closeSaveBtn.addEventListener('click', () => {
 resetAutoSaveBtn.addEventListener('click', () => {
 	resetSave();
 });
->>>>>>> 35c7e66ab6deda2855be7bdfb32ddd880755b4ac
 
 
-<<<<<<< HEAD
-let saveDivMode, saves, textTitle;
-let saveAreLoading = false;
-
-const max_save = 5; 
-
-export function clickOnSave(n) {
-	if(connected && !saveAreLoading) {
-=======
 let saveDivMode,
 	saves,
 	textTitle,
@@ -47,7 +22,6 @@ let saveDivMode,
 
 function clickOnSave(n) {
 	if (connected && !saveAreLoading) {
->>>>>>> 35c7e66ab6deda2855be7bdfb32ddd880755b4ac
 		textTitle = null;
 		switch (n) {
 			case 0:
@@ -144,13 +118,7 @@ function loadThisSave(n) {
 	console.error('Load' + n);
 }
 
-<<<<<<< HEAD
-export function resetAutoSave() {
-
-}
-=======
 function resetSave() {}
->>>>>>> 35c7e66ab6deda2855be7bdfb32ddd880755b4ac
 
 function addListenerForSave() {
 	for (let i = 0; i < max_save; i++) {
