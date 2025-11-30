@@ -1,51 +1,51 @@
 const DEBUG = true;
 
 document.addEventListener('DOMContentLoaded', function () {
-    initGame();
-    preloadImages();
-    if (DEBUG) {
-        initTestButtons();
-    }
-    //========EVENTS=======
-    // ESCAPE
-    returnBtn.addEventListener('click', GameToMenu);
-    // GAME
-   	document.onkeyup = (event) => {
+	initGame();
+	preloadImagesUi();
+	preloadImagesGame();
+	if (DEBUG) {
+		initTestButtons();
+	}
+	//========EVENTS=======
+	// ESCAPE
+	returnBtn.addEventListener('click', GameToMenu);
+	// GAME
+	document.onkeyup = (event) => {
 		pressKey(event);
 	};
-    // LOGIN
-    inputSubmit.addEventListener('click', sendConnexion);
-    formLogin.addEventListener('submit', sendConnexion);
+	// LOGIN
+	inputSubmit.addEventListener('click', sendConnexion);
+	formLogin.addEventListener('submit', sendConnexion);
 
-    connectBtn.addEventListener('click', openLoginForm);
+	connectBtn.addEventListener('click', openLoginForm);
 
-    startBtn.addEventListener('click', start);
+	startBtn.addEventListener('click', start);
 
-    inputUsrName.addEventListener('keyup', checkValidUsrName);
-    inputPswd.addEventListener('keyup', checkValidPassword);
+	inputUsrName.addEventListener('keyup', checkValidUsrName);
+	inputPswd.addEventListener('keyup', checkValidPassword);
 
-    connectBtn.addEventListener('mouseenter', wantDisconnect);
-    connectBtn.addEventListener('mouseleave', printConnected);
-    // MENU
-    settingsBtn.addEventListener('click', openEscape);
-    creditsBtn.addEventListener('click', () => {
-        window.location.href = 'HTML/credits.html';
-    });
-    // SAVE
-    saveBtn.addEventListener('click', () => {
-        clickOnSave(1);
-    });
-    loadBtn.addEventListener('click', () => {
-        clickOnSave(2);
-    });
-    closeSaveBtn.addEventListener('click', () => {
-        clickOnSave(0);
-    });
+	connectBtn.addEventListener('mouseenter', wantDisconnect);
+	connectBtn.addEventListener('mouseleave', printConnected);
+	// MENU
+	settingsBtn.addEventListener('click', openEscape);
+	creditsBtn.addEventListener('click', () => {
+		window.location.href = 'HTML/credits.html';
+	});
+	// SAVE
+	saveBtn.addEventListener('click', () => {
+		clickOnSave(1);
+	});
+	loadBtn.addEventListener('click', () => {
+		clickOnSave(2);
+	});
+	closeSaveBtn.addEventListener('click', () => {
+		clickOnSave(0);
+	});
 
-    resetAutoSaveBtn.addEventListener('click', () => {
-        resetAutoSave();
-    });
-
+	resetAutoSaveBtn.addEventListener('click', () => {
+		resetAutoSave();
+	});
 });
 
 function initGame() {
@@ -198,4 +198,10 @@ function initTestButtons() {
 			getSession();
 		}, 1000);
 	}
+}
+
+// ==================== PRELOAD IMAGES FROM PATHS ===================
+function preloadImagesUi() {
+	preloadImage('assets/extern/UI/bg-config-gallery.png');
+	preloadImage('assets/extern/UI/main/background-unsatured.png');
 }

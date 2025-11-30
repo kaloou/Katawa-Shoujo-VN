@@ -1,88 +1,54 @@
-// === Variables globales pour les options ===
-let optionsDiv;
-let closeOptionsBtn;
-let fullscreenToggle;
-let resolutionSelect;
-let autoModeToggle;
-let textSpeedSlider;
-let textSpeedValue;
-let musicVolumeSlider;
-let musicVolumeValue;
-
-// Variables pour le mode auto
+// === Variables pour les options ===
 let autoModeInterval = null;
-let autoModeDelay = 3000; // 3 secondes par défaut
+let autoModeDelay = 3000;
+let textDisplaySpeed = 50;
 
-// Variable pour la vitesse de lecture du texte
-let textDisplaySpeed = 50; // Vitesse par défaut (1-100)
+// Init
+loadOptions();
+optionsBtn.addEventListener('click', toggleOptionsMenu);
+closeOptionsBtn.addEventListener('click', toggleOptionsMenu);
 
-// === Initialisation ===
-document.addEventListener('DOMContentLoaded', () => {
-	// Récupérer les éléments du DOM
-	optionsDiv = document.getElementById('options_div');
-	closeOptionsBtn = document.getElementById('close_options_button');
-	fullscreenToggle = document.getElementById('fullscreen_toggle');
-	resolutionSelect = document.getElementById('resolution_select');
-	autoModeToggle = document.getElementById('auto_mode_toggle');
-	textSpeedSlider = document.getElementById('text_speed_slider');
-	textSpeedValue = document.getElementById('text_speed_value');
-	musicVolumeSlider = document.getElementById('music_volume_slider');
-	musicVolumeValue = document.getElementById('music_volume_value');
-
-	// Charger les options sauvegardées
-	loadOptions();
-
-	// Event listeners
-	optionsBtn.addEventListener('click', toggleOptionsMenu);
-	closeOptionsBtn.addEventListener('click', toggleOptionsMenu);
-
-	// Mode plein écran
-	fullscreenToggle.addEventListener('change', (e) => {
-		if (e.target.checked) {
-			enterFullscreen();
-		} else {
-			exitFullscreen();
-		}
-		saveOptions();
-	});
-
-	// Résolution
-	resolutionSelect.addEventListener('change', (e) => {
-		changeResolution(e.target.value);
-		saveOptions();
-	});
-
-	// Mode automatique
-	autoModeToggle.addEventListener('change', (e) => {
-		if (e.target.checked) {
-			startAutoMode();
-		} else {
-			stopAutoMode();
-		}
-		saveOptions();
-	});
-
-	// Vitesse de lecture
-	textSpeedSlider.addEventListener('input', (e) => {
-		textDisplaySpeed = parseInt(e.target.value);
-		textSpeedValue.textContent = textDisplaySpeed;
-		saveOptions();
-	});
-
-	// Volume de la musique
-	musicVolumeSlider.addEventListener('input', (e) => {
-		const volume = parseInt(e.target.value);
-		musicVolumeValue.textContent = volume;
-		setMusicVolume(volume);
-		saveOptions();
-	});
-
-	// Détecter les changements de plein écran (par ex: touche F11 ou Escape)
-	document.addEventListener('fullscreenchange', updateFullscreenToggle);
-	document.addEventListener('webkitfullscreenchange', updateFullscreenToggle);
-	document.addEventListener('mozfullscreenchange', updateFullscreenToggle);
-	document.addEventListener('MSFullscreenChange', updateFullscreenToggle);
+fullscreenToggle.addEventListener('change', (e) => {
+	if (e.target.checked) {
+		enterFullscreen();
+	} else {
+		exitFullscreen();
+	}
+	saveOptions();
 });
+
+resolutionSelect.addEventListener('change', (e) => {
+	changeResolution(e.target.value);
+	saveOptions();
+});
+
+autoModeToggle.addEventListener('change', (e) => {
+	if (e.target.checked) {
+		startAutoMode();
+	} else {
+		stopAutoMode();
+	}
+	saveOptions();
+});
+
+textSpeedSlider.addEventListener('input', (e) => {
+	textDisplaySpeed = parseInt(e.target.value);
+	textSpeedValue.textContent = textDisplaySpeed;
+	saveOptions();
+});
+
+musicVolumeSlider.addEventListener('input', (e) => {
+	const volume = parseInt(e.target.value);
+	musicVolumeValue.textContent = volume;
+	setMusicVolume(volume);
+	saveOptions();
+});
+
+document.addEventListener('fullscreenchange', updateFullscreenToggle);
+document.addEventListener('webkitfullscreenchange', updateFullscreenToggle);
+document.addEventListener('mozfullscreenchange', updateFullscreenToggle);
+document.addEventListener('MSFullscreenChange', updateFullscreenToggle);
+
 
 // === Fonctions d'ouverture/fermeture du menu ===
 function toggleOptionsMenu() {
@@ -132,29 +98,17 @@ function updateFullscreenToggle() {
 // === Résolution ===
 function changeResolution(resolution) {
 	if (resolution === 'responsive') {
-		// Retirer les styles de taille fixe
-		document.body.style.width = '';
-		document.body.style.height = '';
-		document.body.style.overflow = '';
-		document.documentElement.style.width = '';
-		document.documentElement.style.height = '';
+		if (DEBUG) console.log('Mode responsive activé');
 	} else {
-		// Appliquer la résolution choisie en ouvrant une nouvelle page
 		const [width, height] = resolution.split('x');
-		const currentUrl = window.location.href;
+		const left = (window.screen.width - parseInt(width)) / 2;
+		const top = (window.screen.height - parseInt(height)) / 2;
 
-		// Ouvrir une nouvelle fenêtre avec la résolution spécifiée
-		window.open(
-			currentUrl,
-			'_blank',
-			`width=${width},height=${height},resizable=no`
-		);
+		const features = `width=${width},height=${height},left=${left},top=${top}`;
+		window.open(window.location.href, '', features);
 
-		// Remettre le select sur "responsive" après l'ouverture
-		setTimeout(() => {
-			resolutionSelect.value = 'responsive';
-			saveOptions();
-		}, 100);
+		resolutionSelect.value = 'responsive';
+		saveOptions();
 	}
 }
 
@@ -164,9 +118,7 @@ function startAutoMode() {
 		stopAutoMode();
 	}
 
-	// Appeler getLine toutes les X secondes (basé sur la vitesse)
-	// Plus la vitesse est élevée, plus le délai est court
-	autoModeDelay = 5000 - (textDisplaySpeed * 40); // Entre 1000ms et 5000ms
+	autoModeDelay = 5000 - (textDisplaySpeed * 40);
 
 	autoModeInterval = setInterval(() => {
 		if (isDisplay(divGame) && !isDisplay(divEscape) && !isDisplay(optionsDiv)) {
@@ -200,9 +152,6 @@ function setMusicVolume(volume) {
 	if (DEBUG) console.log('Volume de la musique:', volume);
 }
 
-// === Vitesse de lecture ===
-// La vitesse de lecture est utilisée par la fonction d'affichage du texte
-// Elle est accessible globalement via la variable textDisplaySpeed
 
 // === Sauvegarde et chargement des options ===
 function saveOptions() {

@@ -41,25 +41,52 @@ function toggle(elem, display = 'block') {
 	}
 }
 
-//============= Preload image function =============
-function preloadImages() {
-	// preload les images de la séquence actuelle
-	fetch('PHP/image_preloader.php')
-		.then((response) => response.json())
-		.then((data) => {
-			if (data.images && data.images.length > 0) {
-				data.images.forEach((image) => {
-					const img = new Image(); // creer une image pour chaque nom trouvé
-					img.src = 'assets/internHD/' + image.image_name;
-					img.onload = function () {
-						console.log('Image préchargée:', image.image_name);
-					};
-				});
-			} else {
-				console.log('Aucune image trouvée.');
-			}
-		})
-		.catch((error) => {
-			console.error('Erreur lors du préchargement des images:', error);
-		});
+//============= Preload image functions =============
+function preloadImage(path, onDone) {
+    const img = new Image();
+    img.onload = () => onDone?.(img);
+    img.onerror = () => onDone?.(null);
+    img.src = path;
 }
+
+function preloadImagesGame() {
+    let xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let responseText = xhr.responseText;
+
+                try {
+                    let data = JSON.parse(responseText);
+
+                    if (data.images && data.images.length > 0) {
+                        data.images.forEach((image) => {
+                            const fullPath = 'assets/internHD/' + image.image_name;
+
+                            preloadImage(fullPath, (img) => {
+                                if (img) {
+                                    console.log('Image préchargée:', image.image_name);
+                                } else {
+                                    console.error('Erreur de chargement:', image.image_name);
+                                }
+                            });
+                        });
+                    } else {
+                        console.log('Aucune image trouvée.');
+                    }
+
+                } catch (error) {
+                    console.error('Erreur lors du parsing JSON:', error, '\nRéponse reçue:', responseText);
+                }
+
+            } else {
+                console.error('Erreur XHR preloadImagesGame:', xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'PHP/image_preloader.php', true);
+    xhr.send();
+}
+
