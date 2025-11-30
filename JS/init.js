@@ -1,12 +1,4 @@
-import {el} from './elements.js';
-import {preloadImages} from './common.js';
-import {GameToMenu, openEscape} from './escape.js'
-import {pressKey} from "./game.js";
-import {sendConnexion, openLoginForm, start, checkValidUsrName, checkValidPassword, wantDisconnect, printConnected} from "./login.js";
-//import {showEscapeMenu} from "./menu.js";
-import {clickOnSave, resetAutoSave} from "./save.js";
-
-export const DEBUG = true;
+const DEBUG = true;
 
 document.addEventListener('DOMContentLoaded', function () {
     initGame();
@@ -53,10 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
     el.resetAutoSaveBtn.addEventListener('click', () => {
         resetAutoSave();
     });
-
-});
-
-window.addEventListener('load', () => {
 
 });
 
@@ -162,7 +150,7 @@ function initTestButtons() {
 	`;
 
 	// Vérifie si le conteneur n'existe pas déjà pour éviter les doublons
-	if (!el.sessionButtonsContainer) {
+	if (!sessionButtonsContainer) {
 		document.body.insertAdjacentHTML('beforeend', html);
 		console.log('✅ Boutons de test ajoutés au DOM');
 		// Les éléments seront disponibles après le rendu.
@@ -186,7 +174,7 @@ function initTestButtons() {
 		}
 	} else {
 		// --- 2️⃣ Attachement des événements ---
-		const testBtn = el.testSessionBtn;
+		const testBtn = testSessionBtn;
 		if (testBtn) {
 			testBtn.addEventListener('click', getSession);
 			console.log('✅ Bouton Test Session initialisé');
@@ -194,7 +182,7 @@ function initTestButtons() {
 			console.warn('⚠️ Bouton test_session_btn non trouvé');
 		}
 
-		const resetBtn = el.resetSessionBtn;
+		const resetBtn = resetSessionBtn;
 		if (resetBtn) {
 			resetBtn.addEventListener('click', destroySession);
 			console.log('✅ Bouton Reset Session initialisé');

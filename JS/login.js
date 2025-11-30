@@ -1,20 +1,15 @@
-import {el} from './elements.js';
-import {$, showFlex, hide, showBlock} from './common.js';
-import {DEBUG} from './init.js';
-// ici il faut importer elements en verifiant que tout est chargé dans le element.js et donc supprimer tout le domContentLoaded
+inputSubmit.addEventListener('click', sendConnexion);
+formLogin.addEventListener('submit', sendConnexion);
 
-// el.inputSubmit.addEventListener('click', sendConnexion);
-// el.formLogin.addEventListener('submit', sendConnexion);
+connectBtn.addEventListener('click', openLoginForm);
 
-// el.connectBtn.addEventListener('click', openLoginForm);
+startBtn.addEventListener('click', start);
 
-// el.startBtn.addEventListener('click', start);
+inputUsrName.addEventListener('keyup', checkValidUsrName);
+inputPswd.addEventListener('keyup', checkValidPassword);
 
-// el.inputUsrName.addEventListener('keyup', checkValidUsrName);
-// el.inputPswd.addEventListener('keyup', checkValidPassword);
-
-// el.connectBtn.addEventListener('mouseenter', wantDisconnect);
-// el.connectBtn.addEventListener('mouseleave', printConnected);
+connectBtn.addEventListener('mouseenter', wantDisconnect);
+connectBtn.addEventListener('mouseleave', printConnected);
 
 isConnectedInSession();
 
@@ -46,7 +41,7 @@ let greenColor = '#99B681'; //2c9e31 or 99B681
 let redColor = '#eb243b';
 let pinkColor = '#FF8D7C';
 
-export let connected = false;
+let connected = false;
 
 let isTryingToConnect = false;
 
@@ -75,8 +70,8 @@ function isConnectedInSession() {
 
 export function openLoginForm() {
 	if (!connected) {
-		showFlex(el.formLogin);
-		hide(el.defMenu);
+		showFlex(formLogin);
+		hide(defMenu);
 	}
 }
 
@@ -85,7 +80,7 @@ function disconnect() {
 		connected = false;
 		printNotConnected();
 		destroySession();
-		el.connectBtn.removeEventListener('click', disconnect);
+		connectBtn.removeEventListener('click', disconnect);
 	}
 }
 
@@ -95,67 +90,67 @@ export function start() {
 	} else printNotConnected();
 }
 
-export function printNotConnected() {
+function printNotConnected() {
 	if (!connected) {
-		el.connectBtn.textContent = 'Se Connecter';
-		el.connectBtn.style.boxShadow = '0 0 0 0.08vw ' + redColor;
-		el.connectBtn.style.backgroundColor = redColor;
+		connectBtn.textContent = 'Se Connecter';
+		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + redColor;
+		connectBtn.style.backgroundColor = redColor;
 	}
 }
 
 export function printConnected() {
 	if (connected) {
-		el.connectBtn.textContent = 'Vous êtes connecté';
-		el.connectBtn.style.boxShadow = '0 0 0 0.08vw ' + greenColor;
-		el.connectBtn.style.backgroundColor = greenColor;
+		connectBtn.textContent = 'Vous êtes connecté';
+		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + greenColor;
+		connectBtn.style.backgroundColor = greenColor;
 	}
 }
 
 export function wantDisconnect() {
 	if (connected) {
-		el.connectBtn.addEventListener('click', disconnect);
-		el.connectBtn.textContent = 'Se déconnecter ?';
-		el.connectBtn.style.boxShadow = '0 0 0 0.08vw ' + pinkColor;
-		el.connectBtn.style.backgroundColor = pinkColor;
+		connectBtn.addEventListener('click', disconnect);
+		connectBtn.textContent = 'Se déconnecter ?';
+		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + pinkColor;
+		connectBtn.style.backgroundColor = pinkColor;
 	}
 }
 
 export function checkValidPassword() {
 	var nbrErrors = 0;
-	var testInput = el.inputPswd.value.trim();
+	var testInput = inputPswd.value.trim();
 
 	for (var i = 0; i < listRegexPwd.length; i++) {
 		if (listRegexPwd[i].test(testInput)) {
-			el.liHelpPswd[i].style.color = greenColor;
+			liHelpPswd[i].style.color = greenColor;
 		} else {
 			nbrErrors += 1;
-			el.liHelpPswd[i].style.color = redColor;
+			liHelpPswd[i].style.color = redColor;
 		}
 	}
 
 	if (nbrErrors === 0) {
-		el.inputPswd.style.color = greenColor;
-		el.inputPswd.style.borderColor = greenColor;
+		inputPswd.style.color = greenColor;
+		inputPswd.style.borderColor = greenColor;
 		return true;
 	} else {
-		el.inputPswd.style.color = redColor;
-		el.inputPswd.style.borderColor = redColor;
+		inputPswd.style.color = redColor;
+		inputPswd.style.borderColor = redColor;
 		return false;
 	}
 }
 
-export function checkValidUsrName() {
-	var testInput = el.inputUsrName.value.trim();
+function checkValidUsrName() {
+	var testInput = inputUsrName.value.trim();
 
 	if (regexUsrName.test(testInput)) {
-		el.helpUsrName.style.color = greenColor;
-		el.inputUsrName.style.color = greenColor;
-		el.inputUsrName.style.borderColor = greenColor;
+		helpUsrName.style.color = greenColor;
+		inputUsrName.style.color = greenColor;
+		inputUsrName.style.borderColor = greenColor;
 		return true;
 	} else {
-		el.helpUsrName.style.color = redColor;
-		el.inputUsrName.style.color = redColor;
-		el.inputUsrName.style.borderColor = redColor;
+		helpUsrName.style.color = redColor;
+		inputUsrName.style.color = redColor;
+		inputUsrName.style.borderColor = redColor;
 		return false;
 	}
 }
@@ -169,7 +164,7 @@ export function sendConnexion(event) {
 }
 
 function editSendButton(text) {
-	el.inputSubmit.value = text;
+	inputSubmit.value = text;
 }
 
 function resetStyleElems(elems) {
@@ -181,7 +176,7 @@ function resetStyleElems(elems) {
 function tryConnexion() {
 	let xhr = new XMLHttpRequest();
 	editSendButton('Connexion en cours');
-	var data = new FormData(el.formLogin);
+	var data = new FormData(formLogin);
 	data.append('inp_submit', 'Envoyer'); //car FormData ne contient pas le submit
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
@@ -194,23 +189,23 @@ function tryConnexion() {
 							case 1:
 								if (DEBUG) console.log(response);
 								editSendButton('Connexion réussie');
-								el.inputSubmit.style.color = greenColor;
-								el.inputSubmit.style.borderColor = greenColor;
+								inputSubmit.style.color = greenColor;
+								inputSubmit.style.borderColor = greenColor;
 								connected = true;
 								printConnected();
-								hide(el.formLogin);
-								showFlex(el.defMenu);
-								el.inputPswd.value = '';
-								el.inputUsrName.value = '';
-								resetStyleElems([el.inputPswd, el.inputUsrName, el.inputSubmit]);
-								el.inputSubmit.style = '';
+								hide(formLogin);
+								showFlex(defMenu);
+								inputPswd.value = '';
+								inputUsrName.value = '';
+								resetStyleElems([inputPswd, inputUsrName, inputSubmit]);
+								inputSubmit.style = '';
 								editSendButton('Envoyer');
 								break;
 							case 0:
 								if (DEBUG) console.log(response);
 								editSendButton('Informations incorrectes');
-								el.inputSubmit.style.color = redColor;
-								el.inputSubmit.style.borderColor = redColor;
+								inputSubmit.style.color = redColor;
+								inputSubmit.style.borderColor = redColor;
 								connected = false;
 								break;
 							default:
@@ -246,8 +241,8 @@ function getAutoSave() {
 				let response = JSON.parse(responseText);
 				if (response.exist) {
 					if (response.found) {
-						hide(el.divMenu);
-						showBlock(el.divGame);
+						hide(divMenu);
+						showBlock(divGame);
 					} else {
 						if (DEBUG) console.error('pas trouvé');
 						printNotConnected();

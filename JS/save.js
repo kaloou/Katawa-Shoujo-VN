@@ -1,9 +1,5 @@
-import {el} from './elements.js';
-import {$, hide, showFlex, isDisplay} from './common.js';
-import {connected, printNotConnected} from "./login.js";
-import {pressKey} from "./game.js";
-
 // EVENTS
+<<<<<<< HEAD
 // el.saveBtn.addEventListener('click', () => {
 // 	clickOnSave(1);
 // });
@@ -17,9 +13,24 @@ import {pressKey} from "./game.js";
 // el.resetAutoSaveBtn.addEventListener('click', () => {
 //     Auto();
 // });
+=======
+saveBtn.addEventListener('click', () => {
+	clickOnSave(1);
+});
+loadBtn.addEventListener('click', () => {
+	clickOnSave(2);
+});
+closeSaveBtn.addEventListener('click', () => {
+	clickOnSave(0);
+});
 
-const DEBUG = true;
+resetAutoSaveBtn.addEventListener('click', () => {
+	resetSave();
+});
+>>>>>>> 35c7e66ab6deda2855be7bdfb32ddd880755b4ac
 
+
+<<<<<<< HEAD
 let saveDivMode, saves, textTitle;
 let saveAreLoading = false;
 
@@ -27,16 +38,26 @@ const max_save = 5;
 
 export function clickOnSave(n) {
 	if(connected && !saveAreLoading) {
+=======
+let saveDivMode,
+	saves,
+	textTitle,
+	max_save = 5,
+	saveAreLoading = false;
+
+function clickOnSave(n) {
+	if (connected && !saveAreLoading) {
+>>>>>>> 35c7e66ab6deda2855be7bdfb32ddd880755b4ac
 		textTitle = null;
 		switch (n) {
 			case 0:
-                toggleSaveMenu();
+				toggleSaveMenu();
 				break;
 			case 1:
 				saveAreLoading = true;
 				textTitle = 'Sauvegarder';
 	            saveDivMode = 1;
-				el.saveBtn.textContent = "chargement...";
+				saveBtn.textContent = "chargement...";
                 extractSaves();
 				addListenerForSave();
 				break;
@@ -44,7 +65,7 @@ export function clickOnSave(n) {
 				saveAreLoading = true;
 				textTitle = 'Charger';
 	            saveDivMode = 2;
-				el.loadBtn.textContent = "chargement...";
+				loadBtn.textContent = "chargement...";
                 extractSaves();
 				addListenerForLoad();
 				break;
@@ -58,18 +79,18 @@ export function clickOnSave(n) {
 }
 
 function toggleSaveMenu() {
-	if(isDisplay(el.saveDiv)) {
+	if (isDisplay(saveDiv)) {
 		$('titleForSaveMenu').remove();
-		hide(el.saveDiv);
+		hide(saveDiv);
 		document.onkeyup = (event) => {
 			pressKey(event);
 		};
 	} else {
 		var title = document.createElement('h1');
 		title.id = 'titleForSaveMenu';
-		el.resetAutoSaveBtn.before(title);
+		resetAutoSaveBtn.before(title);
 		title.append(textTitle);
-		showFlex(el.saveDiv);
+		showFlex(saveDiv);
 		document.onkeyup = (event) => {
 			closeSaveWithEsc(event);
 		};
@@ -93,9 +114,9 @@ function extractSaves() {
 			try {
 				let response = JSON.parse(responseText);
 				if (response.received && response.found) {
-						saves = response.saves;
-						toggleSaveMenu();
-						if (DEBUG) console.error(response);
+					saves = response.saves;
+					toggleSaveMenu();
+					if (DEBUG) console.error(response);
 				} else {
 					if (DEBUG) console.error('Pas de save trouvées' + response);
 					connected = false;
@@ -116,35 +137,37 @@ function extractSaves() {
 }
 
 function saveThisSave(n) {
-	console.error("Save" + n);
+	console.error('Save' + n);
 }
 
 function loadThisSave(n) {
-	console.error("Load" + n);
+	console.error('Load' + n);
 }
 
+<<<<<<< HEAD
 export function resetAutoSave() {
 
 }
+=======
+function resetSave() {}
+>>>>>>> 35c7e66ab6deda2855be7bdfb32ddd880755b4ac
 
 function addListenerForSave() {
-    for(let i=0 ; i < max_save ; i++) {
-        el.listOfSaveBtn[i].onclick = () => {
+	for (let i = 0; i < max_save; i++) {
+		listOfSaveBtn[i].onclick = () => {
 			saveThisSave(i);
 		};
-    }
+	}
 }
 
 function addListenerForLoad() {
-    for(let i=0 ; i < max_save ; i++) {
-        el.listOfSaveBtn[i].onclick = () => {
+	for (let i = 0; i < max_save; i++) {
+		listOfSaveBtn[i].onclick = () => {
 			loadThisSave(i);
 		};
-    }
+	}
 }
 
 function addListenerForReset() {
-	for(var i=0 ; i < max_save ; i++) {
-        
-    }
+	for (var i = 0; i < max_save; i++) {}
 }

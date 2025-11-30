@@ -1,7 +1,3 @@
-import {el} from './elements.js';
-import {preloadImages, blur, showFlex, hide, showBlock, isDisplay, noFilter} from './common.js';
-import {openEscape} from './escape.js';
-import {DEBUG} from './init.js';
 let isTextLoading = false;
 
 // document.onkeyup = (event) => {
@@ -9,16 +5,16 @@ let isTextLoading = false;
 // };
 
 //==========KEY PRESS FUNCTION==========
-export function pressKey(event) {
+function pressKey(event) {
 	event.preventDefault();
 	if (event.key === 'Escape') {
 		openEscape(); 
 		// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
-	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(el.divGame)) {
+	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(divGame)) {
 		getLine();
-	} else if (event.key === 'ArrowLeft' && isDisplay(el.divGame)) {
+	} else if (event.key === 'ArrowLeft' && isDisplay(divGame)) {
 		// revenir au diagolgue précédent
-	} else if (event.key.toLowerCase() === 'f' && isDisplay(el.divGame)) {
+	} else if (event.key.toLowerCase() === 'f' && isDisplay(divGame)) {
 		fullScreen();
 	}
 }
@@ -32,18 +28,30 @@ function fullScreen() {
 	}
 }
 
+function openEscape() {
+	if (isDisplay(divEscape)) {
+		hide(divEscape);
+		noFilter(divMenu);
+		noFilter(divGame);
+	} else {
+		showFlex(divEscape);
+		blur(divMenu);
+		blur(divGame);
+	}
+}
+
 function hideButton() {
-	hide(el.divEscape);
-	noFilter(el.divMenu);
-	noFilter(el.divGame);
-	hide(el.dialogContener);
+	hide(divEscape);
+	noFilter(divMenu);
+	noFilter(divGame);
+	hide(dialogContener);
 	document.addEventListener('keydown', showDialog);
-	el.divGame.addEventListener('click', showDialog);
+	divGame.addEventListener('click', showDialog);
 }
 
 function showDialog() {
-	el.dialogContener.style.display = 'block';
-	el.divGame.removeEventListener('click', showDialog);
+	dialogContener.style.display = 'block';
+	divGame.removeEventListener('click', showDialog);
 	document.removeEventListener('keydown', showDialog);
 }
 //==== MAIN FUNCTIONS ==================================
@@ -160,21 +168,21 @@ function displayText(content, characterName = '', characterColor = '', character
 //==== TYPE 2 FUNCTIONS ==================================
 function change_bg(img_name, reset) {
 	if (reset) {
-		el.divGame.style.transition = 'opacity 0.3s ease-in';
-		el.divGame.style.opacity = 0;
+		divGame.style.transition = 'opacity 0.3s ease-in';
+		divGame.style.opacity = 0;
 		setTimeout(() => {
-			el.divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
-			el.divGame.style.opacity = 1;
+			divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
+			divGame.style.opacity = 1;
 			reset_sprite_stack();
 		}, 300);
 	} // j'hésite de carrement rien faire car quasiment sur que les tag 'bg' sont inutiles...bref
 	else {
-		el.divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
+		divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 	}
 }
 
 function reset_sprite_stack() {
-	el.spriteStack.innerHTML = '';
+	spriteStack.innerHTML = '';
 }
 
 //==== TYPE 3 FUNCTIONS ==================================
@@ -216,11 +224,10 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	spriteImg.style.backgroundRepeat = 'no-repeat';
 
 	let convertedX;
-    if (pos === 800) {
-        const baseX = 750;
-        convertedX = convert_x_on_current_format(baseX);
-    }
-	else if (pos > 800) {
+	if (pos === 800) {
+		const baseX = 750;
+		convertedX = convert_x_on_current_format(baseX);
+	} else if (pos > 800) {
 		// Si pos > 800, convertir 800 puis convertir le reste et additionner
 		const baseX = 800;
 		const remainderX = pos - 800;
@@ -236,9 +243,9 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	spriteImg.style.width = (width > 0 ? width : 200) + 'px';
 	spriteImg.style.height = (height > 0 ? height : 200) + 'px';
 
-	let existingSprite = el.spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
+	let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
 	if (existingSprite) existingSprite.replaceWith(spriteImg);
-	else el.spriteStack.appendChild(spriteImg);
+	else spriteStack.appendChild(spriteImg);
 }
 
 function handle_heartattack(image_name, image_tag, pos, z, width, height) {
@@ -273,9 +280,9 @@ function handle_heartattack(image_name, image_tag, pos, z, width, height) {
 	heart.style.webkitMaskMode = 'alpha';
 
 	// Si un sprite du même tag existe déjà → le remplacer
-	let existing = el.spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
+	let existing = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
 	if (existing) existing.replaceWith(heart);
-	else el.spriteStack.appendChild(heart);
+	else spriteStack.appendChild(heart);
 
 	// requestAnimationFrame pour s'assurer que l'élément est rendu
 	requestAnimationFrame(() => {
@@ -301,7 +308,7 @@ function handle_heartattack(image_name, image_tag, pos, z, width, height) {
 
 //==== TYPE 4 FUNCTIONS ==================================
 function remove_sprite(image_tag) {
-	let spriteToRemove = el.spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
+	let spriteToRemove = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
 	if (spriteToRemove) {
 		spriteToRemove.remove();
 	}
@@ -340,64 +347,64 @@ function stop_music(fadeout) {
 // overlaytext -> overlay debut de jeu
 
 function showNameBox(characterName, characterColor = '#ffffff') {
-	showFlex(el.nameElement);
-	el.nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
-	el.nameElement.style.opacity = '1';
+	showFlex(nameElement);
+	nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
+	nameElement.style.opacity = '1';
 }
 
 function hideNameBox() {
-	hide(el.nameElement);
-	el.nameElement.innerHTML = '';
-	el.nameElement.style.opacity = '0';
+	hide(nameElement);
+	nameElement.innerHTML = '';
+	nameElement.style.opacity = '0';
 }
 
 function showTextBox(content) {
-	showFlex(el.textElement);
-	el.textElement.innerHTML = `<span>${content}</span>`;
-	el.textElement.style.opacity = '1';
+	showFlex(textElement);
+	textElement.innerHTML = `<span>${content}</span>`;
+	textElement.style.opacity = '1';
 
-	triggerLogoEffect(el.textElement);
+	triggerLogoEffect(textElement);
 }
 
 function hideTextBox() {
-	el.textElement.classList.remove('blink', 'pop');
-	hide(el.textElement);
-	el.textElement.innerHTML = '';
-	el.textElement.style.opacity = '0';
+	textElement.classList.remove('blink', 'pop');
+	hide(textElement);
+	textElement.innerHTML = '';
+	textElement.style.opacity = '0';
 }
 
 function showCenteredText(content) {
-	showFlex(el.centeredText);
-	el.centeredText.innerHTML = `<span>${content}</span>`;
-	el.centeredText.style.opacity = '1';
+	showFlex(centeredText);
+	centeredText.innerHTML = `<span>${content}</span>`;
+	centeredText.style.opacity = '1';
 }
 
 function hideCenteredText() {
-	hide(el.centeredText);
-	el.centeredText.innerHTML = '';
-	el.centeredText.style.opacity = '0';
+	hide(centeredText);
+	centeredText.innerHTML = '';
+	centeredText.style.opacity = '0';
 }
 
 let cpt = 0;
 function showOverlayText(content) {
 	cpt++;
 	if (cpt > 7) {
-		el.textOverlay.innerHTML = '';
+		textOverlay.innerHTML = '';
 		cpt = 1;
 	}
 
-	showFlex(el.textOverlay);
-	el.textOverlay.innerHTML += `<br><span>${content}</span>`;
-	el.textOverlay.style.opacity = '0.7';
+	showFlex(textOverlay);
+	textOverlay.innerHTML += `<br><span>${content}</span>`;
+	textOverlay.style.opacity = '0.7';
 
-	triggerLogoEffect(el.textOverlay, 'pop2');
+	triggerLogoEffect(textOverlay, 'pop2');
 }
 
 function hideOverlayText() {
-	el.textOverlay.classList.remove('blink', 'pop2');
-	hide(el.textOverlay);
-	el.textOverlay.innerHTML = '';
-	el.textOverlay.style.opacity = '0';
+	textOverlay.classList.remove('blink', 'pop2');
+	hide(textOverlay);
+	textOverlay.innerHTML = '';
+	textOverlay.style.opacity = '0';
 	cpt = 0;
 }
 
