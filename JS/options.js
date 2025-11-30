@@ -139,16 +139,38 @@ function changeResolution(resolution) {
 		document.documentElement.style.width = '';
 		document.documentElement.style.height = '';
 	} else {
-		// Appliquer la résolution choisie en ouvrant une nouvelle page
+		// Appliquer la résolution choisie en ouvrant une nouvelle fenêtre
 		const [width, height] = resolution.split('x');
 		const currentUrl = window.location.href;
 
+		// Calculer la position pour centrer la fenêtre sur l'écran
+		const left = (window.screen.width - parseInt(width)) / 2;
+		const top = (window.screen.height - parseInt(height)) / 2;
+
+		// Paramètres de fenêtre pour forcer l'ouverture d'une popup et non d'un onglet
+		const windowFeatures = [
+			`width=${width}`,
+			`height=${height}`,
+			`left=${left}`,
+			`top=${top}`,
+			'resizable=no',
+			'toolbar=no',
+			'menubar=no',
+			'location=no',
+			'status=no',
+			'scrollbars=yes'
+		].join(',');
+
 		// Ouvrir une nouvelle fenêtre avec la résolution spécifiée
-		window.open(
-			currentUrl,
-			'_blank',
-			`width=${width},height=${height},resizable=no`
-		);
+		const newWindow = window.open(currentUrl, 'GameWindow', windowFeatures);
+
+		// S'assurer que la fenêtre a le focus
+		if (newWindow) {
+			newWindow.focus();
+			if (DEBUG) console.log(`Nouvelle fenêtre ouverte: ${width}x${height}`);
+		} else {
+			console.error('Impossible d\'ouvrir la fenêtre. Vérifiez que les popups ne sont pas bloquées.');
+		}
 
 		// Remettre le select sur "responsive" après l'ouverture
 		setTimeout(() => {
