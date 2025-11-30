@@ -18,6 +18,7 @@ divEscape = document.getElementById('escape');
 quitEscBtn = document.getElementById('quit_esc_button');
 hideBtn = document.getElementById('hide_button');
 saveBtn = document.getElementById('save_button');
+optionsBtn = document.getElementById('options_button');
 returnBtn = document.getElementById('return_button');
 
 // === Éléments du menu ===
