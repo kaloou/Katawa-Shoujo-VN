@@ -56,7 +56,6 @@
   margin-top: 1vw;
   margin-bottom: 1vw;
   text-shadow: -0.1vw -0.1vw 0 #48443c, 0.1vw -0.1vw 0 #48443c, -0.1vw 0.1vw 0 #48443c, 0.1vw 0.1vw 0 #48443c;  /* From https://stackoverflow.com/a/4919231 */
-  
 }
 
 #save_div .buttons button {
@@ -99,7 +98,6 @@
   font-size: 1vw;
 	margin: 0.1vw 0.7vw 1vw 1vw;
   text-align: center;
-  
 }
 
 #save_div .buttons .separate_saves div {
@@ -107,4 +105,41 @@
 	width: 3vw;
 	height: 1vw;
 	margin: 0.1vw 1vw 1vw 0.7vw;
+}
+
+@media only screen and (max-width: 1000px) {
+  #save_div {
+    width: 80vw; /*35*/
+    height: 77vw; /*32*/
+  }
+
+  #close_save_button {
+    width: 8vw;
+    height: 8vw;
+  }
+  
+  #save_div .buttons h1 {
+    color: var(--secondary-color);
+    font-size: 10vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    text-shadow: -0.2vw -0.2vw 0 #48443c, 0.2vw -0.2vw 0 #48443c, -0.2vw 0.2vw 0 #48443c, 0.2vw 0.2vw 0 #48443c;
+  }
+  
+  #save_div .buttons {
+    width: 70.4vw;
+  }
+
+  #save_div .buttons button {
+    width: 60vw;
+  }
+
+  #save_div .buttons .reset_save {
+    width: 7vw;
+  }
+
+  #save_div .buttons .separate_saves p {
+    width: 50vw;
+    height: 1vw;
+  }
 }

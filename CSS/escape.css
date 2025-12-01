@@ -33,3 +33,15 @@
 #quit_esc_button:hover {
   cursor: pointer;
 }
+
+@media only screen and (max-width: 1000px) {
+  #escape { 
+    width: 60vw;
+    height: 40vw;
+  }
+  #quit_esc_button {
+    margin: 2vw 6vw;
+    width: 6vw;
+    height: 6vw;
+  }
+}

@@ -61,3 +61,17 @@ body {
 	text-decoration: underline;
 	text-decoration-color: var(--primary-color);
 }
+
+@media only screen and (max-width: 1000px) {
+  .buttons button {
+    width: 30vw;
+    height: 7vw;
+    margin: 2vw;
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    border: 0.2vw solid var(--primary-color);
+    box-shadow: 0 0 0 0.08vw var(--secondary-color);
+    font-size: 4vw;
+    justify-self: center;
+  }
+}
