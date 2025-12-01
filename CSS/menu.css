@@ -90,6 +90,7 @@
     align-content: space-between;
     justify-content: space-between;
   }
+  
   .div_img_menu div {
     width: 100vw;
     height: 100vh;
@@ -97,6 +98,7 @@
     flex-direction: row;
     justify-content: space-between;
   }
+
   .img_menu {
     z-index: 1;
     object-fit: cover;
@@ -106,6 +108,7 @@
     width: auto;
     margin: 3vw 6vw;
   }
+
   #main_menu {
     width: 90vw; /* 15 */
     height: 66vw; /* 11 */

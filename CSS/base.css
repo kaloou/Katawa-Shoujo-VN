@@ -64,7 +64,7 @@ body {
 
 @media only screen and (max-width: 1000px) {
   .buttons button {
-    width: 30vw;
+    width: 35vw;
     height: 7vw;
     margin: 2vw;
     color: var(--primary-color);
