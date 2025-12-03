@@ -1,6 +1,6 @@
 const DEBUG = true;
 
-document.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('load', function () {
 	initGame();
 	preloadImagesUi();
 	preloadImagesGame();
@@ -14,11 +14,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	document.onkeyup = (event) => {
 		pressKey(event);
 	};
+	divGame.addEventListener('click', getLine)
 	// LOGIN
 	inputSubmit.addEventListener('click', sendConnexion);
 	formLogin.addEventListener('submit', sendConnexion);
 
-	connectBtn.addEventListener('click', openLoginForm);
+	connectBtn.onclick = () => {openLoginForm();};
 
 	startBtn.addEventListener('click', start);
 
@@ -27,8 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	connectBtn.addEventListener('mouseenter', wantDisconnect);
 	connectBtn.addEventListener('mouseleave', printConnected);
+
+	isConnectedInSession();
 	// MENU
-	settingsBtn.addEventListener('click', openEscape);
+	settingsBtn.addEventListener('click', toggleOptionsMenu);
 	creditsBtn.addEventListener('click', () => {
 		window.location.href = 'HTML/credits.html';
 	});

@@ -7,6 +7,7 @@ let textDisplaySpeed = 50;
 loadOptions();
 optionsBtn.addEventListener('click', toggleOptionsMenu);
 closeOptionsBtn.addEventListener('click', toggleOptionsMenu);
+resolutionSelect.value = 'responsive';
 
 fullscreenToggle.addEventListener('change', (e) => {
 	if (e.target.checked) {
@@ -53,12 +54,18 @@ document.addEventListener('MSFullscreenChange', updateFullscreenToggle);
 // === Fonctions d'ouverture/fermeture du menu ===
 function toggleOptionsMenu() {
 	if (isDisplay(optionsDiv)) {
+		if(!isDisplay(divEscape)) {
+			noFilter(divGame);
+			noFilter(divMenu);
+		}
 		hide(optionsDiv);
 		document.onkeyup = (event) => {
 			pressKey(event);
 		};
 	} else {
 		showFlex(optionsDiv);
+		blurF(divGame);
+		blurF(divMenu);
 		document.onkeyup = (event) => {
 			closeOptionsWithEsc(event);
 		};

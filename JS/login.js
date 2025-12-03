@@ -1,29 +1,3 @@
-inputSubmit.addEventListener('click', sendConnexion);
-formLogin.addEventListener('submit', sendConnexion);
-
-connectBtn.addEventListener('click', openLoginForm);
-
-startBtn.addEventListener('click', start);
-
-inputUsrName.addEventListener('keyup', checkValidUsrName);
-inputPswd.addEventListener('keyup', checkValidPassword);
-
-connectBtn.addEventListener('mouseenter', wantDisconnect);
-connectBtn.addEventListener('mouseleave', printConnected);
-
-isConnectedInSession();
-
-// let connectBtn,
-// 	startBtn,
-// 	defMenu,
-// 	formLogin,
-// 	inputUsrName,
-// 	helpUsrName,
-// 	inputPswd,
-// 	liHelpPswd,
-// 	inputSubmit,
-// 	divMenu,
-// 	divGame;
 
 /*
 let regex10Char = /.{10,}/;
@@ -75,21 +49,6 @@ function openLoginForm() {
 	}
 }
 
-function disconnect() {
-	if (connected) {
-		connected = false;
-		printNotConnected();
-		destroySession();
-		connectBtn.removeEventListener('click', disconnect);
-	}
-}
-
-function start() {
-	if (connected) {
-		getAutoSave();
-	} else printNotConnected();
-}
-
 function printNotConnected() {
 	if (!connected) {
 		connectBtn.textContent = 'Se Connecter';
@@ -108,7 +67,7 @@ function printConnected() {
 
 function wantDisconnect() {
 	if (connected) {
-		connectBtn.addEventListener('click', disconnect);
+		connectBtn.onclick = () => {disconnect();};
 		connectBtn.textContent = 'Se déconnecter ?';
 		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + pinkColor;
 		connectBtn.style.backgroundColor = pinkColor;
@@ -232,51 +191,38 @@ function tryConnexion() {
 	xhr.send(data);
 }
 
-function getAutoSave() {
-	let xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			let responseText = xhr.responseText;
-			try {
-				let response = JSON.parse(responseText);
-				if (response.exist) {
-					if (response.found) {
-						hide(divMenu);
-						showBlock(divGame);
-					} else {
-						if (DEBUG) console.error('pas trouvé');
-						printNotConnected();
-					}
-				} else if (!response.exist) {
-					if (DEBUG) console.log(response);
-					printNotConnected();
-				}
-			} catch (error) {
-				if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
-				printNotConnected();
-			}
-			xhr = null;
-		}
-	};
-	xhr.open('GET', 'PHP/get_auto_save.php', true);
-	xhr.responseType = 'text';
-	xhr.send();
-}
-
 //refaire !!
-function destroySession() {
-	if (confirm('Êtes-vous sûr de vouloir détruire la session ?')) {
-		console.log('=== DESTRUCTION DE SESSION ===');
-		fetch('PHP/destroy_session.php')
-			.then((response) => response.json())
-			.then((data) => {
-				console.log('=== SESSION DELETE ===');
-				console.log(JSON.stringify(data, null, 2));
-				console.log('=============================');
-				console.log('✅ Session DELETE avec succès');
-			})
-			.catch((error) => {
-				console.error('❌ Erreur lors de la destruction de la session:', error);
-			});
+// function destroySession() {
+// 	if (confirm('Êtes-vous sûr de vouloir détruire la session ?')) {
+// 		console.log('=== DESTRUCTION DE SESSION ===');
+// 		fetch('PHP/destroy_session.php')
+// 			.then((response) => response.json())
+// 			.then((data) => {
+// 				console.log('=== SESSION DELETE ===');
+// 				console.log(JSON.stringify(data, null, 2));
+// 				console.log('=============================');
+// 				console.log('✅ Session DELETE avec succès');
+// 			})
+// 			.catch((error) => {
+// 				console.error('❌ Erreur lors de la destruction de la session:', error);
+// 			});
+// 	}
+// }
+
+function disconnect() {
+	if (connected && confirm('Êtes-vous sûr de vouloir vous déconnecter')) {
+		let xhr = new XMLHttpRequest();
+		connected = false;
+		printNotConnected();
+		connectBtn.onclick = () => {openLoginForm();};
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				if (DEBUG) console.error(JSON.parse(xhr.responseText));
+				xhr = null;
+			}
+		};
+		xhr.open('GET', 'PHP/destroy_session.php', true);
+		xhr.responseType = 'text';
+		xhr.send();
 	}
 }

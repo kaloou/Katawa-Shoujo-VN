@@ -18,6 +18,7 @@
 	isolation: isolate;
 	z-index: 999;
 }
+
 #text {
 	position: absolute;
 	bottom: 3%;

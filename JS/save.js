@@ -39,6 +39,10 @@ function clickOnSave(n) {
 function toggleSaveMenu() {
 	if (isDisplay(saveDiv)) {
 		$('titleForSaveMenu').remove();
+		if(!isDisplay(divEscape)) {
+			noFilter(divGame);
+			noFilter(divMenu);
+		}
 		hide(saveDiv);
 		document.onkeyup = (event) => {
 			pressKey(event);
@@ -48,6 +52,8 @@ function toggleSaveMenu() {
 		title.id = 'titleForSaveMenu';
 		resetAutoSaveBtn.before(title);
 		title.append(textTitle);
+		blurF(divGame);
+		blurF(divMenu);
 		showFlex(saveDiv);
 		document.onkeyup = (event) => {
 			closeSaveWithEsc(event);
@@ -122,4 +128,43 @@ function addListenerForLoad() {
 
 function addListenerForReset() {
 	for (var i = 0; i < max_save; i++) {}
+}
+
+function start() {
+	if (connected) {
+		startBtn.textContent = 'lancement...';
+		getAutoSave();
+	} else printNotConnected();
+}
+
+function getAutoSave() {
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			let responseText = xhr.responseText;
+			try {
+				let response = JSON.parse(responseText);
+				if (response.exist) {
+					if (response.found) {
+						hide(divMenu);
+						showBlock(divGame);
+					} else {
+						if (DEBUG) console.error('pas trouvé');
+						printNotConnected();
+					}
+				} else if (!response.exist) {
+					if (DEBUG) console.log(response);
+					printNotConnected();
+				}
+			} catch (error) {
+				if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+				printNotConnected();
+			}
+			startBtn.textContent = 'Jouer';
+			xhr = null;
+		}
+	};
+	xhr.open('GET', 'PHP/get_auto_save.php', true);
+	xhr.responseType = 'text';
+	xhr.send();
 }

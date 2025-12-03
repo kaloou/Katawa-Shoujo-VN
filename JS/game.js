@@ -7,7 +7,7 @@ let isTextLoading = false;
 //==========KEY PRESS FUNCTION==========
 function pressKey(event) {
 	event.preventDefault();
-	if (event.key === 'Escape') {
+	if (event.key === 'Escape' && isDisplay(divGame)) {
 		openEscape(); 
 		// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
 	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(divGame)) {
