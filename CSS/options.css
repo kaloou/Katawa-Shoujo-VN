@@ -236,6 +236,8 @@
   .slider_container {
     gap: 1vw;
     min-width: 15vw;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .slider_container input[type="range"] {
