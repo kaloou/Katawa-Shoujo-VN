@@ -25,7 +25,7 @@ function isNotDisplay(elem) {
 	return elem.style.display === 'none';
 }
 
-function blur(elem) {
+function blurF(elem) {
 	elem.style.filter = 'blur(5px)';
 }
 

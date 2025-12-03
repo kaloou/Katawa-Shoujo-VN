@@ -5,6 +5,6 @@ creditsBtn.addEventListener('click', () => {
 
 // settingsBtn.addEventListener('click', () => {
 // 	showFlex(divEscape);
-// 	blur(divMenu);
-// 	blur(divGame);
+// 	blurF(divMenu);
+// 	blurF(divGame);
 // });

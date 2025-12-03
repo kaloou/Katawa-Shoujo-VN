@@ -1,8 +1,6 @@
 #game_screen {
 	display: none;
 	position: fixed;
-	bottom: 0;
-	left: 0;
 	width: 100vw;
 	height: 100vh;
 	background-image: url('../assets/internHD/bg_op_snowywoods.png');
@@ -21,7 +19,7 @@
 	z-index: 999;
 }
 #text {
-	position: fixed;
+	position: absolute;
 	bottom: 3%;
 	left: 2%;
 	width: 90%;
@@ -100,8 +98,8 @@
 	position: relative;
 	bottom: 0;
 	left: 0;
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	pointer-events: none;
 	z-index: 100;
 }
@@ -117,7 +115,7 @@
 }
 
 #name {
-	position: fixed;
+	position: absolute;
 	width: 22%;
 	height: 16%;
 	bottom: 9%;
@@ -161,7 +159,7 @@
 }
 
 #text_overlay {
-	position: fixed;
+	position: absolute;
 	bottom: 2%;
 	width: 100%;
 	height: 96%;

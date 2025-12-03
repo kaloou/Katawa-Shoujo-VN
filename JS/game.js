@@ -29,14 +29,14 @@ function fullScreen() {
 }
 
 function openEscape() {
-	if (isDisplay(divEscape)) {
+	if (isDisplay(divGame) && isDisplay(divEscape)) {
 		hide(divEscape);
 		noFilter(divMenu);
 		noFilter(divGame);
 	} else {
 		showFlex(divEscape);
-		blur(divMenu);
-		blur(divGame);
+		blurF(divMenu);
+		blurF(divGame);
 	}
 }
 
@@ -189,20 +189,20 @@ function reset_sprite_stack() {
 // Fonctions pour passer d'un format spécifique à la taille de l'écran
 function convert_x_on_current_format(x) {
 	const ORIGINAL_WIDTH = 800;
-	const currentWidth = window.innerWidth;
+	const currentWidth = divGame.offsetWidth;
 	const ratio = currentWidth / ORIGINAL_WIDTH;
 	return x * ratio;
 }
 
 function convert_x_on_current_format_hd(x) {
 	const HD_WIDTH = 1920;
-	const currentWidth = window.innerWidth;
+	const currentWidth = divGame.offsetWidth;
 	const ratio = currentWidth / HD_WIDTH;
 	return x * ratio;
 }
 function convert_y_on_current_format_hd(y) {
 	const HD_HEIGHT = 1080;
-	const currentHeight = window.innerHeight;
+	const currentHeight = divGame.offsetHeight ;
 	const ratio = currentHeight / HD_HEIGHT;
 	return y * ratio;
 }
@@ -299,8 +299,8 @@ function handle_heartattack(image_name, image_tag, pos, z, width, height) {
 
 	heart.style.left = convertedX - convert_x_on_current_format_hd(width) / 2 + 'px';
 	heart.style.bottom = '0';
-	heart.style.width = window.innerWidth + 'px';
-	heart.style.height = window.innerHeight + 'px';
+	heart.style.width = divGame.offsetWidth + 'px';
+	heart.style.height = divGame.offsetHeight  + 'px';
 
 	// --- dégradé horizontal (centre opaque → côtés transparents) ---
 	heart.style.maskImage =

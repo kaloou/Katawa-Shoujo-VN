@@ -96,18 +96,30 @@ function updateFullscreenToggle() {
 }
 
 // === Résolution ===
+// function changeResolution(resolution) {
+// 	if (resolution === 'responsive') {
+// 		if (DEBUG) console.log('Mode responsive activé');
+// 	} else {
+// 		const [width, height] = resolution.split('x');
+// 		const left = (window.screen.width - parseInt(width)) / 2;
+// 		const top = (window.screen.height - parseInt(height)) / 2;
+
+// 		const features = `width=${width},height=${height},left=${left},top=${top}`;
+// 		window.open(window.location.href, '', features);
+
+// 		resolutionSelect.value = 'responsive';
+// 		saveOptions();
+// 	}
+// }
+
 function changeResolution(resolution) {
 	if (resolution === 'responsive') {
-		if (DEBUG) console.log('Mode responsive activé');
+		divGame.style.width = "100vw";
+		divGame.style.height = "100vh";
 	} else {
-		const [width, height] = resolution.split('x');
-		const left = (window.screen.width - parseInt(width)) / 2;
-		const top = (window.screen.height - parseInt(height)) / 2;
-
-		const features = `width=${width},height=${height},left=${left},top=${top}`;
-		window.open(window.location.href, '', features);
-
-		resolutionSelect.value = 'responsive';
+		var [width, height] = resolution.split('x');
+		divGame.style.width = `${width}px`;
+		divGame.style.height = `${height}px`;
 		saveOptions();
 	}
 }
