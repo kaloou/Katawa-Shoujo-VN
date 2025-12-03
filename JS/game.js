@@ -200,12 +200,6 @@ function convert_x_on_current_format_hd(x) {
 	const ratio = currentWidth / HD_WIDTH;
 	return x * ratio;
 }
-function convert_y_on_current_format_hd(y) {
-	const HD_HEIGHT = 1080;
-	const currentHeight = window.innerHeight;
-	const ratio = currentHeight / HD_HEIGHT;
-	return y * ratio;
-}
 
 function add_sprite(image_name, image_tag, pos, z, width, height) {
 	// Exception cases
@@ -252,7 +246,7 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
         const newPos = parseFloat(pos);
 
         if (oldPos !== newPos) {
-            const oldLeft = parseFloat(existingSprite.style.left);
+            //const oldLeft = parseFloat(existingSprite.style.left);
             const newLeft = parseFloat(spriteImg.style.left);
 
             existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
@@ -279,7 +273,7 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 
 }
 
-function handle_heartattack(image_name, image_tag, pos, z, width, height) {
+function handle_heartattack(image_name, image_tag, pos, z, width) {
 	hideTextBox();
 	hideNameBox();
 
@@ -377,6 +371,27 @@ function stop_music(fadeout) {
 // centeredText -> type 5 (note papier)
 // overlaytext -> overlay debut de jeu
 
+//==== ANIMATION D'APPARITION DU TEXTE ==================
+function animateText(element, content, callback) {
+    const speed = textDisplaySpeed ?? 90;
+    const delay = (101 - speed) / 2;
+
+	element.innerHTML = '<span></span>';
+	const span = element.querySelector('span');
+
+	let i = 0;
+	function addChar() {
+		if (i < content.length) {
+			span.textContent += content[i];
+			i++;
+			setTimeout(addChar, delay);
+		} else if (callback) {
+			callback();
+		}
+	}
+	addChar();
+}
+
 function showNameBox(characterName, characterColor = '#ffffff') {
 	showFlex(nameElement);
 	nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
@@ -391,10 +406,11 @@ function hideNameBox() {
 
 function showTextBox(content) {
 	showFlex(textElement);
-	textElement.innerHTML = `<span>${content}</span>`;
 	textElement.style.opacity = '1';
 
-	triggerLogoEffect(textElement);
+	animateText(textElement, content, () => {
+		triggerLogoEffect(textElement);
+	});
 }
 
 function hideTextBox() {
@@ -406,8 +422,9 @@ function hideTextBox() {
 
 function showCenteredText(content) {
 	showFlex(centeredText);
-	centeredText.innerHTML = `<span>${content}</span>`;
 	centeredText.style.opacity = '1';
+
+	animateText(centeredText, content);
 }
 
 function hideCenteredText() {
@@ -425,10 +442,28 @@ function showOverlayText(content) {
 	}
 
 	showFlex(textOverlay);
-	textOverlay.innerHTML += `<br><span>${content}</span>`;
 	textOverlay.style.opacity = '0.7';
 
-	triggerLogoEffect(textOverlay, 'pop2');
+	const newLine = document.createElement('br');
+	const newSpan = document.createElement('span');
+	textOverlay.appendChild(newLine);
+	textOverlay.appendChild(newSpan);
+
+	const speed = textDisplaySpeed ?? 90;
+	const delay = (101 - speed) / 2;
+
+	let i = 0;
+	function addChar() {
+		if (i < content.length) {
+			newSpan.textContent += content[i];
+			i++;
+			setTimeout(addChar, delay);
+		} else {
+			triggerLogoEffect(textOverlay, 'pop2');
+		}
+	}
+
+	addChar();
 }
 
 function hideOverlayText() {
