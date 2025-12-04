@@ -14,7 +14,7 @@ window.addEventListener('load', function () {
 	document.onkeyup = (event) => {
 		pressKey(event);
 	};
-	divGame.addEventListener('click', getLine)
+	divGame.onclick = () => {getLine();};
 	// LOGIN
 	inputSubmit.addEventListener('click', sendConnexion);
 	formLogin.addEventListener('submit', sendConnexion);

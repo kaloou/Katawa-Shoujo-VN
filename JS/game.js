@@ -7,7 +7,7 @@ let isTextLoading = false;
 //==========KEY PRESS FUNCTION==========
 function pressKey(event) {
 	event.preventDefault();
-	if (event.key === 'Escape' && isDisplay(divGame)) {
+	if (event.key === 'Escape' /*&& isDisplay(divGame)*/) {
 		openEscape(); 
 		// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
 	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(divGame)) {
@@ -45,14 +45,22 @@ function hideButton() {
 	noFilter(divMenu);
 	noFilter(divGame);
 	hide(dialogContener);
-	document.addEventListener('keydown', showDialog);
-	divGame.addEventListener('click', showDialog);
+	hide(centeredText);
+	hide(textOverlay);
+	document.onkeyup = () => {
+		showDialog();
+	};
+	divGame.onclick = () => {showDialog();};
 }
 
 function showDialog() {
-	dialogContener.style.display = 'block';
-	divGame.removeEventListener('click', showDialog);
-	document.removeEventListener('keydown', showDialog);
+	showBlock(dialogContener);
+	showBlock(centeredText);
+	showBlock(textOverlay);
+	divGame.onclick = () => {getLine();};
+	document.onkeyup = (event) => {
+		pressKey(event);
+	};
 }
 //==== MAIN FUNCTIONS ==================================
 function getLine() {

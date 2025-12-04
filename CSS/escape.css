@@ -4,6 +4,8 @@
   width: 40vw;
   height: 30vw;
   /*box-shadow: 0 0 30vw 5vw black;*/
+  max-width: 100vh;
+  max-height: 75vh;
   
   z-index: 101;
 
@@ -16,14 +18,18 @@
   background-size: cover;
 }
 
+#escape .buttons {
+  max-width: 60%;
+}
+
 #quit_esc_button {
   display: block;
-  margin: 3vw 5vw;
+  margin: min(3vw, 9vh) min(5vw, 12vh);
   position: absolute;
   top: 0;
   right: 0;
-  width: 2vw;
-  height: 2vw;
+  width: min(2vw, 7vh);
+  height: min(2vw, 7vh);
   background-image: url(../assets/extern/UI/bt-del.png);
   background-position-y: center;
   background-position-x: center;

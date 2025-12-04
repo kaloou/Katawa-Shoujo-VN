@@ -4,6 +4,7 @@
 
   width: 35vw;
   height: 32vw;
+  max-height: 90vh;
   /* box-shadow: 0 0 30vw 5vw black; */
 
   z-index: 102;
@@ -95,8 +96,8 @@
 	display: block;
 	width: 25vw;
 	height: 1vw;
-  font-size: 1vw;
-	margin: 0.1vw 0.7vw 1vw 1vw;
+  font-size: min(1vw, 5vh);
+	margin: min(0.1vw, 1vh) min(0.7vw, 1vh) min(1vw, 5vh) min(1vw, 5vh);
   text-align: center;
 }
 

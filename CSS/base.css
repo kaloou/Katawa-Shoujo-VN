@@ -48,12 +48,14 @@ body {
 	display: block;
 	width: 18vw;
 	height: 3vw;
-	margin: 2vw;
+  max-width: 90%;
+  max-height: 10vh;
+	margin: min(2vw, 5vh);
 	color: var(--primary-color);
 	background-color: var(--secondary-color);
 	border: 0.2vw solid var(--primary-color);
 	box-shadow: 0 0 0 0.08vw var(--secondary-color);
-	font-size: 2vw;
+  font-size: min(2vw, 6vh);
 	justify-self: center;
 }
 
