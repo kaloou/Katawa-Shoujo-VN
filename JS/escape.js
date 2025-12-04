@@ -14,4 +14,5 @@ function GameToMenu() {
 	showFlex(divMenu);
 	hide(divGame);
 	hide(divEscape);
+	hide(openEscIG);
 }

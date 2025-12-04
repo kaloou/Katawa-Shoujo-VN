@@ -68,12 +68,12 @@ body {
   .buttons button {
     width: 35vw;
     height: 7vw;
-    margin: 2vw;
+    margin: min(2vw, 2vh);;
     color: var(--primary-color);
     background-color: var(--secondary-color);
     border: 0.2vw solid var(--primary-color);
     box-shadow: 0 0 0 0.08vw var(--secondary-color);
-    font-size: 4vw;
+    font-size: min(4vw, 5vh);
     justify-self: center;
   }
 }

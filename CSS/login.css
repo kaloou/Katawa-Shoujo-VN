@@ -76,10 +76,10 @@
   #login input {
     width: 50vw;
     height: 7vw;
-    font-size: 4vw;
+    font-size: min(4vw, 10vh);
   }
 
   #login ul>li, #login p {
-    font-size: 2.2vw;
+    font-size: min(2.2vw, 6vh);
   }
 }

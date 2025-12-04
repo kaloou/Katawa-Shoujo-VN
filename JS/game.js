@@ -47,6 +47,7 @@ function hideButton() {
 	hide(dialogContener);
 	hide(centeredText);
 	hide(textOverlay);
+	hide(openEscIG);
 	document.onkeyup = () => {
 		showDialog();
 	};
@@ -57,6 +58,7 @@ function showDialog() {
 	showBlock(dialogContener);
 	showBlock(centeredText);
 	showBlock(textOverlay);
+	showBlock(openEscIG);
 	divGame.onclick = () => {getLine();};
 	document.onkeyup = (event) => {
 		pressKey(event);

@@ -148,6 +148,7 @@ function getAutoSave() {
 					if (response.found) {
 						hide(divMenu);
 						showBlock(divGame);
+						showFlex(openEscIG);
 					} else {
 						if (DEBUG) console.error('pas trouvé');
 						printNotConnected();
