@@ -4,7 +4,7 @@
   width: 40vw;
   height: 30vw;
   /*box-shadow: 0 0 30vw 5vw black;*/
-  max-width: 100vh;
+  max-width: 100dvh;
   max-height: 75vh;
   
   z-index: 101;
@@ -27,7 +27,7 @@
   height: 2vw;
   max-width: 10vh;
   max-height: 10vh;
-  margin: min(2vw, 6vh);
+  margin: 20px;
   font-size: min(2vw, 10vh);
   font-weight: 900;
   color: var(--primary-color);

@@ -1,8 +1,8 @@
 #game_screen {
   display: none;
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   background-image: url('../assets/internHD/bg_op_snowywoods.png');
   background-size: cover;
   background-position: center;
@@ -28,9 +28,9 @@
   background-color: black;
   border: 3px solid #8b8275;
   color: white;
-  font-size: 1.2rem;
+  font-size: 20px;
   line-height: 1.5;
-  padding: 2% 5%;
+  padding: 1% 2%;
   z-index: 1001;
   display: flex;
   align-items: flex-start;
@@ -168,7 +168,7 @@
   border-top: 3px solid #8b8275;
   border-bottom: 3px solid #8b8275;
   color: white;
-  font-size: 1.2rem;
+  font-size: 20px;
   line-height: 1.5;
   padding: 2% 5%;
   z-index: 1001;
@@ -202,4 +202,11 @@
 #text_overlay.pop2::after {
   transform: rotate(90deg);
   animation: pop2 0.15s forwards;
+}
+
+@media only screen and (max-width: 1000px) {
+ #text {
+  height: 30%;
+  font-size: 14px;
+ }
 }

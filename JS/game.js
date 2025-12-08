@@ -7,15 +7,17 @@ let isTextLoading = false;
 //==========KEY PRESS FUNCTION==========
 function pressKey(event) {
 	event.preventDefault();
-	if (event.key === 'Escape' && isDisplay(divGame)) {
-		openEscape(); 
-		// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
-	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(divGame)) {
-		getLine();
-	} else if (event.key === 'ArrowLeft' && isDisplay(divGame)) {
-		// revenir au diagolgue précédent
-	} else if (event.key.toLowerCase() === 'f' && isDisplay(divGame)) {
-		fullScreen();
+	if (isDisplay(divGame)) {
+		if (event.key === 'Escape') {
+			openEscape(); 
+			// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
+		} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter')) {
+			getLine();
+		} else if (event.key === 'ArrowLeft') {
+			// revenir au diagolgue précédent
+		} else if (event.key.toLowerCase() === 'f') {
+			fullScreen();
+		}
 	}
 }
 
@@ -51,7 +53,9 @@ function hideButton() {
 	document.onkeyup = () => {
 		showDialog();
 	};
-	divGame.onclick = () => {showDialog();};
+	divGame.onclick = () => {
+		showDialog();
+	};
 }
 
 function showDialog() {
@@ -59,11 +63,14 @@ function showDialog() {
 	showBlock(centeredText);
 	showBlock(textOverlay);
 	showBlock(openEscIG);
-	divGame.onclick = () => {getLine();};
+	divGame.onclick = () => {
+		getLine();
+	};
 	document.onkeyup = (event) => {
 		pressKey(event);
 	};
 }
+
 //==== MAIN FUNCTIONS ==================================
 function getLine() {
 	if (!isTextLoading) {

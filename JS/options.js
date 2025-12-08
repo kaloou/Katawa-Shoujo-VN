@@ -121,8 +121,8 @@ function updateFullscreenToggle() {
 
 function changeResolution(resolution) {
 	if (resolution === 'responsive') {
-		divGame.style.width = "100vw";
-		divGame.style.height = "100vh";
+		divGame.style.width = "100dvw";
+		divGame.style.height = "100dvh";
 	} else {
 		var [width, height] = resolution.split('x');
 		divGame.style.width = `${width}px`;
