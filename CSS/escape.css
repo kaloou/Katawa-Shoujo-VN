@@ -98,5 +98,6 @@
   #open_esc_ingame::after {
     width: 10vw;
     height: 10vw;
+    opacity: 70%;
   }
 }

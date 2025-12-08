@@ -207,7 +207,7 @@ function reset_sprite_stack() {
 function convert_x_on_current_format(x) {
 	const ORIGINAL_WIDTH = 800;
 	const currentWidth = divGame.offsetWidth;
-	const ratio = currentWidth / ORIGINAL_WIDTH;
+	let ratio = currentWidth / ORIGINAL_WIDTH;
 	return x * ratio;
 }
 
@@ -219,7 +219,7 @@ function convert_x_on_current_format_hd(x) {
 }
 function convert_y_on_current_format_hd(y) {
 	const HD_HEIGHT = 1080;
-	const currentHeight = divGame.offsetHeight ;
+	const currentHeight = divGame.offsetHeight;
 	const ratio = currentHeight / HD_HEIGHT;
 	return y * ratio;
 }
@@ -239,6 +239,7 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	spriteImg.style.zIndex = z;
 	spriteImg.style.backgroundSize = 'contain';
 	spriteImg.style.backgroundRepeat = 'no-repeat';
+	spriteImg.style.backgroundPosition = 'center';
 
 	let convertedX;
 	if (pos === 800) {
@@ -252,8 +253,8 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	} else {
 		convertedX = convert_x_on_current_format(pos);
 	}
-
-	spriteImg.style.left = convertedX - convert_x_on_current_format_hd(width) / 2 + 'px';
+	
+	spriteImg.style.left = convertedX + 'px';
 	spriteImg.style.bottom = '0';
 
 	// dimensions

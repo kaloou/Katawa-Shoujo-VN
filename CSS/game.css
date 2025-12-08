@@ -6,6 +6,7 @@
   background-image: url('../assets/internHD/bg_op_snowywoods.png');
   background-size: cover;
   background-position: center;
+  container-type: inline-size;
 }
 
 #dialog_container {
@@ -28,7 +29,7 @@
   background-color: black;
   border: 3px solid #8b8275;
   color: white;
-  font-size: 20px;
+  font-size: 2.5cqh;
   line-height: 1.5;
   padding: 1% 2%;
   z-index: 1001;
@@ -113,6 +114,7 @@
   max-height: 100%;
   image-rendering: auto;
   user-select: none;
+  transform: translateX(-50%);
 }
 
 #name {
@@ -204,9 +206,43 @@
   animation: pop2 0.15s forwards;
 }
 
-@media only screen and (max-width: 1000px) {
+@container (max-width: 1000px) {
+ #text {
+  height: 20%;
+  font-size: 20px;
+ }
+} /*2.5cqh*/
+
+@container (max-width: 800px) {
+ #text {
+  height: 22%;
+ }
+}
+
+@container (max-width: 450px) {
+ #text {
+  height: 25%;
+  font-size: 2cqh;
+ }
+}
+
+@container (max-width: 700px) and (max-height: 600px) {
  #text {
   height: 30%;
-  font-size: 14px;
+  font-size: 2cqh;
+ }
+}
+
+@container (max-height: 700px) {
+ #text {
+  height: 22%;
+  font-size: 2cqh;
+ }
+}
+
+@container (max-height: 450px) {
+ #text {
+  height: 22%;
+  font-size: 2.5cqh;
  }
 }
