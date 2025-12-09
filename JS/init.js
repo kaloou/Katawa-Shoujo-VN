@@ -209,4 +209,5 @@ function initTestButtons() {
 function preloadImagesUi() {
 	preloadImage('assets/extern/UI/bg-config-gallery.png');
 	preloadImage('assets/extern/UI/main/background-unsatured.png');
+    preloadImage('assets/internHD/bg_op_snowywoods.png');
 }
