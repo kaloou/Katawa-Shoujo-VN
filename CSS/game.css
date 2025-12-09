@@ -139,6 +139,10 @@
   user-select: none;
 }
 
+.heart-flash {
+  transform: translateX(0) !important;
+}
+
 #centered-text {
   position: absolute;
   top: 50%;
