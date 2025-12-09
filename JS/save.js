@@ -145,10 +145,12 @@ function getAutoSave() {
 			try {
 				let response = JSON.parse(responseText);
 				if (response.exist) {
-					if (response.found) {
-						hide(divMenu);
-						showBlock(divGame);
-						showFlex(openEscIG);
+                        if (response.found) {
+                            playTransition(() => {
+                                hide(divMenu);
+                                showBlock(divGame);
+                                showFlex(openEscIG);
+                            });
 					} else {
 						if (DEBUG) console.error('pas trouvé');
 						printNotConnected();
