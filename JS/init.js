@@ -14,7 +14,9 @@ window.addEventListener('load', function () {
 	document.onkeyup = (event) => {
 		pressKey(event);
 	};
-	divGame.onclick = () => {getLine();};
+	divGame.onclick = () => {
+		getLine();
+	};
 	// LOGIN
 	inputSubmit.addEventListener('click', sendConnexion);
 	formLogin.addEventListener('submit', sendConnexion);
@@ -40,6 +42,7 @@ window.addEventListener('load', function () {
 		openEscape();
 	};
 	// SAVE
+	addListenerForReset();
 	saveBtn.addEventListener('click', () => {
 		clickOnSave(1);
 	});
@@ -49,7 +52,6 @@ window.addEventListener('load', function () {
 	closeSaveBtn.addEventListener('click', () => {
 		clickOnSave(0);
 	});
-
 	resetAutoSaveBtn.addEventListener('click', () => {
 		resetAutoSave();
 	});

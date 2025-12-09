@@ -18,6 +18,7 @@
 
 	margin: min(0.7vw, 2vh) auto;
   padding: min(0.5vw, 3vh);
+  padding-inline: 0;
 
   border: 0;
   color: var(--primary-color);
@@ -76,7 +77,7 @@
   #login input {
     width: 50vw;
     height: 7vw;
-    font-size: min(4vw, 10vh);
+    font-size: min(4vw, 5vh);
   }
 
   #login ul>li, #login p {
