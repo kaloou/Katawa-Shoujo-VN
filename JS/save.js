@@ -38,7 +38,7 @@ function clickOnSave(n) {
 
 function toggleSaveMenu() {
 	if (isDisplay(saveDiv)) {
-		$('titleForSaveMenu').remove();
+		titleForSaveMenu.innerHTML = '';
 		if(!isDisplay(divEscape)) {
 			noFilter(divGame);
 			noFilter(divMenu);
@@ -47,16 +47,21 @@ function toggleSaveMenu() {
 		document.onkeyup = (event) => {
 			pressKey(event);
 		};
+		openEscIG.onclick = () => {
+			openEscape();
+		};
+		removeDatesTitlesFromSaves();
 	} else {
-		var title = document.createElement('h1');
-		title.id = 'titleForSaveMenu';
-		resetAutoSaveBtn.before(title);
-		title.append(textTitle);
+		var textnode = document.createTextNode(textTitle);
+		titleForSaveMenu.appendChild(textnode);
 		blurF(divGame);
 		blurF(divMenu);
 		showFlex(saveDiv);
 		document.onkeyup = (event) => {
 			closeSaveWithEsc(event);
+		};
+		openEscIG.onclick = () => {
+			toggleSaveMenu();
 		};
 		saveBtn.textContent = "Sauvegarder";
 		loadBtn.textContent = "Charger";
@@ -78,8 +83,8 @@ function extractSaves() {
 			try {
 				let response = JSON.parse(responseText);
 				if (response.received && response.found) {
-					saves = response.saves;
 					toggleSaveMenu();
+					printDatesTitlesFromSaves(response.saves);
 					if (DEBUG) console.error(response);
 				} else {
 					if (DEBUG) console.error('Pas de save trouvées' + response);
@@ -100,6 +105,29 @@ function extractSaves() {
 	xhr.send();
 }
 
+function resetAutoSave() {
+	
+}
+
+function printDatesTitlesFromSaves(data) {
+	for(var i = 0; i < max_save; i++) {
+		var textnode = document.createTextNode(data[i]['title']);
+		listOfSaveBtn[i].appendChild(textnode);
+		
+		var textnode = document.createTextNode(data[i]['init_date']);
+		var dateOfSave = document.createElement('p');
+		dateOfSave.appendChild(textnode);
+		listOfSaveSeparator[i+1].insertBefore(dateOfSave, listOfSaveSeparator[i+1].firstElementChild);
+	}
+}
+
+function removeDatesTitlesFromSaves() {
+	for(var i = 0; i < max_save; i++) {
+		listOfSaveSeparator[i+1].removeChild(listOfSaveSeparator[i+1].firstElementChild);
+		listOfSaveBtn[i].innerHTML = '';
+	}
+}
+
 function saveThisSave(n) {
 	console.error('Save' + n);
 }
@@ -108,7 +136,9 @@ function loadThisSave(n) {
 	console.error('Load' + n);
 }
 
-function resetAutoSave() {}
+function resetSave(n) {
+	console.error('reset' + n);
+}
 
 function addListenerForSave() {
 	for (let i = 0; i < max_save; i++) {
@@ -127,7 +157,11 @@ function addListenerForLoad() {
 }
 
 function addListenerForReset() {
-	for (var i = 0; i < max_save; i++) {}
+	for (let i = 0; i < max_save; i++) {
+		listOfResetBtn[i].onclick = () => {
+			resetSave(i);
+		}
+	}
 }
 
 function start() {
@@ -145,10 +179,12 @@ function getAutoSave() {
 			try {
 				let response = JSON.parse(responseText);
 				if (response.exist) {
-					if (response.found) {
-						hide(divMenu);
-						showBlock(divGame);
-						showFlex(openEscIG);
+                        if (response.found) {
+                            playTransition(() => {
+                                hide(divMenu);
+                                showBlock(divGame);
+                                showFlex(openEscIG);
+                            });
 					} else {
 						if (DEBUG) console.error('pas trouvé');
 						printNotConnected();

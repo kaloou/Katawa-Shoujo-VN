@@ -39,6 +39,7 @@ helpUsrName = document.querySelector('#login p');
 liHelpPswd = document.querySelectorAll('#login ul>li');
 
 // === Éléments de sauvegarde ===
+titleForSaveMenu = document.querySelector('#save_div .buttons h1');
 saveDiv = document.getElementById('save_div');
 closeSaveBtn = document.getElementById('close_save_button');
 divButtonInSaveMenu = document.querySelector('#save_div .buttons');

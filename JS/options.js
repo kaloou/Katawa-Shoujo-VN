@@ -67,12 +67,18 @@ function toggleOptionsMenu() {
 		document.onkeyup = (event) => {
 			pressKey(event);
 		};
+		openEscIG.onclick = () => {
+			openEscape();
+		};
 	} else {
 		showFlex(optionsDiv);
 		blurF(divGame);
 		blurF(divMenu);
 		document.onkeyup = (event) => {
 			closeOptionsWithEsc(event);
+		};
+		openEscIG.onclick = () => {
+			toggleOptionsMenu();
 		};
 	}
 }
@@ -126,12 +132,16 @@ function updateFullscreenToggle() {
 
 function changeResolution(resolution) {
 	if (resolution === 'responsive') {
-		divGame.style.width = "100dvw";
-		divGame.style.height = "100dvh";
+		divGame.style.width = '100dvw';
+		divGame.style.height = '100dvh';
+		divGame.style.border = '';
+		divGame.style.borderRadius = 0;
 	} else {
 		var [width, height] = resolution.split('x');
 		divGame.style.width = `${width}px`;
 		divGame.style.height = `${height}px`;
+		divGame.style.borderRadius = '1vw';
+  		divGame.style.border = '0.5vw solid var(--secondary-color)';
 		saveOptions();
 	}
 }
