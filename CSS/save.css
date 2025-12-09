@@ -66,6 +66,8 @@
 
 #save_div .buttons #reset_auto_save_button {
   width: 100%;
+  max-width: 100%;
+  margin: 1vw 1vw 0.1vw 1vw;
   background-color: var(--ui-red); 
 	box-shadow: 0px 0px 0px 0.08vw var(--ui-red);
 }

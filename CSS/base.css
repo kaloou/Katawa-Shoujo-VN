@@ -28,11 +28,11 @@
 	width: auto;
 }
 
-html,
-body {
+html, body {
 	min-height: 100dvh;
 	min-height: 100dvh;
 }
+
 body {
 	width: 100dvw;
 	height: 100dvh;
@@ -40,6 +40,10 @@ body {
 	justify-content: center;
 	align-items: center;
 	overflow-x: hidden;
+	background-image: url('../assets/extern/UI/main/background-satured.png');  
+	background-position-y: center;
+	background-position-x: center;
+	background-size: cover;
 }
 
 header {

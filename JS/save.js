@@ -47,6 +47,9 @@ function toggleSaveMenu() {
 		document.onkeyup = (event) => {
 			pressKey(event);
 		};
+		openEscIG.onclick = () => {
+			openEscape();
+		};
 	} else {
 		var title = document.createElement('h1');
 		title.id = 'titleForSaveMenu';
@@ -57,6 +60,9 @@ function toggleSaveMenu() {
 		showFlex(saveDiv);
 		document.onkeyup = (event) => {
 			closeSaveWithEsc(event);
+		};
+		openEscIG.onclick = () => {
+			toggleSaveMenu();
 		};
 		saveBtn.textContent = "Sauvegarder";
 		loadBtn.textContent = "Charger";

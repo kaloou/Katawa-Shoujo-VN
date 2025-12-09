@@ -36,7 +36,9 @@ window.addEventListener('load', function () {
 		window.location.href = 'HTML/credits.html';
 	});
 	// ESCAPE
-	openEscIG.onclick = () => {openEscape();};
+	openEscIG.onclick = () => {
+		openEscape();
+	};
 	// SAVE
 	saveBtn.addEventListener('click', () => {
 		clickOnSave(1);

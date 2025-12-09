@@ -104,6 +104,7 @@
   height: 100%;
   pointer-events: none;
   z-index: 100;
+  overflow: hidden;
 }
 
 .sprite {
@@ -115,6 +116,7 @@
   image-rendering: auto;
   user-select: none;
   transform: translateX(-50%);
+  overflow: hidden;
 }
 
 #name {
