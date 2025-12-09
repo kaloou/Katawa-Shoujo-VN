@@ -28,13 +28,23 @@
   font-style: normal;
 }
 
+html, body{
+    min-height: 100dvh;
+    min-height: 100dvh;
+}
 body {
   width: 100vw;
-  height: 100vh; 
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+    overflow-x: hidden;
 }
+
+header{
+    height: 100dvh;
+}
+
 
 *.unselectable {
   -moz-user-select: -moz-none;

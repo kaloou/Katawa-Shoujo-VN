@@ -1,2 +1,14 @@
 /* Dans ce fichier creer des class à ajouter utile dans le projet
  au lieu d'ajouter du style assigner la class à l'objet */
+
+/* === TRANSITION ANIMATION MENU <--> GAME === */
+#transition {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	pointer-events: none;
+	display: none;
+}

@@ -9,9 +9,12 @@ hideBtn.addEventListener('click', hideButton);
 returnBtn.addEventListener('click', GameToMenu);
 
 function GameToMenu() {
+	hide(divEscape);
 	noFilter(divMenu);
 	noFilter(divGame);
-	showFlex(divMenu);
-	hide(divGame);
-	hide(divEscape);
+
+	playTransition(() => {
+		showFlex(divMenu);
+		hide(divGame);
+	});
 }
