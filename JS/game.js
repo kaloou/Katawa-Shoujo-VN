@@ -7,15 +7,17 @@ let isTextLoading = false;
 //==========KEY PRESS FUNCTION==========
 function pressKey(event) {
 	event.preventDefault();
-	if (event.key === 'Escape') {
-		openEscape(); 
-		// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
-	} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && isDisplay(divGame)) {
-		getLine();
-	} else if (event.key === 'ArrowLeft' && isDisplay(divGame)) {
-		// revenir au diagolgue précédent
-	} else if (event.key.toLowerCase() === 'f' && isDisplay(divGame)) {
-		fullScreen();
+	if (isDisplay(divGame)) {
+		if (event.key === 'Escape') {
+			openEscape();
+			// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
+		} else if (event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') {
+			getLine();
+		} else if (event.key === 'ArrowLeft') {
+			// revenir au diagolgue précédent
+		} else if (event.key.toLowerCase() === 'f') {
+			fullScreen();
+		}
 	}
 }
 
@@ -29,14 +31,14 @@ function fullScreen() {
 }
 
 function openEscape() {
-	if (isDisplay(divEscape)) {
+	if (isDisplay(divGame) && isDisplay(divEscape)) {
 		hide(divEscape);
 		noFilter(divMenu);
 		noFilter(divGame);
 	} else {
 		showFlex(divEscape);
-		blur(divMenu);
-		blur(divGame);
+		blurF(divMenu);
+		blurF(divGame);
 	}
 }
 
@@ -45,15 +47,30 @@ function hideButton() {
 	noFilter(divMenu);
 	noFilter(divGame);
 	hide(dialogContener);
-	document.addEventListener('keydown', showDialog);
-	divGame.addEventListener('click', showDialog);
+	hide(centeredText);
+	hide(textOverlay);
+	hide(openEscIG);
+	document.onkeyup = () => {
+		showDialog();
+	};
+	divGame.onclick = () => {
+		showDialog();
+	};
 }
 
 function showDialog() {
-	dialogContener.style.display = 'block';
-	divGame.removeEventListener('click', showDialog);
-	document.removeEventListener('keydown', showDialog);
+	showBlock(dialogContener);
+	showBlock(centeredText);
+	showBlock(textOverlay);
+	showBlock(openEscIG);
+	divGame.onclick = () => {
+		getLine();
+	};
+	document.onkeyup = (event) => {
+		pressKey(event);
+	};
 }
+
 //==== MAIN FUNCTIONS ==================================
 function getLine() {
 	if (!isTextLoading) {
@@ -189,16 +206,22 @@ function reset_sprite_stack() {
 // Fonctions pour passer d'un format spécifique à la taille de l'écran
 function convert_x_on_current_format(x) {
 	const ORIGINAL_WIDTH = 800;
-	const currentWidth = window.innerWidth;
-	const ratio = currentWidth / ORIGINAL_WIDTH;
+	const currentWidth = divGame.offsetWidth;
+	let ratio = currentWidth / ORIGINAL_WIDTH;
 	return x * ratio;
 }
 
 function convert_x_on_current_format_hd(x) {
 	const HD_WIDTH = 1920;
-	const currentWidth = window.innerWidth;
+	const currentWidth = divGame.offsetWidth;
 	const ratio = currentWidth / HD_WIDTH;
 	return x * ratio;
+}
+function convert_y_on_current_format_hd(y) {
+	const HD_HEIGHT = 1080;
+	const currentHeight = divGame.offsetHeight;
+	const ratio = currentHeight / HD_HEIGHT;
+	return y * ratio;
 }
 
 function add_sprite(image_name, image_tag, pos, z, width, height) {
@@ -216,6 +239,7 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	spriteImg.style.zIndex = z;
 	spriteImg.style.backgroundSize = 'contain';
 	spriteImg.style.backgroundRepeat = 'no-repeat';
+	spriteImg.style.backgroundPosition = 'center';
 
 	let convertedX;
 	if (pos === 800) {
@@ -230,7 +254,7 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 		convertedX = convert_x_on_current_format(pos);
 	}
 
-	spriteImg.style.left = convertedX - convert_x_on_current_format_hd(width) / 2 + 'px';
+	spriteImg.style.left = convertedX + 'px';
 	spriteImg.style.bottom = '0';
 
 	// dimensions
@@ -238,39 +262,39 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	spriteImg.style.height = (height > 0 ? height : 200) + 'px';
 
 	let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
-    if (existingSprite) existingSprite.replaceWith(spriteImg);
-    else spriteStack.appendChild(spriteImg);
+	if (existingSprite) existingSprite.replaceWith(spriteImg);
+	else spriteStack.appendChild(spriteImg);
 
-    if (existingSprite) { // check for transition of the sprite if already there
-        const oldPos = parseFloat(existingSprite.dataset.pos);
-        const newPos = parseFloat(pos);
+	if (existingSprite) {
+		// check for transition of the sprite if already there
+		const oldPos = parseFloat(existingSprite.dataset.pos);
+		const newPos = parseFloat(pos);
 
-        if (oldPos !== newPos) {
-            //const oldLeft = parseFloat(existingSprite.style.left);
-            const newLeft = parseFloat(spriteImg.style.left);
+		if (oldPos !== newPos) {
+			//const oldLeft = parseFloat(existingSprite.style.left);
+			const newLeft = parseFloat(spriteImg.style.left);
 
-            existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
-            existingSprite.dataset.pos = pos;
-            existingSprite.dataset.z = z;
-            existingSprite.style.zIndex = z;
-            existingSprite.style.width = spriteImg.style.width;
-            existingSprite.style.height = spriteImg.style.height;
+			existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
+			existingSprite.dataset.pos = pos;
+			existingSprite.dataset.z = z;
+			existingSprite.style.zIndex = z;
+			existingSprite.style.width = spriteImg.style.width;
+			existingSprite.style.height = spriteImg.style.height;
 
-            existingSprite.style.transition = 'left 0.5s ease-in-out';
+			existingSprite.style.transition = 'left 0.5s ease-in-out';
 
-            existingSprite.style.left = newLeft + 'px';
+			existingSprite.style.left = newLeft + 'px';
 
-            setTimeout(() => {
-                existingSprite.style.transition = '';
-            }, 500);
-        } else {
-            existingSprite.replaceWith(spriteImg);
-        }
-    } else {
-        // Nouveau sprite l'ajouter directement
-        spriteStack.appendChild(spriteImg);
-    }
-
+			setTimeout(() => {
+				existingSprite.style.transition = '';
+			}, 500);
+		} else {
+			existingSprite.replaceWith(spriteImg);
+		}
+	} else {
+		// Nouveau sprite l'ajouter directement
+		spriteStack.appendChild(spriteImg);
+	}
 }
 
 function handle_heartattack(image_name, image_tag, pos, z, width) {
@@ -293,8 +317,8 @@ function handle_heartattack(image_name, image_tag, pos, z, width) {
 
 	heart.style.left = convertedX - convert_x_on_current_format_hd(width) / 2 + 'px';
 	heart.style.bottom = '0';
-	heart.style.width = window.innerWidth + 'px';
-	heart.style.height = window.innerHeight + 'px';
+	heart.style.width = divGame.offsetWidth + 'px';
+	heart.style.height = divGame.offsetHeight + 'px';
 
 	// --- dégradé horizontal (centre opaque → côtés transparents) ---
 	heart.style.maskImage =
@@ -373,8 +397,8 @@ function stop_music(fadeout) {
 
 //==== ANIMATION D'APPARITION DU TEXTE ==================
 function animateText(element, content, callback) {
-    const speed = textDisplaySpeed ?? 90;
-    const delay = (101 - speed) / 2;
+	const speed = textDisplaySpeed ?? 90;
+	const delay = (101 - speed) / 2;
 
 	element.innerHTML = '<span></span>';
 	const span = element.querySelector('span');

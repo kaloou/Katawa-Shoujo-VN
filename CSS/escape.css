@@ -4,6 +4,8 @@
   width: 40vw;
   height: 30vw;
   /*box-shadow: 0 0 30vw 5vw black;*/
+  max-width: 100dvh;
+  max-height: 75vh;
   
   z-index: 101;
 
@@ -16,14 +18,54 @@
   background-size: cover;
 }
 
+#open_esc_ingame {
+  position: absolute;
+  display: none;
+  left: 0;
+  top: 0;
+  width: 2vw;
+  height: 2vw;
+  max-width: 10vh;
+  max-height: 10vh;
+  margin: 20px;
+  font-size: min(2vw, 10vh);
+  font-weight: 900;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+	border: 0.1vw solid var(--primary-color);
+	box-shadow: 0 0 0 0.05vw var(--secondary-color);
+  text-align: center;
+  z-index: 1001;
+}
+/*id="menu_screen" style="display:none"*/
+
+#open_esc_ingame::after {
+  content: "";
+  display: inline-block;
+  align-self: center;
+  justify-self: center;
+  width: min(2vw, 10vh);
+  height: min(2vw, 10vh);
+  max-width: 10vh;
+  max-height: 10vh;
+  background-image: url('../assets/extern/UI/bt-logolarge-heartonly.png');
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#escape .buttons {
+  max-width: 60%;
+}
+
 #quit_esc_button {
   display: block;
-  margin: 3vw 5vw;
+  margin: min(3vw, 9vh) min(5vw, 12vh);
   position: absolute;
   top: 0;
   right: 0;
-  width: 2vw;
-  height: 2vw;
+  width: min(2vw, 7vh);
+  height: min(2vw, 7vh);
   background-image: url(../assets/extern/UI/bt-del.png);
   background-position-y: center;
   background-position-x: center;
@@ -32,4 +74,30 @@
 
 #quit_esc_button:hover {
   cursor: pointer;
+}
+
+@media only screen and (max-width: 1000px) {
+  #escape { 
+    width: 60vw;
+    height: 40vw;
+  }
+
+  #quit_esc_button {
+    margin: min(2vw, 7vh) min(6vw, 9vh);
+    width: min(6vw, 7vh);
+    height: min(6vw, 7vh);
+  }
+
+  #open_esc_ingame {
+    width: 10vw;
+    height: 10vw;
+    margin: 10vw;
+  }
+  /*id="menu_screen" style="display:none"*/
+
+  #open_esc_ingame::after {
+    width: 10vw;
+    height: 10vw;
+    opacity: 70%;
+  }
 }

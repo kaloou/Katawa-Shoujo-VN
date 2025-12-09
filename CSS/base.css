@@ -1,73 +1,89 @@
 :root {
-  --color-primary: #640a34;
-  --color-secondary: #6b0101;
-  --color-text: black;
-  --primary-color: #fff2d4;
-  --secondary-color: #948b7c;
-  --ui-green: #99B681;
-  --ui-red: #eb243b;
-  --ui-pink: #FF8D7C;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Playtime";
-  scroll-behavior: smooth;
-  list-style: none;
-  box-sizing: border-box;
-  height: auto;
-  width: auto;
+	--color-primary: #640a34;
+	--color-secondary: #6b0101;
+	--color-text: black;
+	--primary-color: #fff2d4;
+	--secondary-color: #948b7c;
+	--ui-green: #99b681;
+	--ui-red: #eb243b;
+	--ui-pink: #ff8d7c;
 }
 
 /* FONTS */
 @font-face {
-  font-family: "Playtime";
-  src: url("../assets/extern/font/playtime.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'Playtime';
+	src: url('../assets/extern/font/playtime.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
 }
 
-html, body{
-    min-height: 100dvh;
-    min-height: 100dvh;
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Playtime';
+	scroll-behavior: smooth;
+	list-style: none;
+	box-sizing: border-box;
+	height: auto;
+	width: auto;
+}
+
+html,
+body {
+	min-height: 100dvh;
+	min-height: 100dvh;
 }
 body {
-  width: 100vw;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-    overflow-x: hidden;
+	width: 100dvw;
+	height: 100dvh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow-x: hidden;
 }
 
-header{
-    height: 100dvh;
+header {
+	height: 100dvh;
 }
-
 
 *.unselectable {
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 
 .buttons button {
 	display: block;
 	width: 18vw;
 	height: 3vw;
-	margin: 2vw;
+	max-width: 90%;
+	max-height: 10vh;
+	margin: min(2vw, 5vh);
 	color: var(--primary-color);
 	background-color: var(--secondary-color);
 	border: 0.2vw solid var(--primary-color);
 	box-shadow: 0 0 0 0.08vw var(--secondary-color);
-	font-size: 2vw;
+	font-size: min(2vw, 6vh);
 	justify-self: center;
 }
 
 .buttons button:hover {
 	text-decoration: underline;
 	text-decoration-color: var(--primary-color);
+}
+
+@media only screen and (max-width: 1000px) {
+	.buttons button {
+		width: 35vw;
+		height: 7vw;
+		margin: min(2vw, 2vh);
+		color: var(--primary-color);
+		background-color: var(--secondary-color);
+		border: 0.2vw solid var(--primary-color);
+		box-shadow: 0 0 0 0.08vw var(--secondary-color);
+		font-size: min(4vw, 5vh);
+		justify-self: center;
+	}
 }

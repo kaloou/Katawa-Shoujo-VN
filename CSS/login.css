@@ -2,6 +2,7 @@
   display: none;
   position: fixed;
   /*box-shadow: 0 0 30vw 5vw black;*/
+  max-width: 90vh;
   
   z-index: 101;
   flex-direction: column;
@@ -12,9 +13,11 @@
 
   width: 30vw;
   height: 3vw;
+  max-width: 100%;
+  max-height: 10vh;
 
-  margin: 0.7vw auto;
-  padding: 0.5vw;
+	margin: min(0.7vw, 2vh) auto;
+  padding: min(0.5vw, 3vh);
 
   border: 0;
   color: var(--primary-color);
@@ -23,7 +26,7 @@
   box-shadow: 0px 0px 0px 0.08vw var(--secondary-color);
   
   text-align: center;
-  font-size: 1.5vw;
+  font-size: min(1.5vw, 6vh);
 }
 
 #login input::placeholder{
@@ -42,7 +45,7 @@
 }
 
 #login #inp_submit{
-  margin-top: 1vw;
+  margin-top: min(1vw, 5vh);
 }
 
 #login #inp_submit:hover, #login #inp_submit:focus{
@@ -56,7 +59,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  
+  flex-wrap: wrap;
 }
 
 #login ul>li, #login p {
@@ -64,7 +67,19 @@
   align-self: center;
 
   color: var(--ui-red);
-  font-size: 1vw;
+  font-size: min(1vw, 5vh);
 
-  margin: 0 1vw 1.2vw 1vw;
+  margin: 0 min(1vw, 5vh) min(1.2vw, 4vh) min(1vw, 5vh);
+}
+
+@media only screen and (max-width: 1000px) {
+  #login input {
+    width: 50vw;
+    height: 7vw;
+    font-size: min(4vw, 10vh);
+  }
+
+  #login ul>li, #login p {
+    font-size: min(2.2vw, 6vh);
+  }
 }

@@ -15,6 +15,7 @@ dialogContener = document.getElementById('dialog_container');
 
 // === Éléments de l'écran d'échappement ===
 divEscape = document.getElementById('escape');
+openEscIG = document.getElementById('open_esc_ingame');
 quitEscBtn = document.getElementById('quit_esc_button');
 hideBtn = document.getElementById('hide_button');
 saveBtn = document.getElementById('save_button');
