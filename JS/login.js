@@ -1,4 +1,3 @@
-
 /*
 let regex10Char = /.{10,}/;
 let regexMin = /[]/;
@@ -67,7 +66,9 @@ function printConnected() {
 
 function wantDisconnect() {
 	if (connected) {
-		connectBtn.onclick = () => {disconnect();};
+		connectBtn.onclick = () => {
+			disconnect();
+		};
 		connectBtn.textContent = 'Se déconnecter ?';
 		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + pinkColor;
 		connectBtn.style.backgroundColor = pinkColor;
@@ -214,7 +215,9 @@ function disconnect() {
 		let xhr = new XMLHttpRequest();
 		connected = false;
 		printNotConnected();
-		connectBtn.onclick = () => {openLoginForm();};
+		connectBtn.onclick = () => {
+			openLoginForm();
+		};
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				if (DEBUG) console.error(JSON.parse(xhr.responseText));

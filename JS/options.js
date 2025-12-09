@@ -1,7 +1,7 @@
 // === Variables pour les options ===
 let autoModeInterval = null;
 let autoModeDelay = 3000;
-let textDisplaySpeed = 50;
+let textDisplaySpeed = 90;
 
 // Init
 loadOptions();
@@ -35,6 +35,11 @@ autoModeToggle.addEventListener('change', (e) => {
 textSpeedSlider.addEventListener('input', (e) => {
 	textDisplaySpeed = parseInt(e.target.value);
 	textSpeedValue.textContent = textDisplaySpeed;
+
+	if (autoModeToggle.checked) {
+		startAutoMode();
+	}
+
 	saveOptions();
 });
 
@@ -137,7 +142,14 @@ function startAutoMode() {
 		stopAutoMode();
 	}
 
-	autoModeDelay = 5000 - (textDisplaySpeed * 40);
+	// Calculer le délai du mode auto en tenant compte de l'animation du texte
+	// Temps d'animation moyen pour un texte de 150 caractères
+	const averageTextLength = 150;
+	const charDelay = Math.max(0.5, (101 - textDisplaySpeed) / 2);
+	const animationTime = averageTextLength * charDelay;
+
+	// Délai de base (2000ms) + temps d'animation
+	autoModeDelay = 2000 + animationTime;
 
 	autoModeInterval = setInterval(() => {
 		if (isDisplay(divGame) && !isDisplay(divEscape) && !isDisplay(optionsDiv)) {

@@ -19,10 +19,13 @@ MENU POPUP AVEC ESC
 -   [ ] à la sauvegarde mettre le dernier bg enregistré dans la bd
 -   [ ] et les éléments de la sprite stack
 ---
+- BUG À REGLER
+---
+- j'ai crus voir que le texte restait sur les changement de bg à verif
+---
 
 -   TACHES UNIQUES
 ----
--   [ ] faire animation d'apparition du texte
 -   [ ] implémenter la musique
 -   [ ] zoom animation on ev images (bgs or sprites)
 -   [ ] implémenter les musiques dans la DB 1 par 1
@@ -32,3 +35,4 @@ MENU POPUP AVEC ESC
 -   [ ] Implémenter la sauvegarde et chargement
 -   [ ] Gérer le type 6 (html à interpreter)
 -   [ ] Verifier si
+

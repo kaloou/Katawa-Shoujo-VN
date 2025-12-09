@@ -9,9 +9,9 @@ function pressKey(event) {
 	event.preventDefault();
 	if (isDisplay(divGame)) {
 		if (event.key === 'Escape') {
-			openEscape(); 
+			openEscape();
 			// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
-		} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter')) {
+		} else if (event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') {
 			getLine();
 		} else if (event.key === 'ArrowLeft') {
 			// revenir au diagolgue précédent
@@ -253,7 +253,7 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	} else {
 		convertedX = convert_x_on_current_format(pos);
 	}
-	
+
 	spriteImg.style.left = convertedX + 'px';
 	spriteImg.style.bottom = '0';
 
@@ -262,42 +262,42 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	spriteImg.style.height = (height > 0 ? height : 200) + 'px';
 
 	let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
-    if (existingSprite) existingSprite.replaceWith(spriteImg);
-    else spriteStack.appendChild(spriteImg);
+	if (existingSprite) existingSprite.replaceWith(spriteImg);
+	else spriteStack.appendChild(spriteImg);
 
-    if (existingSprite) { // check for transition of the sprite if already there
-        const oldPos = parseFloat(existingSprite.dataset.pos);
-        const newPos = parseFloat(pos);
+	if (existingSprite) {
+		// check for transition of the sprite if already there
+		const oldPos = parseFloat(existingSprite.dataset.pos);
+		const newPos = parseFloat(pos);
 
-        if (oldPos !== newPos) {
-            const oldLeft = parseFloat(existingSprite.style.left);
-            const newLeft = parseFloat(spriteImg.style.left);
+		if (oldPos !== newPos) {
+			//const oldLeft = parseFloat(existingSprite.style.left);
+			const newLeft = parseFloat(spriteImg.style.left);
 
-            existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
-            existingSprite.dataset.pos = pos;
-            existingSprite.dataset.z = z;
-            existingSprite.style.zIndex = z;
-            existingSprite.style.width = spriteImg.style.width;
-            existingSprite.style.height = spriteImg.style.height;
+			existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
+			existingSprite.dataset.pos = pos;
+			existingSprite.dataset.z = z;
+			existingSprite.style.zIndex = z;
+			existingSprite.style.width = spriteImg.style.width;
+			existingSprite.style.height = spriteImg.style.height;
 
-            existingSprite.style.transition = 'left 0.5s ease-in-out';
+			existingSprite.style.transition = 'left 0.5s ease-in-out';
 
-            existingSprite.style.left = newLeft + 'px';
+			existingSprite.style.left = newLeft + 'px';
 
-            setTimeout(() => {
-                existingSprite.style.transition = '';
-            }, 500);
-        } else {
-            existingSprite.replaceWith(spriteImg);
-        }
-    } else {
-        // Nouveau sprite l'ajouter directement
-        spriteStack.appendChild(spriteImg);
-    }
-
+			setTimeout(() => {
+				existingSprite.style.transition = '';
+			}, 500);
+		} else {
+			existingSprite.replaceWith(spriteImg);
+		}
+	} else {
+		// Nouveau sprite l'ajouter directement
+		spriteStack.appendChild(spriteImg);
+	}
 }
 
-function handle_heartattack(image_name, image_tag, pos, z, width, height) {
+function handle_heartattack(image_name, image_tag, pos, z, width) {
 	hideTextBox();
 	hideNameBox();
 
@@ -318,7 +318,7 @@ function handle_heartattack(image_name, image_tag, pos, z, width, height) {
 	heart.style.left = convertedX - convert_x_on_current_format_hd(width) / 2 + 'px';
 	heart.style.bottom = '0';
 	heart.style.width = divGame.offsetWidth + 'px';
-	heart.style.height = divGame.offsetHeight  + 'px';
+	heart.style.height = divGame.offsetHeight + 'px';
 
 	// --- dégradé horizontal (centre opaque → côtés transparents) ---
 	heart.style.maskImage =
@@ -395,6 +395,27 @@ function stop_music(fadeout) {
 // centeredText -> type 5 (note papier)
 // overlaytext -> overlay debut de jeu
 
+//==== ANIMATION D'APPARITION DU TEXTE ==================
+function animateText(element, content, callback) {
+	const speed = textDisplaySpeed ?? 90;
+	const delay = (101 - speed) / 2;
+
+	element.innerHTML = '<span></span>';
+	const span = element.querySelector('span');
+
+	let i = 0;
+	function addChar() {
+		if (i < content.length) {
+			span.textContent += content[i];
+			i++;
+			setTimeout(addChar, delay);
+		} else if (callback) {
+			callback();
+		}
+	}
+	addChar();
+}
+
 function showNameBox(characterName, characterColor = '#ffffff') {
 	showFlex(nameElement);
 	nameElement.innerHTML = `<span style="color: ${characterColor};">${characterName}</span>`;
@@ -409,10 +430,11 @@ function hideNameBox() {
 
 function showTextBox(content) {
 	showFlex(textElement);
-	textElement.innerHTML = `<span>${content}</span>`;
 	textElement.style.opacity = '1';
 
-	triggerLogoEffect(textElement);
+	animateText(textElement, content, () => {
+		triggerLogoEffect(textElement);
+	});
 }
 
 function hideTextBox() {
@@ -424,8 +446,9 @@ function hideTextBox() {
 
 function showCenteredText(content) {
 	showFlex(centeredText);
-	centeredText.innerHTML = `<span>${content}</span>`;
 	centeredText.style.opacity = '1';
+
+	animateText(centeredText, content);
 }
 
 function hideCenteredText() {
@@ -443,10 +466,28 @@ function showOverlayText(content) {
 	}
 
 	showFlex(textOverlay);
-	textOverlay.innerHTML += `<br><span>${content}</span>`;
 	textOverlay.style.opacity = '0.7';
 
-	triggerLogoEffect(textOverlay, 'pop2');
+	const newLine = document.createElement('br');
+	const newSpan = document.createElement('span');
+	textOverlay.appendChild(newLine);
+	textOverlay.appendChild(newSpan);
+
+	const speed = textDisplaySpeed ?? 90;
+	const delay = (101 - speed) / 2;
+
+	let i = 0;
+	function addChar() {
+		if (i < content.length) {
+			newSpan.textContent += content[i];
+			i++;
+			setTimeout(addChar, delay);
+		} else {
+			triggerLogoEffect(textOverlay, 'pop2');
+		}
+	}
+
+	addChar();
 }
 
 function hideOverlayText() {
