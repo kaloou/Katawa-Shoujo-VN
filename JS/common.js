@@ -89,7 +89,7 @@ function preloadImagesGame() {
 }
 
 //============= Transition animation =============
-const TRANSITION_DURATION = 500;
+let TRANSITION_DURATION = 500;
 const CIRCLE_RADIUS = 10;
 const CIRCLE_SPACING = CIRCLE_RADIUS * 2;
 const CURTAIN_OPACITY = 0.7;
@@ -110,8 +110,23 @@ function playTransition(callback) {
 	divMenu.style.display = 'flex';
 	divGame.style.display = 'block';
 
+	// Gérer le z-index pour que la bonne div soit visible
+	if (isMenuToGame) {
+		divMenu.style.zIndex = '2';
+		divGame.style.zIndex = '1';
+	} else {
+		divMenu.style.zIndex = '1';
+		divGame.style.zIndex = '2';
+	}
+
 	const ctx = canvas.getContext('2d');
-	const startTime = Date.now();
+	let startTime;
+
+	// Attendre un frame pour que le navigateur calcule le layout
+	requestAnimationFrame(() => {
+		startTime = Date.now();
+		animate();
+	});
 
 	function animate() {
 		const elapsed = Date.now() - startTime;
@@ -121,6 +136,8 @@ function playTransition(callback) {
 			canvas.style.display = 'none';
 			divMenu.style.clipPath = '';
 			divGame.style.clipPath = '';
+			divMenu.style.zIndex = '';
+			divGame.style.zIndex = '';
 			if (callback) callback();
 			return;
 		}

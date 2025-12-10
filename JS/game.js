@@ -185,11 +185,16 @@ function displayText(content, characterName = '', characterColor = '', character
 //==== TYPE 2 FUNCTIONS ==================================
 function change_bg(img_name, reset) {
 	if (reset) {
-		divGame.style.transition = 'opacity 0.3s ease-in';
-		divGame.style.opacity = 0;
+		const bgTransition = document.getElementById('bg_transition');
+
+		// Préparer le nouveau background
+		bgTransition.style.backgroundImage = `url("assets/internHD/${img_name}")`;
+		bgTransition.style.opacity = 1;
+
+		// Après la transition, swap et reset
 		setTimeout(() => {
 			divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
-			divGame.style.opacity = 1;
+			bgTransition.style.opacity = 0;
 			reset_sprite_stack();
 		}, 300);
 	} // j'hésite de carrement rien faire car quasiment sur que les tag 'bg' sont inutiles...bref
@@ -262,16 +267,13 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 	spriteImg.style.height = (height > 0 ? height : 200) + 'px';
 
 	let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
-	if (existingSprite) existingSprite.replaceWith(spriteImg);
-	else spriteStack.appendChild(spriteImg);
 
 	if (existingSprite) {
-		// check for transition of the sprite if already there
+		// transition of the sprite if already there and different pos
 		const oldPos = parseFloat(existingSprite.dataset.pos);
 		const newPos = parseFloat(pos);
 
 		if (oldPos !== newPos) {
-			//const oldLeft = parseFloat(existingSprite.style.left);
 			const newLeft = parseFloat(spriteImg.style.left);
 
 			existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
@@ -289,10 +291,11 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
 				existingSprite.style.transition = '';
 			}, 500);
 		} else {
+			// Same position, just replace the sprite
 			existingSprite.replaceWith(spriteImg);
 		}
 	} else {
-		// Nouveau sprite l'ajouter directement
+		// New sprite
 		spriteStack.appendChild(spriteImg);
 	}
 }

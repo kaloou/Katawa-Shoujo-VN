@@ -1,5 +1,10 @@
 const DEBUG = true;
-
+// Transition invisible bug fix
+const originalDuration = TRANSITION_DURATION;
+TRANSITION_DURATION = 0.1;
+playTransition(() => {
+    TRANSITION_DURATION = originalDuration;
+});
 window.addEventListener('load', function () {
 	initGame();
 	preloadImagesUi();
@@ -7,6 +12,8 @@ window.addEventListener('load', function () {
 	if (DEBUG) {
 		initTestButtons();
 	}
+
+
 	//========EVENTS=======
 	// ESCAPE
 	returnBtn.addEventListener('click', GameToMenu);
@@ -213,4 +220,5 @@ function initTestButtons() {
 function preloadImagesUi() {
 	preloadImage('assets/extern/UI/bg-config-gallery.png');
 	preloadImage('assets/extern/UI/main/background-unsatured.png');
+    preloadImage('assets/internHD/bg_op_snowywoods.png');
 }
