@@ -7,6 +7,13 @@ window.addEventListener('load', function () {
 	if (DEBUG) {
 		initTestButtons();
 	}
+
+	// Transition invisible bug fix
+	const originalDuration = TRANSITION_DURATION;
+	TRANSITION_DURATION = 0.1;
+	playTransition(() => {
+		TRANSITION_DURATION = originalDuration;
+	});
 	//========EVENTS=======
 	// ESCAPE
 	returnBtn.addEventListener('click', GameToMenu);

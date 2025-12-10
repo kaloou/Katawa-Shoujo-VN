@@ -89,7 +89,7 @@ function preloadImagesGame() {
 }
 
 //============= Transition animation =============
-const TRANSITION_DURATION = 500;
+let TRANSITION_DURATION = 500;
 const CIRCLE_RADIUS = 10;
 const CIRCLE_SPACING = CIRCLE_RADIUS * 2;
 const CURTAIN_OPACITY = 0.7;
