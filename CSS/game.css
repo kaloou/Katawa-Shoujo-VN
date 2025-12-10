@@ -137,8 +137,7 @@
   position: absolute;
   width: 22%;
   height: 16%;
-  bottom: calc(3% + 16%); /* Position au-dessus de #text */
-  left: 2%;
+  bottom: 9%;
   align-items: flex-start;
   justify-content: flex-start;
   color: white;
@@ -233,7 +232,7 @@
   font-size: 20px;
  }
  #name {
-  bottom: calc(3% + 20%);
+  bottom: 25%;
  }
 } /*2.5cqh*/
 
@@ -242,7 +241,7 @@
   height: 22%;
  }
  #name {
-  bottom: calc(3% + 22%);
+  bottom: 16%;
  }
 }
 
@@ -252,7 +251,7 @@
   font-size: 2cqh;
  }
  #name {
-  bottom: calc(3% + 25%);
+  bottom: 14%;
  }
 }
 
@@ -262,7 +261,7 @@
   font-size: 2cqh;
  }
  #name {
-  bottom: calc(3% + 30%);
+  bottom: 30%;
  }
 }
 
@@ -272,7 +271,7 @@
   font-size: 2cqh;
  }
  #name {
-  bottom: calc(3% + 22%);
+  bottom: 27%;
  }
 }
 
@@ -282,6 +281,6 @@
   font-size: 2.5cqh;
  }
  #name {
-  bottom: calc(3% + 22%);
+  bottom: 27%;
  }
 }
