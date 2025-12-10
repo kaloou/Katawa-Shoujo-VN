@@ -105,6 +105,8 @@ function extractSaves() {
 	xhr.send();
 }
 
+// <input type="text" placeholder="Nouvelle partie"></input>
+
 function resetAutoSave() {
 	
 }
@@ -117,13 +119,13 @@ function printDatesTitlesFromSaves(data) {
 		var textnode = document.createTextNode(data[i]['init_date']);
 		var dateOfSave = document.createElement('p');
 		dateOfSave.appendChild(textnode);
-		listOfSaveSeparator[i+1].insertBefore(dateOfSave, listOfSaveSeparator[i+1].firstElementChild);
+		listOfSaveSeparator[i].insertBefore(dateOfSave, listOfSaveSeparator[i].firstElementChild);
 	}
 }
 
 function removeDatesTitlesFromSaves() {
 	for(var i = 0; i < max_save; i++) {
-		listOfSaveSeparator[i+1].removeChild(listOfSaveSeparator[i+1].firstElementChild);
+		listOfSaveSeparator[i].removeChild(listOfSaveSeparator[i].firstElementChild);
 		listOfSaveBtn[i].innerHTML = '';
 	}
 }
