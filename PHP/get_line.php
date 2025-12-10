@@ -53,6 +53,8 @@ try {
         'elid' => (int)$row['elid'],
     ];
 
+    $_SESSION['to_save']['rep'] = $response;
+
     // ajouter les propriétés spécifiques selon le type
     switch ($row['type']) {
         case 1: // texte
@@ -60,10 +62,17 @@ try {
             $response['character_color'] = $row['character_color'] ?? '';
             $response['text'] = $row['data'];
             $response['character_code'] = $row['character_code'] ?? '';
+
+            $_SESSION['to_save']['text']['char_name'] = $response['character_name'];
+            $_SESSION['to_save']['text']['char_color'] = $response['character_color'];
+            $_SESSION['to_save']['text']['content'] = $response['text'];
+            $_SESSION['to_save']['text']['char_code'] = $response['character_code'];
             break;
 
         case 2: // BG
             $response['image_name'] = $row['image_name'] ?? '';
+
+            $_SESSION['to_save']['bg'] = $response['image_name'];
             break;
             
         case 3: // Sprites
@@ -72,12 +81,27 @@ try {
             $response['height'] = (int)($row['image_height'] ?? 0);
             $response['image_tag'] = $row['data'];
             $response['pos'] = (int)($row['pos'] ?? 0);
+
+            $_SESSION['to_save']['sprite']['image_name'] = $response['image_name'];
+            $_SESSION['to_save']['sprite']['width'] = $response['width'];
+            $_SESSION['to_save']['sprite']['height'] = $response['height'];
+            $_SESSION['to_save']['sprite']['image_tag'] = $response['image_tag'];
+            $_SESSION['to_save']['sprite']['pos'] = $response['pos'];
             break;
         case 4: // Remove Sprites
             $response['image_tag'] = $row['data'];
-            
+
+            $_SESSION['to_save']['sprite']['image_name'] = '';
+            $_SESSION['to_save']['sprite']['width'] = 0;
+            $_SESSION['to_save']['sprite']['height'] = 0;
+            $_SESSION['to_save']['sprite']['image_tag'] = '';
+            $_SESSION['to_save']['sprite']['pos'] = 0;
+            break;
+
         case 5: // DIV au milieu de l'écran
             $response['text'] = $row['data'];
+
+            $_SESSION['to_save']['centered_text'] = $response['text'];
             break;
             
         case 6: // HTML à interpréter
@@ -86,6 +110,8 @@ try {
 
         case 7: // music
             $response['music_name'] = $row['data'];
+
+            $_SESSION['to_save']['music'] = $response['music_name'];
             break;
 
         case 8: //stop music (css style from db (fade))

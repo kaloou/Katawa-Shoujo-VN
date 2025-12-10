@@ -1,38 +1,46 @@
-<?php 
-    session_start();
-    include_once('connexion.php');
-    header('Content-Type: text/plain; charset=utf-8');
+<?php
+    $str = "rep|seqid:=:1|seqserial:=:1|type:=:1|elid:=:1@text|char_name:=:'test.png'|";
+    $tab1 = explode("@", $str); /*$_SESSION('auto_save')*/
+    var_dump($tab1);
+    echo "<br><br>";
+    echo "foreeach";
+    echo "<br><br>";
+    $tab2 = [];
 
-    explode(" ",$str)
+    foreach ($tab1 as $i => $val) 
+    {
+        echo "$i) <br>";
+        $tab2[$i] = explode("|", $val);
+        var_dump($tab2[$i]);
+        echo "<br><br>";
+    }
+    var_dump($tab2);
 
-    if (!isset($_SESSION["story"])) {
-            $_SESSION["story"] = array(
-                "seqid" => 1,
-                "type" => 1,
-                "name" => "",
-                "param" => 0,
-                "next" => 2
-            );
-        }
+    // $_SESSION['to_save']['rep']['seqid'] = 1;
+    // $_SESSION['to_save']['rep']['seqserial'] = 1;
+    // $_SESSION['to_save']['rep']['type'] = 1;
+    // $_SESSION['to_save']['rep']['elid'] = 1;
 
-        if (!isset($_SESSION["seqtext"])) {
-            $_SESSION["seqtext"] = array(
-                "seqid" => $_SESSION["story"]["seqid"],
-                "seqserial" => 1,
-                "type" => 1,
-                "data" => "text",
-                "elid" => 1,
-                "pos" => 1,
-                "z" => 1
-            );
-        }
+    // $_SESSION['to_save']['text']['char_name'] = '';
+    // $_SESSION['to_save']['text']['char_color'] = '';
+    // $_SESSION['to_save']['text']['content'] = '';
+    // $_SESSION['to_save']['text']['char_code'] = '';
 
-        if (!isset($_SESSION["game_state"])) {
-            $_SESSION["game_state"] = array(
-                "background" => "",
-                "menu_active" => false, // may not be necessary
-                "choice_active" => false,
-                "get_line_loaded" => false,
-                "actual_music" => ""
-            );
-        }
+
+    // $_SESSION['to_save']['bg'] = '';
+
+    // $_SESSION['to_save']['sprite']['image_name'] = '';
+    // $_SESSION['to_save']['sprite']['width'] = 0;
+    // $_SESSION['to_save']['sprite']['height'] = 0;
+    // $_SESSION['to_save']['sprite']['image_tag'] = '';
+    // $_SESSION['to_save']['sprite']['pos'] = 0;
+
+
+    // $_SESSION['to_save']['sprite'] = [];
+
+
+    // $_SESSION['to_save']['centered_text'] = $response['text'];
+
+
+    // $_SESSION['to_save']['music'] = $response['music_name'];
+?>
