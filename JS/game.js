@@ -230,74 +230,87 @@ function convert_y_on_current_format_hd(y) {
 }
 
 function add_sprite(image_name, image_tag, pos, z, width, height) {
-	// Exception cases
-	if (image_tag === 'heartattack') {
-		handle_heartattack(image_name, image_tag, pos, z, width, height);
-		return false; // logique pour ne pas appeller directement getline
-	}
-	let spriteImg = document.createElement('div');
-	spriteImg.style.backgroundImage = `url("assets/internHD/${image_name}")`;
-	spriteImg.className = 'sprite';
-	spriteImg.dataset.tag = image_tag;
-	spriteImg.dataset.pos = pos;
-	spriteImg.dataset.z = z;
-	spriteImg.style.zIndex = z;
-	spriteImg.style.backgroundSize = 'contain';
-	spriteImg.style.backgroundRepeat = 'no-repeat';
-	spriteImg.style.backgroundPosition = 'center';
+    // Exception cases
+    if (image_tag === 'heartattack') {
+        handle_heartattack(image_name, image_tag, pos, z, width, height);
+        return false; // logique pour ne pas appeller directement getline
+    }
 
-	let convertedX;
-	if (pos === 800) {
-		const baseX = 750;
-		convertedX = convert_x_on_current_format(baseX);
-	} else if (pos > 800) {
-		// Si pos > 800, convertir 800 puis convertir le reste et additionner
-		const baseX = 800;
-		const remainderX = pos - 800;
-		convertedX = convert_x_on_current_format(baseX) + convert_x_on_current_format(remainderX);
-	} else {
-		convertedX = convert_x_on_current_format(pos);
-	}
+    let spriteImg = document.createElement('div');
+    spriteImg.style.backgroundImage = `url("assets/internHD/${image_name}")`;
+    spriteImg.className = 'sprite';
+    spriteImg.dataset.tag = image_tag;
+    spriteImg.dataset.pos = pos;
+    spriteImg.dataset.z = z;
+    spriteImg.style.zIndex = z;
+    spriteImg.style.backgroundRepeat = 'no-repeat';
+    spriteImg.style.backgroundPosition = 'center';
 
-	spriteImg.style.left = convertedX + 'px';
-	spriteImg.style.bottom = '0';
+    // Fix Sprites en plein écran (1920x1080) put it in cover mode
+    const isFullscreenSprite = (width === 1920 && height === 1080);
 
-	// dimensions
-	spriteImg.style.width = (width > 0 ? width : 200) + 'px';
-	spriteImg.style.height = (height > 0 ? height : 200) + 'px';
+    if (isFullscreenSprite) {
+        spriteImg.style.backgroundSize = 'cover';
+        spriteImg.style.width = '100%';
+        spriteImg.style.height = '100%';
+        spriteImg.style.left = convert_x_on_current_format(pos) + 'px';
+    } else {
+        spriteImg.style.backgroundSize = 'contain';
 
-	let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
+        let convertedX;
+        if (pos === 800) {
+            const baseX = 750;
+            convertedX = convert_x_on_current_format(baseX);
+        } else if (pos > 800) {
+            // Si pos > 800, convertir 800 puis convertir le reste et additionner
+            const baseX = 800;
+            const remainderX = pos - 800;
+            convertedX = convert_x_on_current_format(baseX) + convert_x_on_current_format(remainderX);
+        } else {
+            convertedX = convert_x_on_current_format(pos);
+        }
 
-	if (existingSprite) {
-		// transition of the sprite if already there and different pos
-		const oldPos = parseFloat(existingSprite.dataset.pos);
-		const newPos = parseFloat(pos);
+        spriteImg.style.left = convertedX + 'px';
+        spriteImg.style.bottom = '0';
 
-		if (oldPos !== newPos) {
-			const newLeft = parseFloat(spriteImg.style.left);
+        // dimensions
+        spriteImg.style.width = (width > 0 ? width : 200) + 'px';
+        spriteImg.style.height = (height > 0 ? height : 200) + 'px';
+    }
 
-			existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
-			existingSprite.dataset.pos = pos;
-			existingSprite.dataset.z = z;
-			existingSprite.style.zIndex = z;
-			existingSprite.style.width = spriteImg.style.width;
-			existingSprite.style.height = spriteImg.style.height;
+    let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
 
-			existingSprite.style.transition = 'left 0.5s ease-in-out';
+    if (existingSprite) {
+        // transition of the sprite if already there and different pos
+        const oldPos = parseFloat(existingSprite.dataset.pos);
+        const newPos = parseFloat(pos);
 
-			existingSprite.style.left = newLeft + 'px';
+        // pas de transition pour les sprites plein écran ou si même position
+        if (oldPos !== newPos && !isFullscreenSprite) {
+            const newLeft = parseFloat(spriteImg.style.left);
 
-			setTimeout(() => {
-				existingSprite.style.transition = '';
-			}, 500);
-		} else {
-			// Same position, just replace the sprite
-			existingSprite.replaceWith(spriteImg);
-		}
-	} else {
-		// New sprite
-		spriteStack.appendChild(spriteImg);
-	}
+            existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
+            existingSprite.dataset.pos = pos;
+            existingSprite.dataset.z = z;
+            existingSprite.style.zIndex = z;
+            existingSprite.style.width = spriteImg.style.width;
+            existingSprite.style.height = spriteImg.style.height;
+
+            existingSprite.style.transition = 'left 0.5s ease-in-out';
+
+            existingSprite.style.left = newLeft + 'px';
+
+            setTimeout(() => {
+                existingSprite.style.transition = '';
+            }, 500);
+        } else {
+            // Same position or fullscreen sprite, just replace
+            existingSprite.replaceWith(spriteImg);
+        }
+    } else {
+        // New sprite
+        spriteStack.appendChild(spriteImg);
+    }
 }
 
 function handle_heartattack(image_name, image_tag, pos, z, width) {
