@@ -106,6 +106,8 @@ try {
             
         case 6: // HTML à interpréter
             $response['html'] = $row['data'];
+
+            $_SESSION['to_save']['html'] = $response['html'];
             break;
 
         case 7: // music

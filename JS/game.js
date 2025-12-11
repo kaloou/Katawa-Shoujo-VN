@@ -147,6 +147,9 @@ function update_dialogue(response) {
 		case 5: //type 5
 			add_center_div(content);
 			break;
+		case 6: // type 6 -> HTML interpreter
+			htmlDialogueInterpreter(response.html);
+			break;
 		default:
 			console.log("Type non géré pour l'instant : " + type);
 			getLine();
@@ -247,7 +250,7 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
     spriteImg.style.backgroundPosition = 'center';
 
     // Fix Sprites en plein écran (1920x1080) put it in cover mode
-    const isFullscreenSprite = (width === 1920 && height === 1080);
+    const isFullscreenSprite = (width >= 1920 && height >= 1080);
 
     if (isFullscreenSprite) {
         spriteImg.style.backgroundSize = 'cover';
@@ -389,10 +392,20 @@ function add_center_div(content) {
 //==== TYPE 6 ==================================
 
 function htmlDialogueInterpreter(html_string) {
-	// exemple de ce que on doit interpreter :
-	// <span style="color: #b14343">Emi<br>Aaah!</span><span style="color: #FF8D7C">Fille étrange<br>Bonjour.</span>'
-	// <span style="color: #b14343">Emi<br>Parler comme quoi ?</span><span style="color: #FF8D7C">Rin<br>Comme quoi ?</span>
-	// je ne sais pas ou le placer pour l'instant, doije supprimer les textbox actuelles???
+	// Cache les autres éléments de texte
+	hideNameBox();
+	hideOverlayText();
+	hideCenteredText();
+
+	// Affiche la textbox avec le HTML interprété
+	showFlex(textElement);
+	textElement.style.opacity = '1';
+
+	// Insère le HTML directement
+	textElement.innerHTML = html_string;
+
+	// Applique l'effet de fin (logo qui clignote)
+	triggerLogoEffect(textElement);
 }
 //==== TYPE 7 ==================================
 function play_music(music_name) {
