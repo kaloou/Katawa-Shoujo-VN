@@ -31,8 +31,6 @@ MENU POPUP AVEC ESC
 -   [ ] implémenter les musiques dans la DB 1 par 1
 -   [ ] ajouter type 9 pour les vidéo
 -   [ ] récuperer la vidéo avec mots pendant la scene avec l'hopital depuis la db originale en cachant le texte
--   [ ] Optionnel ->creer animation fluide d'apparition quand on passe du menu au jeu et du jeu au menu ESC (animation powerpoint)
--   [ ] Implémenter la sauvegarde et chargement
 -   [ ] Gérer le type 6 (html à interpreter)
 -   [ ] Verifier si
 
