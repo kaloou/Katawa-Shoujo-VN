@@ -97,6 +97,7 @@ function getLine() {
 					isTextLoading = false;
 				} catch (error) {
 					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+					isTextLoading = false;
 				}
 			}
 		};
@@ -125,24 +126,28 @@ function update_dialogue(response) {
 			displayText(content, character_name, character_color, character_code);
 			break;
 		case 2: // type 2 -> image (bg)
-			change_bg(image_name, true);
-			getLine();
+			if (image_name.startsWith('ev_')) {
+				handle_ev(image_name, image_tag, pos, z, width, height, true);
+			} else {
+				change_bg(image_name, true);
+				setTimeout(() => getLine(), 0);
+			}
 			break;
 		case 3: // type 3 -> sprite
 			if (image_tag === 'bg') {
 				// handle problem in DB for type 3 with 'bg' tag
 				change_bg(image_name, false);
-				getLine();
+				setTimeout(() => getLine(), 400);
 			} else {
 				// add sprite return false just for heartattack to see animation going
 				if (add_sprite(image_name, image_tag, pos, z, width, height)) {
-					getLine();
+					setTimeout(() => getLine(), 0);
 				}
 			}
 			break;
 		case 4: // type 4 -> remove sprite
 			remove_sprite(image_tag);
-			getLine();
+			setTimeout(() => getLine(), 0);
 			break;
 		case 5: //type 5
 			add_center_div(content);
@@ -152,7 +157,7 @@ function update_dialogue(response) {
 			break;
 		default:
 			console.log("Type non géré pour l'instant : " + type);
-			getLine();
+			setTimeout(() => getLine(), 0);
 			break;
 	}
 
@@ -188,17 +193,20 @@ function displayText(content, characterName = '', characterColor = '', character
 //==== TYPE 2 FUNCTIONS ==================================
 function change_bg(img_name, reset) {
 	if (reset) {
+        hideTextBox();
+        hideNameBox();
+		reset_sprite_stack(); // Reset immédiatement, avant la transition
+
 		const bgTransition = document.getElementById('bg_transition');
 
 		// Préparer le nouveau background
 		bgTransition.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 		bgTransition.style.opacity = 1;
 
-		// Après la transition, swap et reset
+		// Après la transition, swap
 		setTimeout(() => {
 			divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 			bgTransition.style.opacity = 0;
-			reset_sprite_stack();
 		}, 300);
 	} // j'hésite de carrement rien faire car quasiment sur que les tag 'bg' sont inutiles...bref
 	else {
@@ -208,6 +216,122 @@ function change_bg(img_name, reset) {
 
 function reset_sprite_stack() {
 	spriteStack.innerHTML = '';
+}
+
+function handle_ev(image_name, animation_tag, pos, z, width, height, is_background) {
+	hideTextBox();
+	hideNameBox();
+    console.log(animation_tag);
+	if (is_background) {
+		reset_sprite_stack();
+	}
+
+	// Choisir l'animation selon le tag
+	if (animation_tag === 'slide') {
+		handle_ev_slide(image_name, pos, z, width, height, is_background);
+	} else {
+		// Par défaut : dézoom (si tag vide '' ou non reconnu)
+		handle_ev_dezoom_animation(image_name, pos, z, width, height, is_background);
+	}
+}
+
+function handle_ev_dezoom_animation(image_name, pos, z, width, height, is_background) {
+	let evDiv = document.createElement('div');
+	evDiv.style.backgroundImage = `url("assets/internHD/${image_name}")`;
+	evDiv.style.backgroundSize = 'cover';
+	evDiv.style.backgroundRepeat = 'no-repeat';
+	evDiv.style.backgroundPosition = 'center';
+	evDiv.style.width = '100%';
+	evDiv.style.height = '100%';
+	evDiv.style.position = 'absolute';
+	evDiv.style.top = '0';
+	evDiv.style.left = '0';
+	evDiv.style.zIndex = is_background ? '0' : z;
+	evDiv.style.transform = 'scale(1.3)';
+
+	if (is_background) {
+		divGame.insertBefore(evDiv, divGame.firstChild);
+	} else {
+		evDiv.className = 'sprite';
+		evDiv.dataset.tag = 'ev_temp';
+		evDiv.dataset.pos = pos;
+		evDiv.dataset.z = z;
+		spriteStack.appendChild(evDiv);
+	}
+
+	requestAnimationFrame(() => {
+		setTimeout(() => {
+			const animation = evDiv.animate(
+				[
+					{transform: 'scale(1.3)'},
+					{transform: 'scale(1)'}
+				],
+				{
+					duration: 3000,
+					easing: 'ease-out',
+					fill: 'forwards'
+				}
+			);
+
+			animation.finished.then(() => {
+				if (is_background) {
+					divGame.style.backgroundImage = `url("assets/internHD/${image_name}")`;
+					evDiv.remove();
+				}
+				setTimeout(() => getLine(), 0);
+			});
+		}, 100);
+	});
+}
+
+function handle_ev_slide(image_name, pos, z, width, height, is_background) {
+    console.log("enter");
+	let evDiv = document.createElement('div');
+	evDiv.style.backgroundImage = `url("assets/internHD/${image_name}")`;
+	evDiv.style.backgroundSize = 'cover';
+	evDiv.style.backgroundRepeat = 'no-repeat';
+	evDiv.style.backgroundPosition = 'left center'; // Commence à gauche
+	evDiv.style.width = '100%';
+	evDiv.style.height = '100%';
+	evDiv.style.position = 'absolute';
+	evDiv.style.top = '0';
+	evDiv.style.left = '0';
+	evDiv.style.zIndex = is_background ? '0' : z;
+
+	if (is_background) {
+		divGame.insertBefore(evDiv, divGame.firstChild);
+	} else {
+		evDiv.className = 'sprite';
+		evDiv.dataset.tag = 'ev_temp';
+		evDiv.dataset.pos = pos;
+		evDiv.dataset.z = z;
+		spriteStack.appendChild(evDiv);
+	}
+
+	requestAnimationFrame(() => {
+		setTimeout(() => {
+			const animation = evDiv.animate(
+				[
+					{backgroundPosition: 'left center'},
+					{backgroundPosition: 'right center'}
+				],
+				{
+					duration: 30000, // 5 secondes pour un slide lent
+					easing: 'ease-in-out',
+					fill: 'forwards'
+				}
+			);
+
+			animation.finished.then(() => {
+				if (is_background) {
+					divGame.style.backgroundImage = `url("assets/internHD/${image_name}")`;
+					divGame.style.backgroundPosition = 'right center';
+					evDiv.remove();
+				}
+				setTimeout(() => getLine(), 0);
+			});
+		}, 100);
+	});
 }
 
 //==== TYPE 3 FUNCTIONS ==================================
@@ -236,6 +360,12 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
     // Exception cases
     if (image_tag === 'heartattack') {
         handle_heartattack(image_name, image_tag, pos, z, width, height);
+        return false; // logique pour ne pas appeller directement getline
+    }
+
+    // Handle ev_* images with animations
+    if (image_name.startsWith('ev_')) {
+        handle_ev(image_name, image_tag, pos, z, width, height, false);
         return false; // logique pour ne pas appeller directement getline
     }
 
@@ -307,13 +437,17 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
                 existingSprite.style.transition = '';
             }, 500);
         } else {
-            // Same position or fullscreen sprite, just replace
+            spriteImg.style.opacity = '0';
+            spriteImg.classList.add('sprite-fade-in');
             existingSprite.replaceWith(spriteImg);
         }
     } else {
-        // New sprite
+        spriteImg.style.opacity = '0';
+        spriteImg.classList.add('sprite-fade-in');
         spriteStack.appendChild(spriteImg);
     }
+
+    return true; // Pas d'animation, sprite ajouté immédiatement
 }
 
 function handle_heartattack(image_name, image_tag, pos, z, width) {
@@ -368,7 +502,7 @@ function handle_heartattack(image_name, image_tag, pos, z, width) {
 			);
 
 			animation.finished.then(() => {
-				getLine();
+				setTimeout(() => getLine(), 0);
 			});
 		}, 200);
 	});
@@ -392,19 +526,16 @@ function add_center_div(content) {
 //==== TYPE 6 ==================================
 
 function htmlDialogueInterpreter(html_string) {
-	// Cache les autres éléments de texte
 	hideNameBox();
 	hideOverlayText();
 	hideCenteredText();
 
-	// Affiche la textbox avec le HTML interprété
 	showFlex(textElement);
 	textElement.style.opacity = '1';
 
 	// Insère le HTML directement
 	textElement.innerHTML = html_string;
 
-	// Applique l'effet de fin (logo qui clignote)
 	triggerLogoEffect(textElement);
 }
 //==== TYPE 7 ==================================

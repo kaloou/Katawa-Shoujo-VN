@@ -71,7 +71,7 @@ try {
 
         case 2: // BG
             $response['image_name'] = $row['image_name'] ?? '';
-
+            $response['image_tag'] = $row['data'];
             $_SESSION['to_save']['bg'] = $response['image_name'];
             break;
             
