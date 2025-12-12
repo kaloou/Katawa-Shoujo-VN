@@ -26,6 +26,7 @@
 	box-sizing: border-box;
 	height: auto;
 	width: auto;
+	cursor: url('../assets/extern/UI/mousecursor.png'), default;
 }
 
 html, body {
