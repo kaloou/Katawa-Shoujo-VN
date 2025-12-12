@@ -460,7 +460,7 @@ INSERT INTO image VALUES(453,'emi_basic_shock_gym.png',531,1080);
 INSERT INTO image VALUES(454,'bg_school_dormext_half.png',2160,1080);
 INSERT INTO image VALUES(455,'shizu_basic_frown_close.png',774,1080);
 INSERT INTO image VALUES(456,'bg_school_stalls2.png',2160,1080);
-INSERT INTO image VALUES(457,'ev_other_iwanako.png',1920,1080);
+INSERT INTO image VALUES(457,'other_iwanako.png',1920,1080);
 INSERT INTO image VALUES(458,'shizu_adjust_happy_ss.png',531,1080);
 INSERT INTO image VALUES(459,'rin_silhouette.png',204,600);
 INSERT INTO image VALUES(460,'shizu_basic_angry_ss.png',531,1080);
@@ -623,6 +623,7 @@ INSERT INTO image VALUES(616,'ev_hana_library_read_std.png',1920,1080);
 INSERT INTO image VALUES(617,'kenji_neutral_ni.png',691,1080);
 INSERT INTO image VALUES(618,'yuuko_panic_shang.png',356,1080);
 INSERT INTO image VALUES(619,'bg_mural_start.png',1920,1080);
+INSERT INTO image VALUES(620,'ev_wallodrugs',1039,617);
 
 DROP TABLE IF EXISTS story;
 CREATE TABLE story (id INTEGER, type INTEGER, name TEXT, param INTEGER, next INTEGER);
@@ -1490,7 +1491,7 @@ INSERT INTO seqtext VALUES(2,53,1,'Nous avons trié tous tes médicaments. Je va
 INSERT INTO seqtext VALUES(2,54,1,'Le médecin remet une feuille de papier à mon père, dont le teint devient livide pendant qu''il la parcourt.',1,0,0);
 INSERT INTO seqtext VALUES(2,55,1,'Tant que ça...',6,0,0);
 INSERT INTO seqtext VALUES(2,56,1,'Je la lui prends des mains et y jette un œil par moi-même, me sentant engourdi. Comment je suis supposé réagir à ça ?',1,0,0);
-INSERT INTO seqtext VALUES(2,57,2,'',43,0,0);
+INSERT INTO seqtext VALUES(2,57,2,'',620,0,0);
 INSERT INTO seqtext VALUES(2,58,1,'La liste ridiculement longue de médicaments me regarde fixement depuis le papier, ce qui me paraît insurmontable. Ils se mélangent tous dans un océan de lettres.',1,0,0);
 INSERT INTO seqtext VALUES(2,59,1,'C''est insensé.',1,0,0);
 INSERT INTO seqtext VALUES(2,60,1,'Les effets secondaires, les effets indérisables, les contre-indications et les dosages sont énumérés ligne après ligne avec une précision glaciale.',1,0,0);
