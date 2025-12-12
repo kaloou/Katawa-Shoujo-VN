@@ -182,11 +182,7 @@ function getAutoSave() {
 				let response = JSON.parse(responseText);
 				if (response.exist) {
                         if (response.found) {
-                            playTransition(() => {
-                                hide(divMenu);
-                                showBlock(divGame);
-                                showFlex(openEscIG);
-                            });
+                            playGame();
 					} else {
 						if (DEBUG) console.error('pas trouvé');
 						printNotConnected();
@@ -199,7 +195,6 @@ function getAutoSave() {
 				if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
 				printNotConnected();
 			}
-			startBtn.textContent = 'Jouer';
 			xhr = null;
 		}
 	};

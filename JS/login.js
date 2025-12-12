@@ -221,6 +221,7 @@ function disconnect() {
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				if (DEBUG) console.error(JSON.parse(xhr.responseText));
+				initGame();
 				xhr = null;
 			}
 		};
