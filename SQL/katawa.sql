@@ -11876,3 +11876,5 @@ INSERT INTO menu VALUES(113,'J''ai promis à Emi de manger avec elle aussi, mais
 INSERT INTO menu VALUES(128,'Lilly l''a remarqué trop vite...',1,'Désolé, je ne suis pas en très bonne condition.','Je ne veux pas vraiment en parler.','','');
 INSERT INTO menu VALUES(142,'Si seulement je savais...',1,'Je suis un peu coincé avec elle, je crois.','Je suis intéressé par le club d''art.','','');
 INSERT INTO menu VALUES(149,'Il doit bien y avoir quelque chose à faire pour passer le temps...',1,'Je vais faire une balade en ville.','Je vais à la bibliothèque.','','');
+
+

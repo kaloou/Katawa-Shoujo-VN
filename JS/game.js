@@ -1,4 +1,6 @@
 let isTextLoading = false;
+let currentMusic = null; // élément audio pour la musique de fond
+let musicFadeInterval = null; // interval pour le fadeout
 
 // document.onkeyup = (event) => {
 // 	pressKey(event);
@@ -120,10 +122,20 @@ function update_dialogue(response) {
 	const image_tag = response.image_tag || '';
 	const width = response.width || 0;
 	const height = response.height || 0;
+	const music_name = response.music_name || '';
 
 	switch (type) {
-		case 1: // type 1 -> text
-			displayText(content, character_name, character_color, character_code);
+        case 1: // type 1 -> text
+			// Gestion de la musique via pos et z...
+			if (pos === 7) {
+				play_music(music_name);
+				setTimeout(() => getLine(), 0);
+			} else if (pos === 8) {
+				stop_music(z);
+				setTimeout(() => getLine(), 0);
+			} else {
+				displayText(content, character_name, character_color, character_code);
+			}
 			break;
 		case 2: // type 2 -> image (bg)
 			if (image_name.startsWith('ev_')) {
@@ -538,14 +550,62 @@ function htmlDialogueInterpreter(html_string) {
 
 	triggerLogoEffect(textElement);
 }
-//==== TYPE 7 ==================================
+//==== MUSIC FUNCTIONS ==================================
 function play_music(music_name) {
-	//
+	if (!music_name || music_name === '') {
+		if (DEBUG) console.error('Nom de musique invalide');
+		return;
+	}
+
+	if (currentMusic) {
+		currentMusic.pause();
+		currentMusic.currentTime = 0;
+	}
+
+	currentMusic = new Audio(`assets/extern/bgm_mp3/${music_name}`);
+	currentMusic.loop = true;
+	currentMusic.volume = 0.75;
+
+	currentMusic.play().catch(error => {
+		if (DEBUG) console.error('Erreur lors de la lecture de la musique:', error);
+	});
+
+	if (DEBUG) console.log('Musique lancée:', music_name);
 }
 
-//==== TYPE 8 ==================================
-function stop_music(fadeout) {
-	//
+function stop_music(fadeout_seconds) {
+	if (!currentMusic) {
+		if (DEBUG) console.log('Aucune musique à arrêter');
+		return;
+	}
+
+	if (musicFadeInterval) {
+		clearInterval(musicFadeInterval);
+		musicFadeInterval = null;
+	}
+
+	if (fadeout_seconds === 0) {
+		currentMusic.pause();
+		currentMusic.currentTime = 0;
+		currentMusic = null;
+		if (DEBUG) console.log('Musique arrêtée instantanément');
+		return;
+	}
+
+	const fadeStep = currentMusic.volume / (fadeout_seconds * 20); // 20 steps par seconde
+	musicFadeInterval = setInterval(() => {
+		if (currentMusic.volume > fadeStep) {
+			currentMusic.volume -= fadeStep;
+		} else {
+			currentMusic.volume = 0;
+			currentMusic.pause();
+			currentMusic.currentTime = 0;
+			currentMusic = null;
+			clearInterval(musicFadeInterval);
+			musicFadeInterval = null;
+			if (DEBUG) console.log('Musique arrêtée avec fadeout');
+		}
+	}, 50);
 }
 
 //==== UTILITY FUNCTIONS ==================================
