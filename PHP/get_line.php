@@ -14,16 +14,18 @@ try {
     $seqserial = $_SESSION["seqtext"]["seqserial"];
 
     $query = "
-        SELECT seqtext.*, 
+        SELECT seqtext.*,
                image.name AS image_name,
                image.w AS image_width,
                image.h AS image_height,
                character.name AS character_name,
                character.color AS character_color,
-               character.code as character_code
+               character.code as character_code,
+               music.name AS music_name
         FROM seqtext
         LEFT JOIN image ON seqtext.elid = image.iid
         LEFT JOIN character ON seqtext.elid = character.cid
+        LEFT JOIN music ON (seqtext.type = 1 AND seqtext.pos = 7 AND seqtext.z = music.id)
         WHERE seqtext.seqid = :seqid
         AND seqtext.seqserial = :seqserial
     ";
@@ -62,6 +64,11 @@ try {
             $response['character_color'] = $row['character_color'] ?? '';
             $response['text'] = $row['data'];
             $response['character_code'] = $row['character_code'] ?? '';
+            $response['pos'] = (int)($row['pos'] ?? 0);
+            $response['z'] = (int)($row['z'] ?? 0);
+            $response['music_name'] = $row['music_name'] ?? '';
+
+
 
             $_SESSION['to_save']['text']['char_name'] = $response['character_name'];
             $_SESSION['to_save']['text']['char_color'] = $response['character_color'];
@@ -108,16 +115,6 @@ try {
             $response['html'] = $row['data'];
 
             $_SESSION['to_save']['html'] = $response['html'];
-            break;
-
-        case 7: // music
-            $response['music_name'] = $row['data'];
-
-            $_SESSION['to_save']['music'] = $response['music_name'];
-            break;
-
-        case 8: //stop music (css style from db (fade))
-            $response['fade'] = $row['data'];
             break;
     }
 
