@@ -15,3 +15,21 @@ function updateSeqid(newSeqid) {
 
     xhr.send(params); // Envoie de la requêt
 }
+
+function updateSeqserial(newSeqserial) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "DEBUG/update_seqserial.php", true); // Le script PHP qui met à jour la session
+
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    var params = "seqserial=" + encodeURIComponent(newSeqserial);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Réponse du serveur si nécessaire
+            console.log(xhr.responseText);
+        }
+    };
+
+    xhr.send(params); // Envoie de la requêt
+}
