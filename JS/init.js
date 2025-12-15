@@ -1,10 +1,11 @@
 const DEBUG = true;
 // Transition invisible bug fix
 const originalDuration = TRANSITION_DURATION;
-TRANSITION_DURATION = 0.1;
+TRANSITION_DURATION = 0;
 playTransition(() => {
     TRANSITION_DURATION = originalDuration;
 });
+hide(divGame);
 window.addEventListener('load', function () {
 	initGame();
 	preloadImagesUi();

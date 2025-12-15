@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+$_SESSION = [];
+
 session_unset();
 session_destroy();
 if (ini_get("session.use_cookies")) {

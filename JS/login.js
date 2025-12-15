@@ -6,7 +6,7 @@ let regexNum = /[0-9]/;
 let regexSpeChar = /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/; // https://stackoverflow.com/a/66435604
 */
 let regexUsrName = /^[-_a-zA-Z0-9]{3,15}$/;
-let listRegexPwd = [/^.{8,25}$/, /[A-Z]/, /[a-z]/, /[0-9]/, /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/u];
+let listRegexPwd = [/^.{8,40}$/, /[A-Z]/, /[-_a-z]/, /[0-9]/];
 //let regexPwd = /^[-A-Za-z0-9,?;.:/=+~ù%´µ£`^¨\[$*\]&|é@"#'(§^è!ç{à)°_}]{8,25}$/u;
 
 // colors : https://katawashoujo.fandom.com/wiki/Main_Page/Characters

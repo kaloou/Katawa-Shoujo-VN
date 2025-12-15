@@ -5,6 +5,7 @@ function $(elem) {
 	}
 	return elem;
 }
+
 function hide(elem) {
 	elem.style.display = 'none';
 }
