@@ -6,7 +6,7 @@
   background-image: url('../assets/internHD/bg_op_snowywoods.png');
   background-size: cover;
   background-position: center;
-  container-type: inline-size;
+  container-type: size;
   overflow: hidden;
 }
 
@@ -44,7 +44,7 @@
   background-color: black;
   border: 3px solid #8b8275;
   color: white;
-  font-size: 2.5cqh;
+  font-size: min(2.5cqw,2.5cqh);
   line-height: 1.5;
   padding: 1% 2%;
   z-index: 1001;
@@ -155,7 +155,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   color: white;
-  font-size: 23px;
+  font-size: min(3.5cqw, 2.5cqh);
   z-index: 1000;
   padding-left: 1%;
   padding-top: 1%;
@@ -181,7 +181,7 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  font-size: 1.6vw;
+  font-size: min(2.5cqw, 2.5cqh);
   background-image: url('../assets/extern/UI/bg-note.png');
   background-size: cover;
   background-position: center;
@@ -204,7 +204,7 @@
   border-top: 3px solid #8b8275;
   border-bottom: 3px solid #8b8275;
   color: white;
-  font-size: 20px;
+  font-size: min(2.5cqw, 2.5cqh);
   line-height: 1.5;
   padding: 2% 5%;
   z-index: 1001;
@@ -243,58 +243,19 @@
 @container (max-width: 1000px) {
  #text {
   height: 20%;
-  font-size: 20px;
+  font-size: min(3.5cqw, 2.5cqh);
  }
  #name {
-  bottom: 25%;
+  bottom: 15%;
+  font-size: min(3.5cqw, 2.5cqh);
  }
 } /*2.5cqh*/
 
-@container (max-width: 800px) {
+@container (max-width: 600px) {
  #text {
-  height: 22%;
+  font-size: min(2.5cqw, 2.5cqh);
  }
  #name {
-  bottom: 16%;
+  font-size: min(2.5cqw, 2.5cqh);
  }
-}
-
-@container (max-width: 450px) {
- #text {
-  height: 25%;
-  font-size: 2cqh;
- }
- #name {
-  bottom: 14%;
- }
-}
-
-@container (max-width: 700px) and (max-height: 600px) {
- #text {
-  height: 30%;
-  font-size: 2cqh;
- }
- #name {
-  bottom: 30%;
- }
-}
-
-@container (max-height: 700px) {
- #text {
-  height: 22%;
-  font-size: 2cqh;
- }
- #name {
-  bottom: 27%;
- }
-}
-
-@container (max-height: 450px) {
- #text {
-  height: 22%;
-  font-size: 2.5cqh;
- }
- #name {
-  bottom: 27%;
- }
-}
+} /*2.5cqh*/
