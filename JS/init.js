@@ -4,8 +4,8 @@ const originalDuration = TRANSITION_DURATION;
 TRANSITION_DURATION = 0;
 playTransition(() => {
     TRANSITION_DURATION = originalDuration;
+    hide(divGame);
 });
-hide(divGame);
 window.addEventListener('load', function () {
 	initGame();
 	preloadImagesUi();
