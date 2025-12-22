@@ -68,12 +68,6 @@ try {
             $response['z'] = (int)($row['z'] ?? 0);
             $response['music_name'] = $row['music_name'] ?? '';
 
-
-
-            $_SESSION['to_save']['text']['char_name'] = $response['character_name'];
-            $_SESSION['to_save']['text']['char_color'] = $response['character_color'];
-            $_SESSION['to_save']['text']['content'] = $response['text'];
-            $_SESSION['to_save']['text']['char_code'] = $response['character_code'];
             if($row['music_name'])
             {
                 $_SESSION['to_save']['music'] = $row['music_name'];
@@ -111,14 +105,10 @@ try {
 
         case 5: // DIV au milieu de l'écran
             $response['text'] = $row['data'];
-
-            $_SESSION['to_save']['centered_text'] = $response['text'];
             break;
             
         case 6: // HTML à interpréter
             $response['html'] = $row['data'];
-
-            $_SESSION['to_save']['html'] = $response['html'];
             break;
     }
 

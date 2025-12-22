@@ -16,8 +16,6 @@ window.addEventListener('load', function () {
 
 
 	//========EVENTS=======
-	// ESCAPE
-	returnBtn.addEventListener('click', GameToMenu);
 	// GAME
 	document.onkeyup = (event) => {
 		pressKey(event);
@@ -40,12 +38,21 @@ window.addEventListener('load', function () {
 	connectBtn.addEventListener('mouseleave', printConnected);
 
 	isConnectedInSession();
-	// MENU
+	// OPTION
 	settingsBtn.addEventListener('click', toggleOptionsMenu);
 	creditsBtn.addEventListener('click', () => {
 		window.location.href = 'HTML/credits.html';
 	});
 	// ESCAPE
+	quitEscBtn.addEventListener('click', () => {
+		noFilter(divMenu);
+		noFilter(divGame);
+		hide(divEscape);
+	});
+
+	hideBtn.addEventListener('click', hideButton);
+	returnBtn.addEventListener('click', returnToMenuAndSave);
+
 	openEscIG.onclick = () => {
 		openEscape();
 	};

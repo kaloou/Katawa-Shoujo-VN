@@ -239,3 +239,36 @@ function getAutoSave() {
 	xhr.responseType = 'text';
 	xhr.send();
 }
+
+function returnToMenuAndSave() {
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			let responseText = xhr.responseText;
+			try {
+				let response = JSON.parse(responseText);
+				if (response.found) {
+                       if (response.connected)
+					   {
+							hide(divEscape);
+							noFilter(divMenu);
+							noFilter(divGame);
+
+							playTransition(() => {
+								showFlex(divMenu);
+								hide(divGame);
+							});
+					   } else if (DEBUG) console.log(response);
+				} else {
+					if (DEBUG) console.log(response);
+				}
+			} catch (error) {
+				if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+			}
+			xhr = null;
+		}
+	};
+	xhr.open('GET', 'PHP/save_session_to_db.php', true);
+	xhr.responseType = 'text';
+	xhr.send();
+}

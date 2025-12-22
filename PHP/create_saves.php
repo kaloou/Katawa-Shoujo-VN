@@ -26,7 +26,6 @@
             if(!$info)
             {
                 $default_title = "Nouvelle partie";
-                $default_save = "On vera après ce qu'on met dedans";
                 
                 $query = "INSERT INTO saves (user_id, title, init_date, content) VALUES (:user_id, :title, :init_date, :content)";
                 $stmt = $pdo->prepare($query);

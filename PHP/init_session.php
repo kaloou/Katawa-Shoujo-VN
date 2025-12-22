@@ -8,11 +8,6 @@ if(!isset($_SESSION['to_save']))
     $_SESSION['to_save']['rep']['type'] = 1;
     $_SESSION['to_save']['rep']['elid'] = 1;
 
-    $_SESSION['to_save']['text']['char_name'] = '';
-    $_SESSION['to_save']['text']['char_color'] = '';
-    $_SESSION['to_save']['text']['content'] = '';
-    $_SESSION['to_save']['text']['char_code'] = '';
-
     $_SESSION['to_save']['bg'] = 'bg_op_snowywoods.png';
 
     $_SESSION['to_save']['sprite']['image_name'] = '';
@@ -20,10 +15,6 @@ if(!isset($_SESSION['to_save']))
     $_SESSION['to_save']['sprite']['height'] = 0;
     $_SESSION['to_save']['sprite']['image_tag'] = '';
     $_SESSION['to_save']['sprite']['pos'] = 0;
-
-    $_SESSION['to_save']['centered_text'] = '';
-
-    $_SESSION['to_save']['html'] = '';
 
     $_SESSION['to_save']['music'] = '';
 }

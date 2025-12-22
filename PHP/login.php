@@ -7,7 +7,6 @@
     {
         $regex_password = "/^(?=.*[-_a-z])(?=.*[A-Z])(?=.*[0-9]).{8,40}$/u";
         $regex_username = "/^[-_a-zA-Z0-9]{3,15}$/";
-        $default_save = "On vera";
         
         //if($DEBUG) var_dump($_POST);
 

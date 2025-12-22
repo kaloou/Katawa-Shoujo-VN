@@ -2,7 +2,7 @@
     session_start();
     include_once('connexion.php');
     header('Content-Type: text/plain; charset=utf-8');
-
+    //$DEBUG = true;
     try 
     {
         if(isset($_SESSION["user_id"]))
@@ -19,9 +19,40 @@
             if($info)
             {
                 $_SESSION["save_to_load"] = $info["auto_save"];
-                // plus tard, au lieu de faire ça ↑ ,
-                // juste traduire les infos de $info["auto_save"] et mettre les données correspondantes dans $_SESSION["..."]
+                //if($DEBUG) echo"<pre>";
+                //if($DEBUG) var_dump($info["auto_save"]);
+                //if($DEBUG) $str = "1|1|1|1@bg_op_snowywoods.png@|0|0||0@Lullaby_of_Open_Eyes.mp3";
+                $tab1 = explode("@", $info["auto_save"]); /*$str*/
+
+                foreach ($tab1 as $i => $val) 
+                {
+                    //if($DEBUG) echo "$i)  ";
+                    $tab2[$i] = explode("|", $val);
+                    //if($DEBUG) var_dump($tab2[$i]);
+                    //if($DEBUG) echo "<br>";
+                }
+                    
+                //if($DEBUG) echo "<pre>";
+                //if($DEBUG) var_dump($tab2);
+
+                //if($DEBUG) echo "<hr><br>";
+                
+                $_SESSION["to_save"]["rep"]["seqid"] = (int)$tab2[0][0];
+                $_SESSION["to_save"]["rep"]["seqserial"] = (int)$tab2[0][1];
+                $_SESSION["to_save"]["rep"]["type"] = (int)$tab2[0][2];
+                $_SESSION["to_save"]["rep"]["elid"] = (int)$tab2[0][3];
+
+                $_SESSION["to_save"]["bg"] = $tab2[1][0];
+
+                $_SESSION["to_save"]["sprite"]["image_name"] = $tab2[2][0];
+                $_SESSION["to_save"]["sprite"]["width"] = (int)$tab2[2][1];
+                $_SESSION["to_save"]["sprite"]["height"] = (int)$tab2[2][2];
+                $_SESSION["to_save"]["sprite"]["image_tag"] = $tab2[2][3];
+                $_SESSION["to_save"]["sprite"]["pos"] = (int)$tab2[2][4];
+
+                $_SESSION["to_save"]["music"] = $tab2[3][0];
                 $response["found"] = true;
+                //if($DEBUG) var_dump($_SESSION);
             }
             else $response["found"] = false;
         }
