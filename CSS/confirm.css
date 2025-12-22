@@ -46,15 +46,19 @@
   padding: 1vw;
 }
 
-#confirm_for_save > div h1 {
-  font-size: 3vw;
+#confirm_title {
+  font-size: 2vw;
   color: var(--ui-pink);
   margin: 0 0 1vw 0;
   text-align: center;
   text-shadow: -0.08vw -0.08vw 0 var(--ui-red), 0.08vw -0.08vw 0 var(--ui-red), -0.08vw 0.08vw 0 var(--ui-red), 0.08vw 0.08vw 0 var(--ui-red);
 }
 
-#confirm_for_save > div input, #confirm_for_save > div button {
+#confirm_input_name {
+  display: none;
+}
+
+#confirm_input_name, #confirm_for_save > div button {
   text-align: center;
   
   width: 60%;
@@ -75,11 +79,11 @@
   font-size: min(1.5vw, 4vh);
 }
 
-#confirm_for_save > div input:focus{
+#confirm_input_name:focus{
   outline: none;
 }
 
-#confirm_for_save > div input::placeholder{
+#confirm_input_name::placeholder{
   color: var(--primary-color);
   opacity: 50%;
   text-align: center;
@@ -113,19 +117,22 @@
 
 @media only screen and (max-width: 1000px) {
   #confirm_for_save > div {
-  width: 50vw;
+    width: 70vw;
   }
 
-#confirm_for_save > div input, #confirm_for_save > div button {
-  height: 7vw;
-  font-size: min(3.2vw, 5vh);
+  #confirm_title {
+    font-size: 4vw;
   }
-#confirm_for_save > div .buttons {
+  #confirm_input_name, #confirm_for_save > div button {
+    height: 7vw;
+    font-size: min(3.2vw, 5vh);
+  }
+  #confirm_for_save > div .buttons {
     display: flex;
     width: 75%;
   }
 
-#confirm_for_save > div .buttons button {
+  #confirm_for_save > div .buttons button {
     width: 40%;
   }
 }

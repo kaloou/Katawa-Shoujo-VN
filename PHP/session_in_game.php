@@ -9,6 +9,8 @@
             {
                 $response['found'] = true;
                 $response['to_load'] = $_SESSION["to_save"];
+                $_SESSION["story"]["seqid"] = $_SESSION["to_save"]['rep']['seqid'];
+                $_SESSION["seqtext"]["seqserial"] = --$_SESSION["to_save"]['rep']['seqserial'];
             }
             else $response['found'] = false;
         }

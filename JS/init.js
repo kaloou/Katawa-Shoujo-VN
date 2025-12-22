@@ -63,6 +63,8 @@ window.addEventListener('load', function () {
 	resetAutoSaveBtn.addEventListener('click', () => {
 		resetAutoSave();
 	});
+	// CONFIRM
+	addListenerForConfirmDiv();
 });
 
 function initGame() {

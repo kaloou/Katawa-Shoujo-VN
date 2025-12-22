@@ -74,6 +74,10 @@ try {
             $_SESSION['to_save']['text']['char_color'] = $response['character_color'];
             $_SESSION['to_save']['text']['content'] = $response['text'];
             $_SESSION['to_save']['text']['char_code'] = $response['character_code'];
+            if($row['music_name'])
+            {
+                $_SESSION['to_save']['music'] = $row['music_name'];
+            }
             break;
 
         case 2: // BG

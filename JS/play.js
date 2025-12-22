@@ -7,11 +7,12 @@ function playGame() {
 				let response = JSON.parse(responseText);
 				if (response.connected) {
                         if (response.found) {
-							loadDivGame(response.to_load);
                             playTransition(() => {
+								console.error("transi");
                                 hide(divMenu);
                                 showBlock(divGame);
                                 showFlex(openEscIG);
+								loadDivGame(response.to_load);
                             });
 					} else {
 						if (DEBUG) console.error('pas trouvé');
@@ -37,6 +38,7 @@ function playGame() {
 
 function loadDivGame(toLoad)
 {
+	console.error("aa");
 	switch(parseInt(toLoad.rep.type))
 	{
 		case 6:
@@ -48,6 +50,7 @@ function loadDivGame(toLoad)
 		default:
 			displayText(toLoad.text.content, toLoad.text.char_name, toLoad.text.char_color, toLoad.text.char_code);
 			change_bg(toLoad.bg, true);
+			play_music(toLoad.music);
 			if (toLoad.sprite.image_name.startsWith('ev_')) {
 				handle_ev(toLoad.sprite.image_name, toLoad.sprite.image_tag, 
 					toLoad.sprite.pos, toLoad.sprite.z, toLoad.sprite.width, toLoad.sprite.height, true);

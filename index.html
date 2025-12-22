@@ -71,14 +71,11 @@
 		</div>
 
 		<div id="escape">
-			<!--Il faut mettre le style="display: none;" pour que le ESCAPE marche toujours-->
 			<img src="assets/extern/UI/bt-del.png" id="quit_esc_button" title="Fermer" />
 			<div class="buttons">
-				<!--<button id="continue_button" class="unselectable">Continuer</button>-->
 				<button id="hide_button" class="unselectable" title="Cacher le dialogue en jeu">Cacher le dialogue</button>
 				<button id="save_button" class="unselectable">Sauvegarder</button>
 				<button id="options_button" class="unselectable">Options</button>
-				<!--<button id="load_button" class="unselectable">Charger</button>-->
 				<button id="return_button" class="unselectable">Revenir au Menu</button>
 			</div>
 		</div>
@@ -108,11 +105,11 @@
 
 		<div id="confirm_for_save">
 			<div>
-				<h1>test</h1>
-				<input name="input_save_name" type="text" placeholder="Nouvelle partie"/>
+				<h1 id="confirm_title"></h1>
+				<input id="confirm_input_name" type="text" placeholder="Nouvelle partie"></input>
 				<div class="buttons">
-					<button>Confirmer</button>
-					<button>Annuler</button>
+					<button id="confirm_btn_confirm">Confirmer</button>
+					<button id="confirm_btn_cancel">Annuler</button>
 				</div>
 			</div>
 			<span></span>
@@ -197,7 +194,6 @@
 			</div>
 			<div id="dialog_container">
 				<div id="name"></div>
-				<!-- texte le plus long de la db-->
 				<div id="text"></div>
 			</div>
 		</div>

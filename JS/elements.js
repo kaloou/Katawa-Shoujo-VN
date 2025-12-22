@@ -48,6 +48,13 @@ listOfSaveBtn = document.querySelectorAll('#save_div .save_list');
 listOfResetBtn = document.querySelectorAll('#save_div .reset_save');
 listOfSaveSeparator = document.querySelectorAll('#save_div .separate_saves');
 
+// === Éléments de confirmation ===
+confirmDiv = document.getElementById('confirm_for_save');
+titleForConfirmDiv = document.getElementById('confirm_title');
+inputForConfirm = document.getElementById('confirm_input_name');
+confirmBtnForCfrm = document.getElementById('confirm_btn_confirm');
+cancelBtnForCfrm = document.getElementById('confirm_btn_cancel');
+
 // === Éléments de debug (créés dynamiquement dans init.js) ===
 sessionButtonsContainer = document.getElementById('session_buttons_container');
 testSessionBtn = document.getElementById('test_session_btn');

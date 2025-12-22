@@ -1,34 +1,35 @@
 let saveDivMode,
 	saves,
-	textTitle,
+	textTitleSaveDiv,
+	textTitleForConfirm,
 	max_save = 5,
 	saveAreLoading = false;
 
 function clickOnSave(n) {
 	if (connected && !saveAreLoading) {
-		textTitle = null;
+		textTitleSaveDiv = null;
 		switch (n) {
-			case 0:
+			case 0: // Close
 				toggleSaveMenu();
 				break;
-			case 1:
+			case 1: // Save
 				saveAreLoading = true;
-				textTitle = 'Sauvegarder';
+				textTitleSaveDiv = 'Sauvegarder';
 	            saveDivMode = 1;
 				saveBtn.textContent = "chargement...";
                 extractSaves();
 				addListenerForSave();
 				break;
-			case 2:
+			case 2: // Load
 				saveAreLoading = true;
-				textTitle = 'Charger';
+				textTitleSaveDiv = 'Charger';
 	            saveDivMode = 2;
 				loadBtn.textContent = "chargement...";
                 extractSaves();
 				addListenerForLoad();
 				break;
 			default:
-				textTitle = '[ERROR] Reload the page';
+				textTitleSaveDiv = '[ERROR] Reload the page';
 				break;
 		}
 	} else {
@@ -52,7 +53,7 @@ function toggleSaveMenu() {
 		};
 		removeDatesTitlesFromSaves();
 	} else {
-		var textnode = document.createTextNode(textTitle);
+		var textnode = document.createTextNode(textTitleSaveDiv);
 		titleForSaveMenu.appendChild(textnode);
 		blurF(divGame);
 		blurF(divMenu);
@@ -105,12 +106,6 @@ function extractSaves() {
 	xhr.send();
 }
 
-// <input type="text" placeholder="Nouvelle partie"></input>
-
-function resetAutoSave() {
-	
-}
-
 function printDatesTitlesFromSaves(data) {
 	for(var i = 0; i < max_save; i++) {
 		var textnode = document.createTextNode(data[i]['title']);
@@ -130,16 +125,53 @@ function removeDatesTitlesFromSaves() {
 	}
 }
 
+function closeConfirmDiv() {
+	hide(confirmDiv);
+	hide(inputForConfirm);
+	inputForConfirm.value = '';
+	titleForConfirmDiv.textContent = '';
+}
+
+function showConfirmDiv(mode) {
+	showFlex(confirmDiv);
+	switch (mode)
+	{
+		case 0 : // Reset a save
+			titleForConfirmDiv.textContent = 'Réinitialiser cette sauvegarde ?';
+			break;
+		case 1 : // Reset auto-save
+			titleForConfirmDiv.textContent = 'Réinitialiser la partie en cours ?';
+			break;
+		case 2 : // Load
+			titleForConfirmDiv.textContent = 'Remplacer la partie par cette sauvegarde ?';
+			break;
+		case 3 : // Save
+			titleForConfirmDiv.textContent = 'Remplacer cette sauvegarde ?';
+			break;
+		default : 
+			titleForConfirmDiv.textContent = '[ERROR] Reload the page';
+			break;
+	}
+}
+
+function resetAutoSave() {
+	showConfirmDiv(1);
+}
+
 function saveThisSave(n) {
 	console.error('Save' + n);
+	showConfirmDiv(3);
+	showBlock(inputForConfirm);
 }
 
 function loadThisSave(n) {
 	console.error('Load' + n);
+	showConfirmDiv(2);
 }
 
 function resetSave(n) {
 	console.error('reset' + n);
+	showConfirmDiv(0);
 }
 
 function addListenerForSave() {
@@ -164,6 +196,11 @@ function addListenerForReset() {
 			resetSave(i);
 		}
 	}
+}
+
+function addListenerForConfirmDiv() {
+	confirmBtnForCfrm.onclick = () => {return true};
+	cancelBtnForCfrm.onclick = () => {closeConfirmDiv()};
 }
 
 function start() {
