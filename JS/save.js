@@ -253,7 +253,7 @@ function returnToMenuAndSave() {
 							hide(divEscape);
 							noFilter(divMenu);
 							noFilter(divGame);
-
+							window.onbeforeunload = '';
 							playTransition(() => {
 								showFlex(divMenu);
 								hide(divGame);

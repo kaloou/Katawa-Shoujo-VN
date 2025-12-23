@@ -14,6 +14,10 @@ function playGame() {
 							hide(divMenu);
 							showFlex(openEscIG);
 						});
+						window.onbeforeunload = (e) => {
+							e.preventDefault();
+							returnToMenuAndSave();
+						};
 					} else {
 						if (DEBUG) console.error('pas trouvé');
 						printNotConnected();
