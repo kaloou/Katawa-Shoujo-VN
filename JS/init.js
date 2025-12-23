@@ -16,6 +16,10 @@ window.addEventListener('load', function () {
 
 
 	//========EVENTS=======
+	// MENU
+	creditsBtn.addEventListener('click', () => {
+		window.location.href = 'HTML/credits.html';
+	});
 	// GAME
 	document.onkeyup = (event) => {
 		pressKey(event);
@@ -69,7 +73,9 @@ window.addEventListener('load', function () {
 		resetAutoSave();
 	});
 	// CONFIRM
-	addListenerForConfirmDiv();
+	cancelBtnForCfrm.onclick = () => {
+		closeConfirmDiv()
+	};
 });
 
 function initGame() {

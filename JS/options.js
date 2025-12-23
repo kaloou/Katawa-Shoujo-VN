@@ -1,4 +1,4 @@
-// === Variables pour les options ===
+// === Variables for options ===
 let autoModeInterval = null;
 let autoModeDelay = 3000;
 let textDisplaySpeed = 90;
@@ -56,7 +56,7 @@ document.addEventListener('mozfullscreenchange', updateFullscreenToggle);
 document.addEventListener('MSFullscreenChange', updateFullscreenToggle);
 
 
-// === Fonctions d'ouverture/fermeture du menu ===
+// === Open and close options ===
 function toggleOptionsMenu() {
 	if (isDisplay(optionsDiv)) {
 		if(!isDisplay(divEscape)) {
@@ -90,7 +90,7 @@ function closeOptionsWithEsc(event) {
 	}
 }
 
-// === Mode plein écran ===
+// === Fullscreen mode ===
 function enterFullscreen() {
 	if (!document.fullscreenElement) {
 		document.documentElement.requestFullscreen().catch((err) => {
@@ -136,7 +136,8 @@ function changeResolution(resolution) {
 		divGame.style.height = '100dvh';
 		divGame.style.border = '';
 		divGame.style.borderRadius = 0;
-	} else {
+	} 
+	else {
 		var [width, height] = resolution.split('x');
 		divGame.style.width = `${width}px`;
 		divGame.style.height = `${height}px`;
@@ -146,7 +147,7 @@ function changeResolution(resolution) {
 	}
 }
 
-// === Mode automatique ===
+// === Automatic mode ===
 function startAutoMode() {
 	if (autoModeInterval) {
 		stopAutoMode();

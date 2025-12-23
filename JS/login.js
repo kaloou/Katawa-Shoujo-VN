@@ -29,7 +29,8 @@ function isConnectedInSession() {
 					connected = true;
 					printConnected();
 				}
-			} catch (error) {
+			}
+			catch (error) {
 				if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
 				connected = false;
 			}
@@ -39,13 +40,6 @@ function isConnectedInSession() {
 	xhr.open('GET', 'PHP/is_connected.php', true);
 	xhr.responseType = 'text';
 	xhr.send();
-}
-
-function openLoginForm() {
-	if (!connected) {
-		showFlex(formLogin);
-		hide(defMenu);
-	}
 }
 
 function printNotConnected() {
@@ -75,43 +69,31 @@ function wantDisconnect() {
 	}
 }
 
-function checkValidPassword() {
-	var nbrErrors = 0;
-	var testInput = inputPswd.value.trim();
-
-	for (var i = 0; i < listRegexPwd.length; i++) {
-		if (listRegexPwd[i].test(testInput)) {
-			liHelpPswd[i].style.color = greenColor;
-		} else {
-			nbrErrors += 1;
-			liHelpPswd[i].style.color = redColor;
-		}
-	}
-
-	if (nbrErrors === 0) {
-		inputPswd.style.color = greenColor;
-		inputPswd.style.borderColor = greenColor;
-		return true;
-	} else {
-		inputPswd.style.color = redColor;
-		inputPswd.style.borderColor = redColor;
-		return false;
+function disconnect() {
+	if (connected && confirm('Êtes-vous sûr de vouloir vous déconnecter')) {
+		let xhr = new XMLHttpRequest();
+		connected = false;
+		printNotConnected();
+		connectBtn.onclick = () => {
+			openLoginForm();
+		};
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				if (DEBUG) console.error(JSON.parse(xhr.responseText));
+				initGame();
+				xhr = null;
+			}
+		};
+		xhr.open('GET', 'PHP/destroy_session.php', true);
+		xhr.responseType = 'text';
+		xhr.send();
 	}
 }
 
-function checkValidUsrName() {
-	var testInput = inputUsrName.value.trim();
-
-	if (regexUsrName.test(testInput)) {
-		helpUsrName.style.color = greenColor;
-		inputUsrName.style.color = greenColor;
-		inputUsrName.style.borderColor = greenColor;
-		return true;
-	} else {
-		helpUsrName.style.color = redColor;
-		inputUsrName.style.color = redColor;
-		inputUsrName.style.borderColor = redColor;
-		return false;
+function openLoginForm() {
+	if (!connected) {
+		showFlex(formLogin);
+		hide(defMenu);
 	}
 }
 
@@ -123,13 +105,46 @@ function sendConnexion(event) {
 	}
 }
 
-function editSendButton(text) {
-	inputSubmit.value = text;
+function checkValidUsrName() {
+	var testInput = inputUsrName.value.trim();
+
+	if (regexUsrName.test(testInput)) {
+		helpUsrName.style.color = greenColor;
+		inputUsrName.style.color = greenColor;
+		inputUsrName.style.borderColor = greenColor;
+		return true;
+	}
+	else {
+		helpUsrName.style.color = redColor;
+		inputUsrName.style.color = redColor;
+		inputUsrName.style.borderColor = redColor;
+		return false;
+	}
 }
 
-function resetStyleElems(elems) {
-	for (var i = 0; i < elems.length; i++) {
-		elems[i].style = '';
+function checkValidPassword() {
+	var nbrErrors = 0;
+	var testInput = inputPswd.value.trim();
+
+	for (var i = 0; i < listRegexPwd.length; i++) {
+		if (listRegexPwd[i].test(testInput)) {
+			liHelpPswd[i].style.color = greenColor;
+		}
+		else {
+			nbrErrors += 1;
+			liHelpPswd[i].style.color = redColor;
+		}
+	}
+
+	if (nbrErrors === 0) {
+		inputPswd.style.color = greenColor;
+		inputPswd.style.borderColor = greenColor;
+		return true;
+	}
+	else {
+		inputPswd.style.color = redColor;
+		inputPswd.style.borderColor = redColor;
+		return false;
 	}
 }
 
@@ -172,15 +187,18 @@ function tryConnexion() {
 								if (DEBUG) console.error('??? reponse.connexion ???');
 								editSendButton('[ERROR] Reload Page');
 						}
-					} else {
+					}
+					else {
 						if (DEBUG) console.error('Données invalides');
 						editSendButton('[ERROR] Respecter les conditions des champs');
 					}
-				} else {
+				}
+				else {
 					if (DEBUG) console.log(response);
 					connected = false;
 				}
-			} catch (error) {
+			}
+			catch (error) {
 				if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
 			}
 			isTryingToConnect = false;
@@ -192,41 +210,12 @@ function tryConnexion() {
 	xhr.send(data);
 }
 
-//refaire !!
-// function destroySession() {
-// 	if (confirm('Êtes-vous sûr de vouloir détruire la session ?')) {
-// 		console.log('=== DESTRUCTION DE SESSION ===');
-// 		fetch('PHP/destroy_session.php')
-// 			.then((response) => response.json())
-// 			.then((data) => {
-// 				console.log('=== SESSION DELETE ===');
-// 				console.log(JSON.stringify(data, null, 2));
-// 				console.log('=============================');
-// 				console.log('✅ Session DELETE avec succès');
-// 			})
-// 			.catch((error) => {
-// 				console.error('❌ Erreur lors de la destruction de la session:', error);
-// 			});
-// 	}
-// }
+function editSendButton(text) {
+	inputSubmit.value = text;
+}
 
-function disconnect() {
-	if (connected && confirm('Êtes-vous sûr de vouloir vous déconnecter')) {
-		let xhr = new XMLHttpRequest();
-		connected = false;
-		printNotConnected();
-		connectBtn.onclick = () => {
-			openLoginForm();
-		};
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState === 4 && xhr.status === 200) {
-				if (DEBUG) console.error(JSON.parse(xhr.responseText));
-				initGame();
-				xhr = null;
-			}
-		};
-		xhr.open('GET', 'PHP/destroy_session.php', true);
-		xhr.responseType = 'text';
-		xhr.send();
+function resetStyleElems(elems) {
+	for (var i = 0; i < elems.length; i++) {
+		elems[i].style = '';
 	}
 }

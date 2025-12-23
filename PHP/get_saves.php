@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once('connexion.php');
-    header('Content-Type: text/plain; charset=utf-8');
+    include_once("connexion.php");
+    header("Content-Type: text/plain; charset=utf-8");
 
     try 
     {
@@ -9,13 +9,13 @@
         if(isset($_SESSION["user_id"]))
         {
             //if($DEBUG) echo "\nid trouve";
-            $response['received'] = true;
+            $response["received"] = true;
             $user_id = $_SESSION["user_id"];
 
             $query = "SELECT * FROM saves WHERE user_id = :user_id ORDER BY id ASC";
 
             $stmt = $pdo->prepare($query);
-            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
             $stmt->execute();
 
             $info = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -38,19 +38,19 @@
             else 
             {
                 $response["found"] = false;
-                include_once('create_saves.php');
+                include_once("create_saves.php");
             }
         }
-        else $response['received'] = false;
+        else $response["received"] = false;
         
         echo json_encode($response);
 
     } 
     catch (PDOException $e) 
     {
-        error_log('login.php -> PDOException: ' . $e->getMessage());
+        error_log("login.php -> PDOException: " . $e->getMessage());
         http_response_code(500);
-        echo json_encode(['type' => 'error', 'message' => $e->getMessage()]);
+        echo json_encode(["type" => "error", "message" => $e->getMessage()]);
         exit;
     }
 ?>

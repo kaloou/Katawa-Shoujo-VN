@@ -12,12 +12,12 @@ function pressKey(event) {
 	if (isDisplay(divGame)) {
 		if (event.key === 'Escape') {
 			toggleEscape();
-			// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
-		} else if (event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') {
+			// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas dû à la fonction.
+		} 
+		else if (event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') {
 			getLine();
-		} else if (event.key === 'ArrowLeft') {
-			// revenir au diagolgue précédent
-		} else if (event.key.toLowerCase() === 'f') {
+		} 
+		else if (event.key.toLowerCase() === 'f') {
 			fullScreen();
 		}
 	}
@@ -25,9 +25,9 @@ function pressKey(event) {
 
 function fullScreen() {
 	if (!document.fullscreenElement) {
-		// Plein écran sur tout le document
 		document.documentElement.requestFullscreen();
-	} else {
+	} 
+	else {
 		document.exitFullscreen();
 	}
 }
@@ -40,7 +40,8 @@ function toggleEscape() {
 		divGame.onclick = () => {
 			getLine();
 		};
-	} else {
+	} 
+	else {
 		showFlex(divEscape);
 		blurF(divMenu);
 		blurF(divGame);

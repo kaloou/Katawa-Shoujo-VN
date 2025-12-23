@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once('connexion.php');
-    header('Content-Type: text/plain; charset=utf-8');
+    include_once("connexion.php");
+    header("Content-Type: text/plain; charset=utf-8");
     //$DEBUG = true;
     try 
     {
@@ -11,7 +11,7 @@
             $user_id = $_SESSION["user_id"];
             $query = "SELECT auto_save FROM users WHERE users.id_user = :user_id";
             $stmt = $pdo->prepare($query);
-            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
             $stmt->execute();
 
             $info = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -54,9 +54,9 @@
     } 
     catch (PDOException $e) 
     {
-        error_log('get_auto_save.php -> PDOException: ' . $e->getMessage());
+        error_log("get_auto_save.php -> PDOException: " . $e->getMessage());
         http_response_code(500);
-        echo json_encode(['type' => 'error', 'message' => $e->getMessage()]);
+        echo json_encode(["type" => "error", "message" => $e->getMessage()]);
         exit;
     }
 ?>
