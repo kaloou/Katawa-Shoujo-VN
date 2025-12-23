@@ -169,6 +169,9 @@ function toggleSaveMenu() {
 		if(!isDisplay(divEscape)) {
 			noFilter(divGame);
 			noFilter(divMenu);
+			divGame.onclick = () => {
+				getLine();
+			}
 		}
 		hide(saveDiv);
 		document.onkeyup = (event) => {
@@ -441,7 +444,7 @@ function returnToMenuAndSave() {
 
 function toMenu() {
 	hide(openEscIG);
-	hide(divEscape);
+	toggleEscape();
 	noFilter(divMenu);
 	noFilter(divGame);
 	window.onbeforeunload = '';
