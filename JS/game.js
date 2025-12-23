@@ -14,7 +14,7 @@ function pressKey(event) {
 			toggleEscape();
 			// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas dû à la fonction.
 		} 
-		else if (event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') {
+		else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && !isDisplay(divEscape)) {
 			getLine();
 		} 
 		else if (event.key.toLowerCase() === 'f') {
@@ -40,12 +40,18 @@ function toggleEscape() {
 		divGame.onclick = () => {
 			getLine();
 		};
+		document.onkeyup = (event) => {
+			pressKey(event);
+		}
 	} 
 	else {
 		showFlex(divEscape);
 		blurF(divMenu);
 		blurF(divGame);
 		divGame.onclick = '';
+		document.onkeyup = (event) => {
+			pressKey(event);
+		};
 	}
 }
 
@@ -103,11 +109,11 @@ function getLine() {
 						}
 						update_dialogue(response);
 					}
-					isTextLoading = false;
 				} catch (error) {
 					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
-					isTextLoading = false;
 				}
+				isTextLoading = false;
+				xhr = null;
 			}
 		};
 		xhr.open('GET', 'PHP/get_line.php', true);

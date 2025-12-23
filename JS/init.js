@@ -10,9 +10,7 @@ window.addEventListener('load', function () {
 	initGame();
 	preloadImagesUi();
 	preloadImagesGame();
-	if (DEBUG) {
-		initTestButtons();
-	}
+	if (DEBUG) initTestButtons();
 
 
 	//========EVENTS=======
@@ -31,9 +29,12 @@ window.addEventListener('load', function () {
 	inputSubmit.addEventListener('click', sendConnexion);
 	formLogin.addEventListener('submit', sendConnexion);
 
-	connectBtn.onclick = () => {openLoginForm();};
-
-	startBtn.addEventListener('click', start);
+	connectBtn.onclick = () => {
+		openLoginForm();
+	};
+	startBtn.onclick = () => {
+		start()
+	};
 
 	inputUsrName.addEventListener('keyup', checkValidUsrName);
 	inputPswd.addEventListener('keyup', checkValidPassword);
