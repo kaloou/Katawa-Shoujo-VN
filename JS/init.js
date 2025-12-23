@@ -45,16 +45,14 @@ window.addEventListener('load', function () {
 	});
 	// ESCAPE
 	quitEscBtn.addEventListener('click', () => {
-		noFilter(divMenu);
-		noFilter(divGame);
-		hide(divEscape);
+		toggleEscape();
 	});
 
 	hideBtn.addEventListener('click', hideButton);
 	returnBtn.addEventListener('click', returnToMenuAndSave);
 
 	openEscIG.onclick = () => {
-		openEscape();
+		toggleEscape();
 	};
 	// SAVE
 	addListenerForReset();

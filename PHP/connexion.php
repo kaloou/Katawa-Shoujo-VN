@@ -10,7 +10,7 @@ $source_bd = "pgsql:host={$serveur_bd};port=5433;dbname={$nom_bd};sslmode=requir
 
 
 $DEBUG = false;
-$default_save = "1|1|1|1@bg_op_snowywoods.png@|0|0||0@Lullaby_of_Open_Eyes.mp3";
+$default_save = "1|1|1|1|bg_op_snowywoods.png||0|0||0|Lullaby_of_Open_Eyes.mp3";
 try
 {
     $pdo = new PDO($source_bd, $utilisateur_bd, $passe_bd, $options);

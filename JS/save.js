@@ -1,7 +1,6 @@
 let saveDivMode,
 	saves,
 	textTitleSaveDiv,
-	textTitleForConfirm,
 	max_save = 5,
 	saveAreLoading = false;
 
@@ -49,7 +48,7 @@ function toggleSaveMenu() {
 			pressKey(event);
 		};
 		openEscIG.onclick = () => {
-			openEscape();
+			toggleEscape();
 		};
 		removeDatesTitlesFromSaves();
 	} else {
@@ -129,7 +128,7 @@ function closeConfirmDiv() {
 	hide(confirmDiv);
 	hide(inputForConfirm);
 	inputForConfirm.value = '';
-	titleForConfirmDiv.textContent = '';
+	titleForConfirmDiv.innerHTML = '';
 }
 
 function showConfirmDiv(mode) {
@@ -137,19 +136,24 @@ function showConfirmDiv(mode) {
 	switch (mode)
 	{
 		case 0 : // Reset a save
-			titleForConfirmDiv.textContent = 'Réinitialiser cette sauvegarde ?';
+			var textnode = document.createTextNode('Réinitialiser cette sauvegarde ?');
+			titleForConfirmDiv.appendChild(textnode);
 			break;
 		case 1 : // Reset auto-save
-			titleForConfirmDiv.textContent = 'Réinitialiser la partie en cours ?';
+			var textnode = document.createTextNode('Réinitialiser la partie en cours ?');
+			titleForConfirmDiv.appendChild(textnode);
 			break;
 		case 2 : // Load
-			titleForConfirmDiv.textContent = 'Remplacer la partie par cette sauvegarde ?';
+			var textnode = document.createTextNode('Remplacer la partie par cette sauvegarde ?');
+			titleForConfirmDiv.appendChild(textnode);
 			break;
 		case 3 : // Save
-			titleForConfirmDiv.textContent = 'Remplacer cette sauvegarde ?';
+			var textnode = document.createTextNode('Remplacer cette sauvegarde ?');
+			titleForConfirmDiv.appendChild(textnode);
 			break;
 		default : 
-			titleForConfirmDiv.textContent = '[ERROR] Reload the page';
+			var textnode = document.createTextNode('[ERROR] Reload the page');
+			titleForConfirmDiv.appendChild(textnode);
 			break;
 	}
 }
@@ -250,6 +254,7 @@ function returnToMenuAndSave() {
 				if (response.found) {
                        if (response.connected)
 					   {
+							hide(openEscIG);
 							hide(divEscape);
 							noFilter(divMenu);
 							noFilter(divGame);

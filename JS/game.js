@@ -11,7 +11,7 @@ function pressKey(event) {
 	event.preventDefault();
 	if (isDisplay(divGame)) {
 		if (event.key === 'Escape') {
-			openEscape();
+			toggleEscape();
 			// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas du à la fonction.
 		} else if (event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') {
 			getLine();
@@ -32,15 +32,19 @@ function fullScreen() {
 	}
 }
 
-function openEscape() {
+function toggleEscape() {
 	if (isDisplay(divGame) && isDisplay(divEscape)) {
 		hide(divEscape);
 		noFilter(divMenu);
 		noFilter(divGame);
+		divGame.onclick = () => {
+			getLine();
+		};
 	} else {
 		showFlex(divEscape);
 		blurF(divMenu);
 		blurF(divGame);
+		divGame.onclick = '';
 	}
 }
 

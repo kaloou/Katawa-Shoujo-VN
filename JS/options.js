@@ -68,7 +68,7 @@ function toggleOptionsMenu() {
 			pressKey(event);
 		};
 		openEscIG.onclick = () => {
-			openEscape();
+			toggleEscape();
 		};
 	} else {
 		showFlex(optionsDiv);
