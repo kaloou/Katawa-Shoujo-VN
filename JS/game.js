@@ -79,8 +79,10 @@ function showDialog() {
 
 //==== MAIN FUNCTIONS ==================================
 function getLine() {
+	textElement.classList.add('wait');
 	if (!isTextLoading) {
 		isTextLoading = true;
+		textElement.classList.remove('wait');
 		let xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
@@ -725,7 +727,7 @@ function hideOverlayText() {
 //======================================
 
 function triggerLogoEffect(element, animationClass = 'pop') {
-	element.classList.remove('blink', 'pop', 'pop2');
+	element.classList.remove('blink', 'pop', 'pop2', 'wait');
 
 	element.classList.add(animationClass, 'blink');
 

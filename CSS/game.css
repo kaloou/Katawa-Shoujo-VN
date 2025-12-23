@@ -68,6 +68,10 @@
   background-repeat: no-repeat;
 }
 
+#text.wait::after {
+  background-image: url('../assets/extern/UI/pause-white.png');
+}
+
 #text.blink::after {
   animation: blink 1.5s infinite;
 }
