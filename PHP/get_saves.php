@@ -27,7 +27,7 @@
                 {
                     $_SESSION["saves"] = $info;
                     $response["saves"][$i]["title"] = $info[$i]["title"];
-                    $response["saves"][$i]["init_date"] = date("Y-m-d → H:m:s", $info[$i]["init_date"]);
+                    $response["saves"][$i]["init_date"] = date("Y/m/d → H:i:s", $info[$i]["init_date"]);
                 }
                 //if($DEBUG) var_dump($response["saves"][2]);
                 //if($DEBUG) echo "\n info trouve";

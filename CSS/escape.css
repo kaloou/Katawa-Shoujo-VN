@@ -54,6 +54,11 @@
   background-position: center;
 }
 
+#open_esc_ingame:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
 #escape .buttons {
   max-width: 60%;
 }
@@ -74,6 +79,7 @@
 
 #quit_esc_button:hover {
   cursor: pointer;
+  transform: scale(1.2);
 }
 
 @media only screen and (max-width: 1000px) {

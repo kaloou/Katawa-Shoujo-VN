@@ -14,6 +14,7 @@ window.addEventListener('load', function () {
 
 
 	//========EVENTS=======
+	document.getElementById('transition').onclick = () => {};
 	// MENU
 	creditsBtn.addEventListener('click', () => {
 		window.location.href = 'HTML/credits.html';

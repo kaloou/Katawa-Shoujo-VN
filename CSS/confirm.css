@@ -103,9 +103,9 @@
 
 #confirm_for_save > div .buttons button:first-child:hover{
   outline: none;
-  color: var(--ui-red);
-  border-color: var(--ui-red);
-  text-decoration-color: var(--ui-red);
+  color: var(--ui-pink);
+  border-color: var(--ui-pink);
+  text-decoration-color: var(--ui-pink);
 }
 
 #confirm_for_save > div .buttons button:last-child:hover{

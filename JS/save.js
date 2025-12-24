@@ -4,7 +4,8 @@ let saveDivMode,
 	isExtractingAuto = false,
 	isLunchingGame = false,
 	areSavesLoading = false,
-	isLoadingOneSave = false;
+	isLoadingOneSave = false,
+	isAutoSaving = false;
 
 function start() {
 	if (connected) {
@@ -142,14 +143,15 @@ function clickOnSave(n) {
 			case 1: // Save
 				textTitleSaveDiv = 'Sauvegarder';
 	            saveDivMode = 1;
-				saveBtn.textContent = "chargement...";
+				saveBtn.textContent = 'chargement...';
                 extractSaves();
 				addListenerForSave();
 				break;
 			case 2: // Load
 				textTitleSaveDiv = 'Charger';
 	            saveDivMode = 2;
-				loadBtn.textContent = "chargement...";
+				loadBtn.textContent = 'chargement...';
+				showBlock(resetAutoSaveBtn);
                 extractSaves();
 				addListenerForLoad();
 				break;
@@ -166,6 +168,7 @@ function clickOnSave(n) {
 function toggleSaveMenu() {
 	if (isDisplay(saveDiv)) {
 		titleForSaveMenu.innerHTML = '';
+		hide(resetAutoSaveBtn);
 		if(!isDisplay(divEscape)) {
 			noFilter(divGame);
 			noFilter(divMenu);
@@ -193,8 +196,8 @@ function toggleSaveMenu() {
 		openEscIG.onclick = () => {
 			toggleSaveMenu();
 		};
-		saveBtn.textContent = "Sauvegarder";
-		loadBtn.textContent = "Charger";
+		saveBtn.textContent = 'Sauvegarder';
+		loadBtn.textContent = 'Charger';
 	}
 }
 
@@ -219,7 +222,7 @@ function extractSaves() {
 						toggleSaveMenu();
 						removeDatesTitlesFromSaves();
 						printDatesTitlesFromSaves(response.saves);
-						if (DEBUG) console.error(response);
+						if (DEBUG) console.log(response);
 					}
 					else {
 						if (DEBUG) console.error('Pas de save trouvées' + response);
@@ -289,6 +292,109 @@ function addListenerForReset() {
 
 function resetAutoSave() {
 	showConfirmDiv(1);
+	confirmBtnForCfrm.onclick = () => {
+		if(!isLoadingOneSave)
+		{
+			isLoadingOneSave = true;
+			let xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					let responseText = xhr.responseText;
+					try {
+						let response = JSON.parse(responseText);
+						if (response.connected) {
+								getAutoSave();
+							}
+						else {
+							if (DEBUG) console.error('Not connected');
+							connected = false;
+							printNotConnected();
+							toMenu();
+						}
+					}
+					catch (error) {
+						if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+						connected = false;
+						printNotConnected();
+						toMenu();
+					}
+					closeConfirmDiv();
+					clickOnSave(0);
+					isLoadingOneSave = false;
+					xhr = null;
+				}
+			};
+			xhr.open('GET', 'PHP/reset_auto_save.php', true);
+			xhr.responseType = 'text';
+			xhr.send();
+		}
+	};
+}
+
+function resetSave(n) {
+	showConfirmDiv(0);
+	confirmBtnForCfrm.onclick = () => {
+		if(n<max_save && n> -1 && !isLoadingOneSave)
+		{
+			confirmBtnForCfrm.textContent = '...';
+			isLoadingOneSave = true;
+			let xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					let responseText = xhr.responseText;
+					try {
+						let response = JSON.parse(responseText);
+						if (response.valid) {
+							if (response.connected) {
+								if (response.found) {
+									listOfResetBtn[n].textContent = "V";
+									clickOnSave(0);
+									clickOnSave(saveDivMode);
+									setTimeout(
+										() => {
+											listOfResetBtn[n].textContent = "X";
+											n = null;
+										}, 2000
+									);
+								}
+								else {
+									connected = false;
+									printNotConnected();
+									if (DEBUG) console.error('Not found');
+									n = null;
+								}
+							}
+							else {
+								if (DEBUG) console.error('Not connected');
+								connected = false;
+								printNotConnected();
+								n = null;
+							}
+						}
+						else {
+							if (DEBUG) console.error('Not valid' + response);
+							connected = false;
+							printNotConnected();
+							n = null;
+						}
+					}
+					catch (error) {
+						if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+						connected = false;
+						printNotConnected();
+						n = null;
+					}
+					closeConfirmDiv();
+					confirmBtnForCfrm.textContent = 'Confirmer';
+					isLoadingOneSave = false;
+					xhr = null;
+				}
+			};
+			xhr.open('POST', 'PHP/reset_one_save.php', true);
+			xhr.responseType = 'text';
+			xhr.send(n);
+		}
+	};
 }
 
 function loadThisSave(n) {
@@ -349,14 +455,14 @@ function saveThisSave(n) {
 	showConfirmDiv(3);
 	showBlock(inputForConfirm);
 	confirmBtnForCfrm.onclick = () => {
-		if(inputForConfirm.value.trim() == "") {
-			inputForConfirm.value = "Nouvelle partie";
+		if(inputForConfirm.value.trim() == '') {
+			inputForConfirm.value = 'Nouvelle partie';
 		}
 		if(n<max_save && n> -1 && checkValidTitleForSave() && !isLoadingOneSave)
 		{
 			isLoadingOneSave = true;
 			let xhr = new XMLHttpRequest();
-			var toSend = n + "|" + inputForConfirm.value.trim();
+			var toSend = n + '|' + inputForConfirm.value.trim();
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState === 4 && xhr.status === 200) {
 					let responseText = xhr.responseText;
@@ -468,37 +574,38 @@ function closeConfirmWithEsc(event) {
 	}
 }
 
-function resetSave(n) {
-	console.error('reset' + n);
-	showConfirmDiv(0);
-}
-
 function returnToMenuAndSave() {
-	let xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			let responseText = xhr.responseText;
-			try {
-				let response = JSON.parse(responseText);
-				if (!response.found || !response.connected) {
-					if (DEBUG) console.log(response);
+	if (!isAutoSaving) {
+		isAutoSaving = true;
+		returnBtn.textContent = 'retour...';
+		let xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				let responseText = xhr.responseText;
+				try {
+					let response = JSON.parse(responseText);
+					if (!response.found || !response.connected) {
+						if (DEBUG) console.log(response);
+						printNotConnected();
+						connected = false;
+					}
+					toMenu();
+				}
+				catch (error) {
+					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
 					printNotConnected();
 					connected = false;
+					toMenu();		
 				}
-				toMenu();
+				returnBtn.textContent = 'Revenir au Menu';
+				isAutoSaving = false;
+				xhr = null;
 			}
-			catch (error) {
-				if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
-				printNotConnected();
-				connected = false;
-				toMenu();		
-			}
-			xhr = null;
-		}
-	};
-	xhr.open('GET', 'PHP/save_session_to_db.php', true);
-	xhr.responseType = 'text';
-	xhr.send();
+		};
+		xhr.open('GET', 'PHP/save_session_to_db.php', true);
+		xhr.responseType = 'text';
+		xhr.send();
+	}
 }
 
 function toMenu() {
