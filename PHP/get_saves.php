@@ -27,7 +27,7 @@
                 {
                     $_SESSION["saves"] = $info;
                     $response["saves"][$i]["title"] = $info[$i]["title"];
-                    $response["saves"][$i]["init_date"] = date("Y-m-d → H:m", $info[$i]["init_date"]);
+                    $response["saves"][$i]["init_date"] = date("Y-m-d → H:m:s", $info[$i]["init_date"]);
                 }
                 //if($DEBUG) var_dump($response["saves"][2]);
                 //if($DEBUG) echo "\n info trouve";
@@ -46,9 +46,9 @@
         echo json_encode($response);
 
     } 
-    catch (PDOException $e) 
+    catch (Exception $e) 
     {
-        error_log("login.php -> PDOException: " . $e->getMessage());
+        error_log("login.php -> Exception: " . $e->getMessage());
         http_response_code(500);
         echo json_encode(["type" => "error", "message" => $e->getMessage()]);
         exit;

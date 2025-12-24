@@ -42,9 +42,9 @@
             }
         }
     } 
-    catch (PDOException $e) 
+    catch (Exception $e) 
     {
-        error_log("create_saves.php -> PDOException: " . $e->getMessage());
+        error_log("create_saves.php -> Exception: " . $e->getMessage());
         http_response_code(500);
         exit;
     }

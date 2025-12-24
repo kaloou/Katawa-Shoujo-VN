@@ -14,8 +14,8 @@
         {
             $response["submit"] = true;
             //if($DEBUG) echo "submit\n";
-            $usrname = htmlspecialchars(trim($_POST["inp_pseudo"]));
-            $pswd = htmlspecialchars(trim($_POST["inp_pswd"]));
+            $usrname = trim($_POST["inp_pseudo"]);
+            $pswd = trim($_POST["inp_pswd"]);
 
             if(preg_match($regex_username, $usrname) && preg_match($regex_password, $pswd)) 
             {
@@ -71,9 +71,9 @@
         echo json_encode($response);
 
     } 
-    catch (PDOException $e) 
+    catch (Exception $e) 
     {
-        error_log("login.php -> PDOException: " . $e->getMessage());
+        error_log("login.php -> Exception: " . $e->getMessage());
         http_response_code(500);
         echo json_encode(["type" => "error", "message" => $e->getMessage()]);
         exit;

@@ -30,20 +30,20 @@ function getAutoSave() {
 						}
 						else {
 							if (DEBUG) console.error('pas trouvé');
-							printNotConnected();
 							connected = false;
+							printNotConnected();
 						}
 					}
 					else if (!response.exist) {
 						if (DEBUG) console.log(response);
-						printNotConnected();
 						connected = false;
+						printNotConnected();
 					}
 				}
 				catch (error) {
 					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
-					printNotConnected();
 					connected = false;
+					printNotConnected();
 				}
 				isExtractingAuto = false;
 				xhr = null;
@@ -291,16 +291,10 @@ function resetAutoSave() {
 	showConfirmDiv(1);
 }
 
-function saveThisSave(n) {
-	console.error('Save' + n);
-	showConfirmDiv(3);
-	showBlock(inputForConfirm);
-}
-
 function loadThisSave(n) {
 	showConfirmDiv(2);
 	confirmBtnForCfrm.onclick = () => {
-		if(!isLoadingOneSave)
+		if(n<max_save && n> -1 && !isLoadingOneSave)
 		{
 			isLoadingOneSave = true;
 			let xhr = new XMLHttpRequest();
@@ -340,6 +334,7 @@ function loadThisSave(n) {
 						printNotConnected();
 					}
 					isLoadingOneSave = false;
+					n = null;
 					xhr = null;
 				}
 			};
@@ -348,6 +343,82 @@ function loadThisSave(n) {
 			xhr.send(n);
 		}
 	};
+}
+
+function saveThisSave(n) {
+	showConfirmDiv(3);
+	showBlock(inputForConfirm);
+	confirmBtnForCfrm.onclick = () => {
+		if(inputForConfirm.value.trim() == "") {
+			inputForConfirm.value = "Nouvelle partie";
+		}
+		if(n<max_save && n> -1 && checkValidTitleForSave() && !isLoadingOneSave)
+		{
+			isLoadingOneSave = true;
+			let xhr = new XMLHttpRequest();
+			var toSend = n + "|" + inputForConfirm.value.trim();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					let responseText = xhr.responseText;
+					try {
+						let response = JSON.parse(responseText);
+						if (response.valid) {
+							if (response.connected) {
+								if (!response.found) {
+									connected = false;
+									printNotConnected();
+									toMenu();
+									if (DEBUG) console.error('Not found');
+								}
+							}
+							else {
+								if (DEBUG) console.error('Not connected');
+								connected = false;
+								printNotConnected();
+								toMenu();
+							}
+						}
+						else {
+							if (DEBUG) console.error('Not valid' + response);
+							connected = false;
+							printNotConnected();
+							toMenu();
+						}
+					}
+					catch (error) {
+						if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
+						connected = false;
+						printNotConnected();
+						toMenu();
+					}
+					closeConfirmDiv();
+					toggleSaveMenu();
+					isLoadingOneSave = false;
+					n = null;
+					xhr = null;
+				}
+			};
+			xhr.open('POST', 'PHP/save_game.php', true);
+			xhr.responseType = 'text';
+			xhr.send(toSend);
+		}
+	};
+}
+
+function checkValidTitleForSave()
+{
+	var testInput = inputForConfirm.value.trim();
+
+	if (/^[- _a-zA-Z0-9]{1,16}$/.test(testInput)) {
+		inputForConfirm.style.color = greenColor;
+		inputForConfirm.style.borderColor = greenColor;
+		return true;
+	}
+	else {
+		inputForConfirm.style.color = redColor;
+		inputForConfirm.style.borderColor = redColor;
+		return false;
+	}
 }
 
 function showConfirmDiv(mode) {
@@ -360,16 +431,10 @@ function showConfirmDiv(mode) {
 		case 0 : // Reset a save
 			var textnode = document.createTextNode('Réinitialiser cette sauvegarde ?');
 			titleForConfirmDiv.appendChild(textnode);
-			confirmBtnForCfrm.onclick = () => {
-				
-			};
 			break;
 		case 1 : // Reset auto-save
 			var textnode = document.createTextNode('Réinitialiser la partie en cours ?');
 			titleForConfirmDiv.appendChild(textnode);
-			confirmBtnForCfrm.onclick = () => {
-				
-			};
 			break;
 		case 2 : // Load
 			var textnode = document.createTextNode('Remplacer la partie par cette sauvegarde ?');
@@ -378,16 +443,10 @@ function showConfirmDiv(mode) {
 		case 3 : // Save
 			var textnode = document.createTextNode('Remplacer cette sauvegarde ?');
 			titleForConfirmDiv.appendChild(textnode);
-			confirmBtnForCfrm.onclick = () => {
-				
-			};
 			break;
 		default : 
 			var textnode = document.createTextNode('[ERROR] Reload the page');
 			titleForConfirmDiv.appendChild(textnode);
-			confirmBtnForCfrm.onclick = () => {
-				
-			};
 			break;
 	}
 }

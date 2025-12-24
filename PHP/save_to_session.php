@@ -21,9 +21,9 @@
         
         echo json_encode($response);
     } 
-    catch (PDOException $e) 
+    catch (Exception $e) 
     {
-        error_log("save_to_session.php -> PDOException: " . $e->getMessage());
+        error_log("save_to_session.php -> Exception: " . $e->getMessage());
         http_response_code(500);
         echo json_encode(["type" => "error", "message" => $e->getMessage()]);
         exit;

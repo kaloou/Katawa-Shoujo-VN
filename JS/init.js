@@ -77,6 +77,7 @@ window.addEventListener('load', function () {
 	cancelBtnForCfrm.onclick = () => {
 		closeConfirmDiv()
 	};
+	inputForConfirm.addEventListener('keyup', checkValidTitleForSave);
 });
 
 function initGame() {

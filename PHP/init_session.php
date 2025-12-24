@@ -16,7 +16,7 @@ if(!isset($_SESSION['to_save']))
     $_SESSION['to_save']['sprite']['image_tag'] = '';
     $_SESSION['to_save']['sprite']['pos'] = 0;
 
-    $_SESSION['to_save']['music'] = '';
+    $_SESSION['to_save']['music'] = 'Lullaby_of_Open_Eyes.mp3';
 }
 
 if (!isset($_SESSION["story"])) {
