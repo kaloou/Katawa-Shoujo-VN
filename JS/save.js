@@ -531,6 +531,9 @@ function showConfirmDiv(mode) {
 	showFlex(confirmDiv);
 	document.onkeyup = (event) => {
 		closeConfirmWithEsc(event);
+	}; 
+	openEscIG.onclick = () => {
+		closeConfirmDiv();
 	};
 	switch (mode)
 	{
@@ -564,6 +567,9 @@ function closeConfirmDiv() {
 	titleForConfirmDiv.innerHTML = '';
 	document.onkeyup = (event) => {
 		closeSaveWithEsc(event);
+	};
+	openEscIG.onclick = () => {
+		toggleSaveMenu();
 	};
 }
 
