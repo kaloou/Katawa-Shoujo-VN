@@ -3,8 +3,8 @@ session_start();
 
 if(!isset($_SESSION['to_save']))
 {
-    $_SESSION['to_save']['rep']['seqid'] = 1;
-    $_SESSION['to_save']['rep']['seqserial'] = 1;
+    $_SESSION['to_save']['rep']['seqid'] = 0;
+    $_SESSION['to_save']['rep']['seqserial'] = 9999;
     $_SESSION['to_save']['rep']['type'] = 1;
     $_SESSION['to_save']['rep']['elid'] = 1;
 
@@ -17,27 +17,23 @@ if(!isset($_SESSION['to_save']))
     $_SESSION['to_save']['sprite']['pos'] = 0;
 
     $_SESSION['to_save']['music'] = 'Lullaby_of_Open_Eyes.mp3';
+
+    $_SESSION['to_save']['interpreter']['ip'] = 1;
+    $_SESSION['to_save']['interpreter']['last_qcm_choice'] = 0;
+    $_SESSION['to_save']['interpreter']['scenes_viewed'] = array();
+    $_SESSION['to_save']['interpreter']['variables'] = array();
 }
 
 if (!isset($_SESSION["story"])) {
     $_SESSION["story"] = array(
-        "seqid" => 1,
-        "type" => 1,
-        "name" => "",
-        "param" => 0,
-        "next" => 2
+        "seqid" => 0
     );
 }
 
 if (!isset($_SESSION["seqtext"])) {
     $_SESSION["seqtext"] = array(
-        "seqid" => $_SESSION["story"]["seqid"],
-        "seqserial" => 1,
-        "type" => 1,
-        "data" => "text",
-        "elid" => 1,
-        "pos" => 1,
-        "z" => 1
+        "seqid" => 0,
+        "seqserial" => 9999
     );
 }
 
@@ -46,6 +42,15 @@ if (!isset($_SESSION["game_state"])) {
         "menu_active" => false, // may not be necessary
         "choice_active" => false,
         "get_line_loaded" => false
+    );
+}
+
+if (!isset($_SESSION["interpreter"])) {
+    $_SESSION["interpreter"] = array(
+        "ip" => 1,
+        "last_qcm_choice" => 0,
+        "scenes_viewed" => array(),
+        "variables" => array()
     );
 }
 ?>

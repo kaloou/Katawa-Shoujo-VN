@@ -1,6 +1,7 @@
 let isTextLoading = false;
-let currentMusic = null; // élément audio pour la musique de fond
-let musicFadeInterval = null; // interval pour le fadeout
+let currentMusic = null;
+let musicFadeInterval = null;
+let globalMusicVolume = 0.75;
 
 // document.onkeyup = (event) => {
 // 	pressKey(event);
@@ -124,7 +125,11 @@ function getLine() {
 }
 
 function update_dialogue(response) {
-	const type = parseInt(response.type);
+	let type = response.type;
+	if (typeof type === 'string' && !isNaN(parseInt(type))) {
+		type = parseInt(type);
+	}
+
 	const content = response.text || '';
 	const pos = response.pos || 0;
 	const z = response.z || 0;
@@ -179,6 +184,12 @@ function update_dialogue(response) {
 			break;
 		case 6: // type 6 -> HTML interpreter
 			htmlDialogueInterpreter(response.html);
+			break;
+		case 7: // type 7 -> QCM
+			displayQCM(response);
+			break;
+		case 'game_end': // Fin du jeu
+			displayGameEnd(response.ending_name);
 			break;
 		default:
 			console.log("Type non géré pour l'instant : " + type);
@@ -577,7 +588,7 @@ function play_music(music_name) {
 
 	currentMusic = new Audio(`assets/extern/bgm_mp3/${music_name}`);
 	currentMusic.loop = true;
-	currentMusic.volume = 0.75;
+	currentMusic.volume = globalMusicVolume;
 
 	currentMusic.play().catch(error => {
 		if (DEBUG) console.error('Erreur lors de la lecture de la musique:', error);
@@ -743,4 +754,99 @@ function triggerLogoEffect(element, animationClass = 'pop') {
 		void element.offsetWidth;
 		element.classList.add('blink');
 	}, 300);
+}
+
+function displayQCM(qcm_data) {
+	hideTextBox();
+	hideOverlayText();
+	hideCenteredText();
+
+	if (qcm_data.character_name && qcm_data.character_color) {
+		showNameBox(qcm_data.character_name, qcm_data.character_color);
+	} else {
+		hideNameBox();
+	}
+
+	hide(openEscIG);
+
+	const qcmContainer = document.createElement('div');
+	qcmContainer.id = 'qcm-container';
+
+	const questionText = document.createElement('div');
+	questionText.className = 'qcm-question';
+	questionText.textContent = qcm_data.qtext;
+
+	qcmContainer.appendChild(questionText);
+
+	const choicesContainer = document.createElement('div');
+	choicesContainer.id = 'qcm-choices';
+
+	qcm_data.options.forEach(option => {
+		const choiceDiv = document.createElement('div');
+		choiceDiv.className = 'qcm-choice';
+		choiceDiv.textContent = option.text;
+		choiceDiv.dataset.choice = option.number;
+		choiceDiv.onclick = () => handleQCMChoice(option.number);
+		choicesContainer.appendChild(choiceDiv);
+	});
+
+	qcmContainer.appendChild(choicesContainer);
+	divGame.appendChild(qcmContainer);
+
+	divGame.onclick = null;
+	document.onkeyup = null;
+}
+
+function handleQCMChoice(choice) {
+	if (DEBUG) console.log('Choix QCM:', choice);
+
+	const choices = document.querySelectorAll('.qcm-choice');
+	choices.forEach(c => c.onclick = null);
+
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			try {
+				let response = JSON.parse(xhr.responseText);
+				if (response.success) {
+					if (DEBUG) console.log('Choix sauvegardé:', response.choice);
+					const qcmContainer = document.getElementById('qcm-container');
+					if (qcmContainer) qcmContainer.remove();
+					hideTextBox();
+					hideNameBox();
+
+					showFlex(openEscIG);
+
+					divGame.onclick = () => {
+						getLine();
+					};
+					document.onkeyup = (event) => {
+						pressKey(event);
+					};
+
+					setTimeout(() => getLine(), 100);
+				} else {
+					if (DEBUG) console.error('Erreur sauvegarde choix:', response.message);
+				}
+			} catch (error) {
+				if (DEBUG) console.error('Erreur parsing JSON:', error);
+			}
+		}
+	};
+	xhr.open('POST', 'PHP/save_qcm_choice.php', true);
+	xhr.send(choice.toString());
+}
+
+function displayGameEnd(ending_name) {
+	hideTextBox();
+	hideNameBox();
+	hideOverlayText();
+	hideCenteredText();
+
+	showCenteredText('Fin atteinte : ' + ending_name);
+
+	divGame.onclick = null;
+	document.onkeyup = null;
+
+	if (DEBUG) console.log('Fin du jeu:', ending_name);
 }

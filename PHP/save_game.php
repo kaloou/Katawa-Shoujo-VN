@@ -28,6 +28,14 @@
                     $response["found"] = true;
                     $save_id = $_SESSION["saves"][$int_for_id]["id"];
                     $user_id = $_SESSION["user_id"];
+
+                    if(isset($_SESSION["interpreter"])) {
+                        $_SESSION["to_save"]["interpreter"]["ip"] = $_SESSION["interpreter"]["ip"];
+                        $_SESSION["to_save"]["interpreter"]["last_qcm_choice"] = $_SESSION["interpreter"]["last_qcm_choice"];
+                        $_SESSION["to_save"]["interpreter"]["scenes_viewed"] = $_SESSION["interpreter"]["scenes_viewed"];
+                        $_SESSION["to_save"]["interpreter"]["variables"] = $_SESSION["interpreter"]["variables"];
+                    }
+
                     $to_save = serialize($_SESSION["to_save"]);
                     $query = "UPDATE saves SET content = :to_save, title = :title, init_date = :init_date WHERE id = :save_id AND user_id = :user_id";
                     $stmt = $pdo->prepare($query);
