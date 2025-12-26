@@ -604,13 +604,15 @@ function autoSave() {
 						printNotConnected();
 						connected = false;
 						toMenu();
+						hide(divEscape);
 					}
 				}
 				catch (error) {
 					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
 					printNotConnected();
 					connected = false;
-					toMenu();		
+					toMenu();
+					hide(divEscape);
 				}
 				returnBtn.textContent = 'Revenir au Menu';
 				isAutoSaving = false;
