@@ -144,7 +144,7 @@ function update_dialogue(response) {
 
 	switch (type) {
         case 1: // type 1 -> text
-			// Gestion de la musique via pos et z...
+			// Gestion of music with pos and z...
 			if (pos === 7) {
 				play_music(music_name);
 				setTimeout(() => getLine(), 0);
@@ -188,7 +188,7 @@ function update_dialogue(response) {
 		case 7: // type 7 -> QCM
 			displayQCM(response);
 			break;
-		case 'game_end': // Fin du jeu
+		case 'game_end': // End of the game
 			displayGameEnd(response.ending_name);
 			break;
 		default:
@@ -768,6 +768,7 @@ function displayQCM(qcm_data) {
 	}
 
 	hide(openEscIG);
+	window.onbeforeunload = '';
 
 	const qcmContainer = document.createElement('div');
 	qcmContainer.id = 'qcm-container';
@@ -816,6 +817,11 @@ function handleQCMChoice(choice) {
 					hideNameBox();
 
 					showFlex(openEscIG);
+
+					window.onbeforeunload = (e) => {
+						e.preventDefault();
+						returnToMenuAndSave();
+					};
 
 					divGame.onclick = () => {
 						getLine();
