@@ -528,6 +528,7 @@ function checkValidTitleForSave()
 }
 
 function showConfirmDiv(mode) {
+	titleForConfirmDiv.innerHTML = '';
 	showFlex(confirmDiv);
 	document.onkeyup = (event) => {
 		closeConfirmWithEsc(event);
