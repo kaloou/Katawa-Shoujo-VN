@@ -14,6 +14,23 @@
                 $response["to_load"] = $_SESSION["to_save"];
                 $_SESSION["story"]["seqid"] = $_SESSION["to_save"]["rep"]["seqid"];
                 $_SESSION["seqtext"]["seqserial"] = $_SESSION["to_save"]["rep"]["seqserial"];
+
+                if(isset($_SESSION["to_save"]["interpreter"])) {
+                    $_SESSION["interpreter"]["ip"] = $_SESSION["to_save"]["interpreter"]["ip"];
+                    $_SESSION["interpreter"]["last_qcm_choice"] = $_SESSION["to_save"]["interpreter"]["last_qcm_choice"];
+                    $_SESSION["interpreter"]["scenes_viewed"] = $_SESSION["to_save"]["interpreter"]["scenes_viewed"];
+                    $_SESSION["interpreter"]["variables"] = $_SESSION["to_save"]["interpreter"]["variables"];
+                } else {
+                    $_SESSION["interpreter"]["ip"] = 1;
+                    $_SESSION["interpreter"]["last_qcm_choice"] = 0;
+                    $_SESSION["interpreter"]["scenes_viewed"] = array();
+                    $_SESSION["interpreter"]["variables"] = array();
+
+                    $_SESSION["to_save"]["interpreter"]["ip"] = 1;
+                    $_SESSION["to_save"]["interpreter"]["last_qcm_choice"] = 0;
+                    $_SESSION["to_save"]["interpreter"]["scenes_viewed"] = array();
+                    $_SESSION["to_save"]["interpreter"]["variables"] = array();
+                }
             }
             else $response["found"] = false;
         }

@@ -3,11 +3,19 @@
     include_once("connexion.php");
     header("Content-Type: text/plain; charset=utf-8");
     
-    try 
+    try
     {
         if(isset($_SESSION["to_save"]))
         {
             $response["found"] = true;
+
+            if(isset($_SESSION["interpreter"])) {
+                $_SESSION["to_save"]["interpreter"]["ip"] = $_SESSION["interpreter"]["ip"];
+                $_SESSION["to_save"]["interpreter"]["last_qcm_choice"] = $_SESSION["interpreter"]["last_qcm_choice"];
+                $_SESSION["to_save"]["interpreter"]["scenes_viewed"] = $_SESSION["interpreter"]["scenes_viewed"];
+                $_SESSION["to_save"]["interpreter"]["variables"] = $_SESSION["interpreter"]["variables"];
+            }
+
             $to_auto_save = serialize($_SESSION["to_save"]);
 
             if(isset($_SESSION["user_id"]))
