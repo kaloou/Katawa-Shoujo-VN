@@ -181,11 +181,13 @@ function stopAutoMode() {
 
 // === Volume de la musique ===
 function setMusicVolume(volume) {
-	// Cette fonction sera implémentée quand le système audio sera en place
-	// Pour l'instant, on stocke juste la valeur
 	const volumeLevel = volume / 100;
+	globalMusicVolume = volumeLevel;
 
-	// Si il y a des éléments audio dans le jeu, on applique le volume
+	if (currentMusic) {
+		currentMusic.volume = volumeLevel;
+	}
+
 	const audioElements = document.querySelectorAll('audio');
 	audioElements.forEach((audio) => {
 		audio.volume = volumeLevel;
@@ -240,6 +242,7 @@ function loadOptions() {
 			if (options.musicVolume !== undefined) {
 				musicVolumeSlider.value = options.musicVolume;
 				musicVolumeValue.textContent = options.musicVolume;
+				globalMusicVolume = options.musicVolume / 100;
 				setMusicVolume(options.musicVolume);
 			}
 

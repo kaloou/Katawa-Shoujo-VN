@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once('connexion.php');
+include_once('interpreter.php');
 header('Content-Type: text/plain; charset=utf-8');
 
 /*
@@ -38,11 +39,82 @@ try {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($row === false) {
-        $_SESSION["story"]["seqid"]++;// later on update seqid with next parameter of story table
         $_SESSION["seqtext"]["seqserial"] = 1;
-        echo json_encode(['type' => 'end']);
-        // here tester si question (qcm in the next seqid)
-        exit;
+
+        $interpreter_result = run_interpreter($pdo);
+
+        switch ($interpreter_result['type']) {
+            case 'scene':
+                $_SESSION["story"]["seqid"] = $interpreter_result['seqid'];
+                $_SESSION["seqtext"]["seqid"] = $interpreter_result['seqid'];
+                $_SESSION["seqtext"]["seqserial"] = 1;
+                echo json_encode(['type' => 'end']);
+                exit;
+
+            case 'menu':
+                $menu_query = "SELECT * FROM menu WHERE seqid = :seqid";
+                $menu_stmt = $pdo->prepare($menu_query);
+                $menu_stmt->bindValue(':seqid', $interpreter_result['seqid'], PDO::PARAM_INT);
+                $menu_stmt->execute();
+                $menu_data = $menu_stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($menu_data) {
+                    $_SESSION["seqtext"]["seqserial"] = 9999;
+
+                    $character_name = '';
+                    $character_color = '';
+                    if ($menu_data['qid'] !== null) {
+                        $char_query = "SELECT name, color FROM character WHERE cid = :qid";
+                        $char_stmt = $pdo->prepare($char_query);
+                        $char_stmt->bindValue(':qid', $menu_data['qid'], PDO::PARAM_INT);
+                        $char_stmt->execute();
+                        $char_data = $char_stmt->fetch(PDO::FETCH_ASSOC);
+                        if ($char_data) {
+                            $character_name = $char_data['name'];
+                            $character_color = $char_data['color'];
+                        }
+                    }
+
+                    $qcm_response = [
+                        'type' => 7,
+                        'qtext' => $menu_data['qtext'],
+                        'character_name' => $character_name,
+                        'character_color' => $character_color,
+                        'options' => []
+                    ];
+                    for ($i = 1; $i <= 4; $i++) {
+                        $opt_key = 'opt' . $i;
+                        if (!empty($menu_data[$opt_key]) && $menu_data[$opt_key] !== null) {
+                            $qcm_response['options'][] = [
+                                'number' => $i,
+                                'text' => $menu_data[$opt_key]
+                            ];
+                        }
+                    }
+
+                    echo json_encode($qcm_response);
+                    exit;
+                } else {
+                    error_log('get_line.php -> Menu introuvable: seqid=' . $interpreter_result['seqid']);
+                    echo json_encode(['type' => 'error', 'message' => 'Menu introuvable']);
+                    exit;
+                }
+
+            case 'end':
+                echo json_encode([
+                    'type' => 'game_end',
+                    'ending_name' => $interpreter_result['ending_name']
+                ]);
+                exit;
+
+            case 'error':
+            default:
+                echo json_encode([
+                    'type' => 'error',
+                    'message' => $interpreter_result['message'] ?? 'Erreur'
+                ]);
+                exit;
+        }
     }
 
     $_SESSION["seqtext"]["seqserial"]++;
