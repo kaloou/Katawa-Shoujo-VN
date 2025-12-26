@@ -830,7 +830,10 @@ function handleQCMChoice(choice) {
 						pressKey(event);
 					};
 
-					setTimeout(() => getLine(), 100);
+					setTimeout(() => {
+						getLine();
+						autoSave();
+					}, 100);
 				} else {
 					if (DEBUG) console.error('Erreur sauvegarde choix:', response.message);
 				}

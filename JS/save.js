@@ -585,9 +585,14 @@ function closeConfirmWithEsc(event) {
 }
 
 function returnToMenuAndSave() {
+	returnBtn.textContent = 'retour...';
+	autoSave();
+	toMenu();
+}
+
+function autoSave() {
 	if (!isAutoSaving) {
 		isAutoSaving = true;
-		returnBtn.textContent = 'retour...';
 		let xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
@@ -598,8 +603,8 @@ function returnToMenuAndSave() {
 						if (DEBUG) console.log(response);
 						printNotConnected();
 						connected = false;
+						toMenu();
 					}
-					toMenu();
 				}
 				catch (error) {
 					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
