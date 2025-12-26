@@ -162,6 +162,9 @@ function clickOnSave(n) {
 	}
 	else {
 		printNotConnected();
+		if (isDisplay(divEscape)) {
+			toMenu();
+		}
 	}
 }
 
@@ -196,8 +199,6 @@ function toggleSaveMenu() {
 		openEscIG.onclick = () => {
 			toggleSaveMenu();
 		};
-		saveBtn.textContent = 'Sauvegarder';
-		loadBtn.textContent = 'Charger';
 	}
 }
 
@@ -237,6 +238,8 @@ function extractSaves() {
 					printNotConnected();
 					toMenu();
 				}
+				saveBtn.textContent = 'Sauvegarder';
+				loadBtn.textContent = 'Charger';
 				areSavesLoading = false;
 				xhr = null;
 			}

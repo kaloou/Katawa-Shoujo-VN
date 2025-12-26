@@ -83,13 +83,13 @@ window.addEventListener('load', function () {
 
 function initGame() {
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'PHP/init.php', true);
+	xhr.open('GET', 'PHP/init_session.php', true);
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			let response = xhr.responseText;
-			console.log('✅ init.php -> Session initialisée : ', response); // to fix -> no response
+			console.log('✅ init_session.php -> Session initialisée : ', response); // to fix -> no response
 		} else if (xhr.readyState === 4 && xhr.status !== 200) {
-			console.error("❌init.php -> Erreur lors de l'appel AJAX : " + xhr.statusText);
+			console.error("❌init_session.php -> Erreur lors de l'appel AJAX : " + xhr.statusText);
 		}
 	};
 	xhr.send();

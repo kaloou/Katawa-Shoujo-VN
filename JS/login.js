@@ -60,9 +60,6 @@ function printConnected() {
 
 function wantDisconnect() {
 	if (connected) {
-		connectBtn.onclick = () => {
-			disconnect();
-		};
 		connectBtn.textContent = 'Se déconnecter ?';
 		connectBtn.style.boxShadow = '0 0 0 0.08vw ' + pinkColor;
 		connectBtn.style.backgroundColor = pinkColor;
@@ -70,7 +67,7 @@ function wantDisconnect() {
 }
 
 function disconnect() {
-	if (connected && confirm('Êtes-vous sûr de vouloir vous déconnecter')) {
+	if (confirm('Êtes-vous sûr de vouloir vous déconnecter')) {
 		let xhr = new XMLHttpRequest();
 		connected = false;
 		printNotConnected();
@@ -175,6 +172,9 @@ function tryConnexion() {
 								resetStyleElems([inputPswd, inputUsrName, inputSubmit]);
 								inputSubmit.style = '';
 								editSendButton('Envoyer');
+								connectBtn.onclick = () => {
+									disconnect();
+								};
 								break;
 							case 0:
 								if (DEBUG) console.log(response);
