@@ -541,7 +541,7 @@ function showConfirmDiv(mode) {
 	};
 	switch (mode)
 	{
-		case 0 : // Reset a save
+		case 0 : // Reset une save
 			var textnode = document.createTextNode('Réinitialiser cette sauvegarde ?');
 			titleForConfirmDiv.appendChild(textnode);
 			break;
