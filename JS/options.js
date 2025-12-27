@@ -144,7 +144,7 @@ function startAutoMode() {
 	autoModeDelay = 2000 + animationTime;
 
 	autoModeInterval = setInterval(() => {
-		if (isDisplay(divGame) && !isDisplay(divEscape) && !isDisplay(optionsDiv) && !isQcmactive) {
+		if (isDisplay(divGame) && !isDisplay(divEscape) && !isQcmactive && !isHidingText) {
 			getLine();
 		}
 	}, autoModeDelay);

@@ -112,7 +112,7 @@
   }
 
   #main_menu {
-    width: 90vw; /* 15 */
-    height: 66vw; /* 11 */
+    width: 90vw;
+    height: 66vw;
   }
 }
