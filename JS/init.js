@@ -1,4 +1,3 @@
-const DEBUG = true;
 // Transition invisible pour fix un bug
 const originalDuration = TRANSITION_DURATION;
 TRANSITION_DURATION = 0;
@@ -10,7 +9,6 @@ window.addEventListener('load', function () {
 	initGame();
 	preloadImagesUi();
 	preloadImagesGame();
-	if (DEBUG) initTestButtons();
 
 
 	//========EVENTS=======
