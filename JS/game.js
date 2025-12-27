@@ -3,6 +3,7 @@ let currentMusic = null;
 let musicFadeInterval = null;
 let globalMusicVolume = 0.75;
 let isQcmactive = false;
+let isHidingText = false;
 
 // document.onkeyup = (event) => {
 // 	pressKey(event);
