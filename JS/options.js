@@ -94,7 +94,7 @@ function closeOptionsWithEsc(event) {
 function enterFullscreen() {
 	if (!document.fullscreenElement) {
 		document.documentElement.requestFullscreen().catch((err) => {
-			console.error('Erreur lors du passage en plein écran:', err);
+            if (DEBUG) console.error('Erreur lors du passage en plein écran:', err);
 			fullscreenToggle.checked = false;
 		});
 	}
@@ -103,7 +103,7 @@ function enterFullscreen() {
 function exitFullscreen() {
 	if (document.fullscreenElement) {
 		document.exitFullscreen().catch((err) => {
-			console.error('Erreur lors de la sortie du plein écran:', err);
+            if (DEBUG) console.error('Erreur lors de la sortie du plein écran:', err);
 		});
 	}
 }

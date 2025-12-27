@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 // Transition invisible bug fix
 const originalDuration = TRANSITION_DURATION;
 TRANSITION_DURATION = 0;
@@ -87,9 +87,9 @@ function initGame() {
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			let response = xhr.responseText;
-			console.log('✅ init_session.php -> Session initialisée : ', response); // to fix -> no response
+            if (DEBUG) console.log('✅ init_session.php -> Session initialisée : ', response); // to fix -> no response
 		} else if (xhr.readyState === 4 && xhr.status !== 200) {
-			console.error("❌init_session.php -> Erreur lors de l'appel AJAX : " + xhr.statusText);
+            if (DEBUG) console.error("❌init_session.php -> Erreur lors de l'appel AJAX : " + xhr.statusText);
 		}
 	};
 	xhr.send();
@@ -97,52 +97,54 @@ function initGame() {
 
 // ==================== DEBUG TEST DE SESSION ===================
 function getSession() {
-	console.log('=== TEST DE SESSION ===');
+    if (DEBUG) console.log('=== TEST DE SESSION ===');
 	fetch('DEBUG/get_session.php')
 		.then((response) => response.json())
 		.then((data) => {
-			console.log('=== DONNÉES DE SESSION ===');
-			console.log(JSON.stringify(data, null, 2));
-			console.log('========================');
+            if (DEBUG) console.log('=== DONNÉES DE SESSION ===');
+            if (DEBUG) console.log(JSON.stringify(data, null, 2));
+            if (DEBUG) console.log('========================');
 
 			// Vérifier si la session est vide
 			if (Object.keys(data).length === 0) {
-				console.warn('⚠️ SESSION VIDE - Aucune donnée de session trouvée');
+                if (DEBUG) console.warn('⚠️ SESSION VIDE - Aucune donnée de session trouvée');
 			} else {
-				console.log('✅ Session active avec', Object.keys(data).length, 'propriétés');
+                if (DEBUG) console.log('✅ Session active avec', Object.keys(data).length, 'propriétés');
 			}
 		})
 		.catch((error) => {
-			console.error('❌ Erreur lors de la récupération de la session:', error);
+            if (DEBUG) console.error('❌ Erreur lors de la récupération de la session:', error);
 		});
 }
 
 function destroySession() {
 	if (confirm('Êtes-vous sûr de vouloir détruire la session ?')) {
-		console.log('=== DESTRUCTION DE SESSION ===');
+        if (DEBUG) console.log('=== DESTRUCTION DE SESSION ===');
 		fetch('PHP/destroy_session.php')
 			.then((response) => response.json())
 			.then((data) => {
-				console.log('=== SESSION DELETE ===');
-				console.log(JSON.stringify(data, null, 2));
-				console.log('=============================');
-				console.log('✅ Session DELETE avec succès');
+                if (DEBUG) {
+                    console.log('=== SESSION DELETE ===');
+                    console.log(JSON.stringify(data, null, 2));
+                    console.log('=============================');
+                    console.log('✅ Session DELETE avec succès');
+                }
 			})
 			.catch((error) => {
-				console.error('❌ Erreur lors de la destruction de la session:', error);
+                if (DEBUG) console.error('❌ Erreur lors de la destruction de la session:', error);
 			});
 	}
 }
 
 function initSession() {
-	console.log('=== INITIALISATION MANUELLE DE SESSION ===');
+    if (DEBUG) console.log('=== INITIALISATION MANUELLE DE SESSION ===');
 	fetch('PHP/init_session.php')
 		.then((response) => response.text())
 		.then((data) => {
-			console.log('✅ Session initialisée manuellement');
+            if (DEBUG) console.log('✅ Session initialisée manuellement');
 		})
 		.catch((error) => {
-			console.error("❌ Erreur lors de l'initialisation:", error);
+            if (DEBUG) console.error("❌ Erreur lors de l'initialisation:", error);
 		});
 }
 
@@ -185,7 +187,7 @@ function initTestButtons() {
 	// Vérifie si le conteneur n'existe pas déjà pour éviter les doublons
 	if (!sessionButtonsContainer) {
 		document.body.insertAdjacentHTML('beforeend', html);
-		console.log('✅ Boutons de test ajoutés au DOM');
+        if (DEBUG) console.log('✅ Boutons de test ajoutés au DOM');
 		// Les éléments seront disponibles après le rendu.
 		const sessionContainer = document.getElementById('session_buttons_container');
 		const testBtn = document.getElementById('test_session_btn');

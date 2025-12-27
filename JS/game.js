@@ -192,7 +192,7 @@ function update_dialogue(response) {
 			displayGameEnd(response.ending_name);
 			break;
 		default:
-			console.log("Type non géré pour l'instant : " + type);
+            if (DEBUG) console.log("Type non géré pour l'instant : " + type);
 			setTimeout(() => getLine(), 0);
 			break;
 	}
@@ -257,7 +257,7 @@ function reset_sprite_stack() {
 function handle_ev(image_name, animation_tag, pos, z, width, height, is_background) {
 	hideTextBox();
 	hideNameBox();
-    console.log(animation_tag);
+    if (DEBUG) console.log(animation_tag);
 	if (is_background) {
 		reset_sprite_stack();
 	}
@@ -321,7 +321,6 @@ function handle_ev_dezoom_animation(image_name, pos, z, width, height, is_backgr
 }
 
 function handle_ev_slide(image_name, pos, z, width, height, is_background) {
-    console.log("enter");
 	let evDiv = document.createElement('div');
 	evDiv.style.backgroundImage = `url("assets/internHD/${image_name}")`;
 	evDiv.style.backgroundSize = 'cover';
