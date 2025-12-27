@@ -642,6 +642,16 @@ function stop_music(fadeout_seconds) {
 //==== ANIMATION D'APPARITION DU TEXTE ==================
 function animateText(element, content, callback) {
 	const speed = textDisplaySpeed ?? 90;
+
+	// Si vitesse au max (100), affichage instantané
+	if (speed >= 100) {
+		element.innerHTML = `<span>${content}</span>`;
+		if (callback) {
+			callback();
+		}
+		return;
+	}
+
 	const delay = (101 - speed) / 2;
 
 	element.innerHTML = '<span></span>';
@@ -718,6 +728,14 @@ function showOverlayText(content) {
 	textOverlay.appendChild(newSpan);
 
 	const speed = textDisplaySpeed ?? 90;
+
+	// Si vitesse au max (100), affichage instantané
+	if (speed >= 100) {
+		newSpan.textContent = content;
+		triggerLogoEffect(textOverlay, 'pop2');
+		return;
+	}
+
 	const delay = (101 - speed) / 2;
 
 	let i = 0;
