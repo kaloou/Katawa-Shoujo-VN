@@ -8,7 +8,7 @@
     try 
     {
         $input = file_get_contents("php://input");
-        $parts = explode('|', $input, 2); // 2 = max 2 parts
+        $parts = explode('|', $input, 2); // 2 = max 2 parties
         if (count($parts) !== 2) {
             http_response_code(400);
             echo json_encode(["valid" => false]);

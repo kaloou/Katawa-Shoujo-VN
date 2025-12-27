@@ -3,7 +3,6 @@
   position: fixed;
   width: 40vw;
   height: 30vw;
-  /*box-shadow: 0 0 30vw 5vw black;*/
   max-width: 100dvh;
   max-height: 75vh;
   
@@ -37,7 +36,6 @@
   text-align: center;
   z-index: 1001;
 }
-/*id="menu_screen" style="display:none"*/
 
 #open_esc_ingame::after {
   content: "";
@@ -99,7 +97,6 @@
     height: min(10vw, 5vh);
     margin: min(10vw, 50vh);
   }
-  /*id="menu_screen" style="display:none"*/
 
   #open_esc_ingame::after {
     width: 100%;

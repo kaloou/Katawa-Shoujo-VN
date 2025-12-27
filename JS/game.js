@@ -2,18 +2,14 @@ let isTextLoading = false;
 let currentMusic = null;
 let musicFadeInterval = null;
 let globalMusicVolume = 0.75;
+let isHidingText = false;
 
-// document.onkeyup = (event) => {
-// 	pressKey(event);
-// };
-
-//==========KEY PRESS FUNCTION==========
+//==========KEY PRESS Fonction==========
 function pressKey(event) {
 	event.preventDefault();
 	if (isDisplay(divGame)) {
 		if (event.key === 'Escape') {
 			toggleEscape();
-			// si la page se charge et qu'on fait Escape, les chargements en cours se bloquent mais ce n'est pas dû à la fonction.
 		} 
 		else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && !isDisplay(divEscape)) {
 			getLine();
@@ -57,6 +53,7 @@ function toggleEscape() {
 }
 
 function hideButton() {
+	isHidingText = true;
 	hide(divEscape);
 	noFilter(divMenu);
 	noFilter(divGame);
@@ -73,6 +70,7 @@ function hideButton() {
 }
 
 function showDialog() {
+	isHidingText = false;
 	showBlock(dialogContener);
 	showBlock(centeredText);
 	showBlock(textOverlay);
@@ -85,7 +83,6 @@ function showDialog() {
 	};
 }
 
-//==== MAIN FUNCTIONS ==================================
 function getLine() {
 	textElement.classList.add('wait');
 	if (!isTextLoading) {
@@ -165,7 +162,7 @@ function update_dialogue(response) {
 			break;
 		case 3: // type 3 -> sprite
 			if (image_tag === 'bg') {
-				// handle problem in DB for type 3 with 'bg' tag
+				// Regle le problème des background type 3 de la bd
 				change_bg(image_name, false);
 				setTimeout(() => getLine(), 400);
 			} else {
@@ -175,7 +172,7 @@ function update_dialogue(response) {
 				}
 			}
 			break;
-		case 4: // type 4 -> remove sprite
+		case 4: // type 4 -> supprime sprite
 			remove_sprite(image_tag);
 			setTimeout(() => getLine(), 0);
 			break;
@@ -188,7 +185,7 @@ function update_dialogue(response) {
 		case 7: // type 7 -> QCM
 			displayQCM(response);
 			break;
-		case 'game_end': // End of the game
+		case 'game_end': // Fin du jeu
 			displayGameEnd(response.ending_name);
 			break;
 		default:
@@ -244,7 +241,7 @@ function change_bg(img_name, reset) {
 			divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 			bgTransition.style.opacity = 0;
 		}, 300);
-	} // j'hésite de carrement rien faire car quasiment sur que les tag 'bg' sont inutiles...bref
+	}
 	else {
 		divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 	}
@@ -352,7 +349,7 @@ function handle_ev_slide(image_name, pos, z, width, height, is_background) {
 					{backgroundPosition: 'right center'}
 				],
 				{
-					duration: 30000, // 5 secondes pour un slide lent
+					duration: 20000, // 5 secondes pour un slide lent
 					easing: 'ease-in-out',
 					fill: 'forwards'
 				}
@@ -393,13 +390,13 @@ function convert_y_on_current_format_hd(y) {
 }
 
 function add_sprite(image_name, image_tag, pos, z, width, height) {
-    // Exception cases
+    // Cas particuiliers :
     if (image_tag === 'heartattack') {
         handle_heartattack(image_name, image_tag, pos, z, width, height);
         return false; // logique pour ne pas appeller directement getline
     }
 
-    // Handle ev_* images with animations
+    // ev_* images avec une animation
     if (image_name.startsWith('ev_')) {
         handle_ev(image_name, image_tag, pos, z, width, height, false);
         return false; // logique pour ne pas appeller directement getline
@@ -415,7 +412,7 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
     spriteImg.style.backgroundRepeat = 'no-repeat';
     spriteImg.style.backgroundPosition = 'center';
 
-    // Fix Sprites en plein écran (1920x1080) put it in cover mode
+    // Fix Sprites en plein écran (1920x1080) met en cover mode
     const isFullscreenSprite = (width >= 1920 && height >= 1080);
 
     if (isFullscreenSprite) {
@@ -450,7 +447,7 @@ function add_sprite(image_name, image_tag, pos, z, width, height) {
     let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
 
     if (existingSprite) {
-        // transition of the sprite if already there and different pos
+        // transition du sprite s'il y en a déjà un autre
         const oldPos = parseFloat(existingSprite.dataset.pos);
         const newPos = parseFloat(pos);
 
@@ -574,7 +571,7 @@ function htmlDialogueInterpreter(html_string) {
 
 	triggerLogoEffect(textElement);
 }
-//==== MUSIC FUNCTIONS ==================================
+//==== MUSIQUE ==================================
 function play_music(music_name) {
 	if (!music_name || music_name === '') {
 		if (DEBUG) console.error('Nom de musique invalide');

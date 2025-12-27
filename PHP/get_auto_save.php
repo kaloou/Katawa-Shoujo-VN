@@ -2,7 +2,6 @@
     session_start();
     include_once("connexion.php");
     header("Content-Type: text/plain; charset=utf-8");
-    //$DEBUG = true;
     try 
     {
         if(isset($_SESSION["user_id"]))

@@ -39,7 +39,7 @@ if (!isset($_SESSION["seqtext"])) {
 
 if (!isset($_SESSION["game_state"])) {
     $_SESSION["game_state"] = array(
-        "menu_active" => false, // may not be necessary
+        "menu_active" => false,
         "choice_active" => false,
         "get_line_loaded" => false
     );

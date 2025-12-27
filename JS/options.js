@@ -1,4 +1,4 @@
-// === Variables for options ===
+// === Variables pour options ===
 let autoModeInterval = null;
 let autoModeDelay = 3000;
 let textDisplaySpeed = 90;
@@ -56,7 +56,7 @@ document.addEventListener('mozfullscreenchange', updateFullscreenToggle);
 document.addEventListener('MSFullscreenChange', updateFullscreenToggle);
 
 
-// === Open and close options ===
+// === Ouvre et ferme les options ===
 function toggleOptionsMenu() {
 	if (isDisplay(optionsDiv)) {
 		if(!isDisplay(divEscape)) {
@@ -90,7 +90,7 @@ function closeOptionsWithEsc(event) {
 	}
 }
 
-// === Fullscreen mode ===
+// === Mode Plein écran ===
 function enterFullscreen() {
 	if (!document.fullscreenElement) {
 		document.documentElement.requestFullscreen().catch((err) => {
@@ -112,23 +112,6 @@ function updateFullscreenToggle() {
 	fullscreenToggle.checked = !!document.fullscreenElement;
 	saveOptions();
 }
-
-// === Résolution ===
-// function changeResolution(resolution) {
-// 	if (resolution === 'responsive') {
-// 		if (DEBUG) console.log('Mode responsive activé');
-// 	} else {
-// 		const [width, height] = resolution.split('x');
-// 		const left = (window.screen.width - parseInt(width)) / 2;
-// 		const top = (window.screen.height - parseInt(height)) / 2;
-
-// 		const features = `width=${width},height=${height},left=${left},top=${top}`;
-// 		window.open(window.location.href, '', features);
-
-// 		resolutionSelect.value = 'responsive';
-// 		saveOptions();
-// 	}
-// }
 
 function changeResolution(resolution) {
 	if (resolution === 'responsive') {
@@ -163,7 +146,7 @@ function startAutoMode() {
 	autoModeDelay = 2000 + animationTime;
 
 	autoModeInterval = setInterval(() => {
-		if (isDisplay(divGame) && !isDisplay(divEscape) && !isDisplay(optionsDiv)) {
+		if (isDisplay(divGame) && !isDisplay(divEscape) && !isDisplay(optionsDiv) && !isHidingText) {
 			getLine();
 		}
 	}, autoModeDelay);

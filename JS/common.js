@@ -42,7 +42,7 @@ function toggle(elem, display = 'block') {
 	}
 }
 
-//============= Preload image functions =============
+//============= Preload les images =============
 function preloadImage(path, onDone) {
 	const img = new Image();
 	img.onload = () => onDone?.(img);
@@ -89,7 +89,7 @@ function preloadImagesGame() {
 	xhr.send();
 }
 
-//============= Transition animation =============
+//============= Transition =============
 let TRANSITION_DURATION = 500;
 const CIRCLE_RADIUS = 10;
 const CIRCLE_SPACING = CIRCLE_RADIUS * 2;
