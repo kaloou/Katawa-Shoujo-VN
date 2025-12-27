@@ -817,7 +817,7 @@ function handleQCMChoice(choice) {
 
 					window.onbeforeunload = (e) => {
 						e.preventDefault();
-						returnToMenuAndSave();
+						autoSave();
 					};
 
 					divGame.onclick = () => {

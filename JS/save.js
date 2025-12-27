@@ -102,7 +102,7 @@ function playGame() {
 							});
 							window.onbeforeunload = (e) => {
 								e.preventDefault();
-								returnToMenuAndSave();
+								autoSave();
 							};
 						}
 						else {

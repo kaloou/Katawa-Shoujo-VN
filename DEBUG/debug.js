@@ -1,5 +1,3 @@
-const DEBUG = true;
-
 window.addEventListener('load', function () {
 	if (DEBUG) initTestButtons();
 });

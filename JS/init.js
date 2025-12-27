@@ -1,4 +1,5 @@
 // Transition invisible pour fix un bug
+const DEBUG = true;
 const originalDuration = TRANSITION_DURATION;
 TRANSITION_DURATION = 0;
 playTransition(() => {
