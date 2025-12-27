@@ -1,4 +1,4 @@
-// === Variables for options ===
+// === Variables pour options ===
 let autoModeInterval = null;
 let autoModeDelay = 3000;
 let textDisplaySpeed = 90;
@@ -55,11 +55,10 @@ document.addEventListener('webkitfullscreenchange', updateFullscreenToggle);
 document.addEventListener('mozfullscreenchange', updateFullscreenToggle);
 document.addEventListener('MSFullscreenChange', updateFullscreenToggle);
 
-
-// === Open and close options ===
+// === Ouvre et ferme les options ===
 function toggleOptionsMenu() {
 	if (isDisplay(optionsDiv)) {
-		if(!isDisplay(divEscape)) {
+		if (!isDisplay(divEscape)) {
 			noFilter(divGame);
 			noFilter(divMenu);
 		}
@@ -90,11 +89,11 @@ function closeOptionsWithEsc(event) {
 	}
 }
 
-// === Fullscreen mode ===
+// === Mode Plein écran ===
 function enterFullscreen() {
 	if (!document.fullscreenElement) {
 		document.documentElement.requestFullscreen().catch((err) => {
-            if (DEBUG) console.error('Erreur lors du passage en plein écran:', err);
+			if (DEBUG) console.error('Erreur lors du passage en plein écran:', err);
 			fullscreenToggle.checked = false;
 		});
 	}
@@ -103,7 +102,7 @@ function enterFullscreen() {
 function exitFullscreen() {
 	if (document.fullscreenElement) {
 		document.exitFullscreen().catch((err) => {
-            if (DEBUG) console.error('Erreur lors de la sortie du plein écran:', err);
+			if (DEBUG) console.error('Erreur lors de la sortie du plein écran:', err);
 		});
 	}
 }
@@ -113,36 +112,18 @@ function updateFullscreenToggle() {
 	saveOptions();
 }
 
-// === Résolution ===
-// function changeResolution(resolution) {
-// 	if (resolution === 'responsive') {
-// 		if (DEBUG) console.log('Mode responsive activé');
-// 	} else {
-// 		const [width, height] = resolution.split('x');
-// 		const left = (window.screen.width - parseInt(width)) / 2;
-// 		const top = (window.screen.height - parseInt(height)) / 2;
-
-// 		const features = `width=${width},height=${height},left=${left},top=${top}`;
-// 		window.open(window.location.href, '', features);
-
-// 		resolutionSelect.value = 'responsive';
-// 		saveOptions();
-// 	}
-// }
-
 function changeResolution(resolution) {
 	if (resolution === 'responsive') {
 		divGame.style.width = '100dvw';
 		divGame.style.height = '100dvh';
 		divGame.style.border = '';
 		divGame.style.borderRadius = 0;
-	} 
-	else {
+	} else {
 		var [width, height] = resolution.split('x');
 		divGame.style.width = `${width}px`;
 		divGame.style.height = `${height}px`;
 		divGame.style.borderRadius = '1vw';
-  		divGame.style.border = '0.5vw solid var(--secondary-color)';
+		divGame.style.border = '0.5vw solid var(--secondary-color)';
 		saveOptions();
 	}
 }
@@ -152,8 +133,7 @@ function startAutoMode() {
 	if (autoModeInterval) {
 		stopAutoMode();
 	}
-    if (isQcmactive)
-        return;
+	if (isQcmactive) return;
 	// Calculer le délai du mode auto en tenant compte de l'animation du texte
 	// Temps d'animation moyen pour un texte de 150 caractères
 	const averageTextLength = 150;
@@ -196,7 +176,6 @@ function setMusicVolume(volume) {
 
 	if (DEBUG) console.log('Volume de la musique:', volume);
 }
-
 
 // === Sauvegarde et chargement des options ===
 function saveOptions() {

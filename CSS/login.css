@@ -1,7 +1,6 @@
 #login{
   display: none;
   position: fixed;
-  /*box-shadow: 0 0 30vw 5vw black;*/
   max-width: 90vh;
   
   z-index: 101;

@@ -57,11 +57,11 @@
   position: relative;
   margin: 0 auto;
   z-index: 2;
-  width: 52.5vw; /* 15 */
+  width: 52.5vw;
   max-width: 150vh;
   max-height: 99vh;
-  height: 38.5vw; /* 11 */
-  margin: 1vw auto; /*l'image background de base fait 1025x803*/
+  height: 38.5vw;
+  margin: 1vw auto;
   background-image: url(../assets/extern/UI/main/bg-login-screen.png);
   background-position-y: center;
   background-position-x: center;

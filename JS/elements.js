@@ -5,7 +5,6 @@ defaultMenu = document.getElementById('default_menu');
 
 // === Éléments du jeu ===
 divGame = document.getElementById('game_screen');
-gameScreen = document.getElementById('game_screen');
 spriteStack = document.getElementById('sprite_stack');
 nameElement = document.getElementById('name');
 textElement = document.getElementById('text');

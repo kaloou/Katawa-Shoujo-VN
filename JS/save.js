@@ -102,7 +102,7 @@ function playGame() {
 							});
 							window.onbeforeunload = (e) => {
 								e.preventDefault();
-								returnToMenuAndSave();
+								autoSave();
 							};
 						}
 						else {
@@ -541,7 +541,7 @@ function showConfirmDiv(mode) {
 	};
 	switch (mode)
 	{
-		case 0 : // Reset a save
+		case 0 : // Reset une save
 			var textnode = document.createTextNode('Réinitialiser cette sauvegarde ?');
 			titleForConfirmDiv.appendChild(textnode);
 			break;
@@ -585,9 +585,14 @@ function closeConfirmWithEsc(event) {
 }
 
 function returnToMenuAndSave() {
+	returnBtn.textContent = 'retour...';
+	autoSave();
+	toMenu();
+}
+
+function autoSave() {
 	if (!isAutoSaving) {
 		isAutoSaving = true;
-		returnBtn.textContent = 'retour...';
 		let xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
@@ -598,14 +603,16 @@ function returnToMenuAndSave() {
 						if (DEBUG) console.log(response);
 						printNotConnected();
 						connected = false;
+						toMenu();
+						hide(divEscape);
 					}
-					toMenu();
 				}
 				catch (error) {
 					if (DEBUG) console.error('Erreur lors du parsing JSON:' + error + '\nRéponse reçue:' + responseText);
 					printNotConnected();
 					connected = false;
-					toMenu();		
+					toMenu();
+					hide(divEscape);
 				}
 				returnBtn.textContent = 'Revenir au Menu';
 				isAutoSaving = false;

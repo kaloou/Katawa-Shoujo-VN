@@ -165,7 +165,7 @@ try {
             $_SESSION['to_save']['sprite']['image_tag'] = $response['image_tag'];
             $_SESSION['to_save']['sprite']['pos'] = $response['pos'];
             break;
-        case 4: // Remove Sprites
+        case 4: // Supprime Sprites
             $response['image_tag'] = $row['data'];
 
             $_SESSION['to_save']['sprite']['image_name'] = '';

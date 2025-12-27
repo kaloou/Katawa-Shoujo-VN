@@ -1,15 +1,13 @@
 /*
 let regex10Char = /.{10,}/;
-let regexMin = /[]/;
+let regexMin = /[a-z]/;
 let regexMaj = /[A-Z]/;
 let regexNum = /[0-9]/;
-let regexSpeChar = /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]/; // https://stackoverflow.com/a/66435604
 */
 let regexUsrName = /^[-_a-zA-Z0-9]{3,15}$/;
 let listRegexPwd = [/^.{8,40}$/, /[A-Z]/, /[-_a-z]/, /[0-9]/];
-//let regexPwd = /^[-A-Za-z0-9,?;.:/=+~ù%´µ£`^¨\[$*\]&|é@"#'(§^è!ç{à)°_}]{8,25}$/u;
 
-// colors : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
+// couleurs : https://katawashoujo.fandom.com/wiki/Main_Page/Characters
 let greenColor = '#99B681'; //2c9e31 or 99B681
 let redColor = '#eb243b';
 let pinkColor = '#FF8D7C';
@@ -97,7 +95,7 @@ function openLoginForm() {
 function sendConnexion(event) {
 	event.preventDefault();
 	if (!connected && !isTryingToConnect && checkValidUsrName() && checkValidPassword()) {
-		isTryingToConnect = true; // to be sure the user is'nt spamming connexion resquests
+		isTryingToConnect = true; // pour ne pas pouvoir spammer les requetes de connexion
 		tryConnexion();
 	}
 }
