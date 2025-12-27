@@ -166,7 +166,7 @@ function update_dialogue(response) {
 				change_bg(image_name, false);
 				setTimeout(() => getLine(), 400);
 			} else {
-				// add sprite return false just for heartattack to see animation going
+				// pour l'animation heartattack ou ev
 				if (add_sprite(image_name, image_tag, pos, z, width, height)) {
 					setTimeout(() => getLine(), 0);
 				}
