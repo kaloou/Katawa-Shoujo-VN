@@ -2,6 +2,7 @@ let isTextLoading = false;
 let currentMusic = null;
 let musicFadeInterval = null;
 let globalMusicVolume = 0.75;
+let isQcmactive = false;
 
 // document.onkeyup = (event) => {
 // 	pressKey(event);
@@ -756,6 +757,7 @@ function triggerLogoEffect(element, animationClass = 'pop') {
 }
 
 function displayQCM(qcm_data) {
+    isQcmactive  = true;
 	hideTextBox();
 	hideOverlayText();
 	hideCenteredText();
@@ -797,6 +799,7 @@ function displayQCM(qcm_data) {
 }
 
 function handleQCMChoice(choice) {
+    isQcmactive = false;
 	if (DEBUG) console.log('Choix QCM:', choice);
 
 	const choices = document.querySelectorAll('.qcm-choice');

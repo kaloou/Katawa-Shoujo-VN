@@ -152,7 +152,8 @@ function startAutoMode() {
 	if (autoModeInterval) {
 		stopAutoMode();
 	}
-
+    if (isQcmactive)
+        return;
 	// Calculer le délai du mode auto en tenant compte de l'animation du texte
 	// Temps d'animation moyen pour un texte de 150 caractères
 	const averageTextLength = 150;
@@ -163,7 +164,7 @@ function startAutoMode() {
 	autoModeDelay = 2000 + animationTime;
 
 	autoModeInterval = setInterval(() => {
-		if (isDisplay(divGame) && !isDisplay(divEscape) && !isDisplay(optionsDiv)) {
+		if (isDisplay(divGame) && !isDisplay(divEscape) && !isDisplay(optionsDiv) && !isQcmactive) {
 			getLine();
 		}
 	}, autoModeDelay);
