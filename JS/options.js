@@ -55,11 +55,10 @@ document.addEventListener('webkitfullscreenchange', updateFullscreenToggle);
 document.addEventListener('mozfullscreenchange', updateFullscreenToggle);
 document.addEventListener('MSFullscreenChange', updateFullscreenToggle);
 
-
 // === Ouvre et ferme les options ===
 function toggleOptionsMenu() {
 	if (isDisplay(optionsDiv)) {
-		if(!isDisplay(divEscape)) {
+		if (!isDisplay(divEscape)) {
 			noFilter(divGame);
 			noFilter(divMenu);
 		}
@@ -94,7 +93,7 @@ function closeOptionsWithEsc(event) {
 function enterFullscreen() {
 	if (!document.fullscreenElement) {
 		document.documentElement.requestFullscreen().catch((err) => {
-			console.error('Erreur lors du passage en plein écran:', err);
+			if (DEBUG) console.error('Erreur lors du passage en plein écran:', err);
 			fullscreenToggle.checked = false;
 		});
 	}
@@ -103,7 +102,7 @@ function enterFullscreen() {
 function exitFullscreen() {
 	if (document.fullscreenElement) {
 		document.exitFullscreen().catch((err) => {
-			console.error('Erreur lors de la sortie du plein écran:', err);
+			if (DEBUG) console.error('Erreur lors de la sortie du plein écran:', err);
 		});
 	}
 }
@@ -119,13 +118,12 @@ function changeResolution(resolution) {
 		divGame.style.height = '100dvh';
 		divGame.style.border = '';
 		divGame.style.borderRadius = 0;
-	} 
-	else {
+	} else {
 		var [width, height] = resolution.split('x');
 		divGame.style.width = `${width}px`;
 		divGame.style.height = `${height}px`;
 		divGame.style.borderRadius = '1vw';
-  		divGame.style.border = '0.5vw solid var(--secondary-color)';
+		divGame.style.border = '0.5vw solid var(--secondary-color)';
 		saveOptions();
 	}
 }
@@ -135,7 +133,7 @@ function startAutoMode() {
 	if (autoModeInterval) {
 		stopAutoMode();
 	}
-
+	if (isQcmactive) return;
 	// Calculer le délai du mode auto en tenant compte de l'animation du texte
 	// Temps d'animation moyen pour un texte de 150 caractères
 	const averageTextLength = 150;
@@ -146,7 +144,7 @@ function startAutoMode() {
 	autoModeDelay = 2000 + animationTime;
 
 	autoModeInterval = setInterval(() => {
-		if (isDisplay(divGame) && !isDisplay(divEscape) && !isDisplay(optionsDiv) && !isHidingText) {
+		if (isDisplay(divGame) && !isDisplay(divEscape) && !isDisplay(optionsDiv) && !isQcmactive) {
 			getLine();
 		}
 	}, autoModeDelay);
@@ -178,7 +176,6 @@ function setMusicVolume(volume) {
 
 	if (DEBUG) console.log('Volume de la musique:', volume);
 }
-
 
 // === Sauvegarde et chargement des options ===
 function saveOptions() {

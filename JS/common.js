@@ -64,23 +64,22 @@ function preloadImagesGame() {
 					if (data.images && data.images.length > 0) {
 						data.images.forEach((image) => {
 							const fullPath = 'assets/internHD/' + image.image_name;
-
 							preloadImage(fullPath, (img) => {
 								if (img) {
-									console.log('Image préchargée:', image.image_name);
+                                    if (DEBUG) console.log('Image préchargée:', image.image_name);
 								} else {
-									console.error('Erreur de chargement:', image.image_name);
+                                    if (DEBUG) console.error('Erreur de chargement:', image.image_name);
 								}
 							});
 						});
 					} else {
-						console.log('Aucune image trouvée.');
+                        if (DEBUG) console.log('Aucune image trouvée.');
 					}
 				} catch (error) {
-					console.error('Erreur lors du parsing JSON:', error, '\nRéponse reçue:', responseText);
+                    if (DEBUG) console.error('Erreur lors du parsing JSON:', error, '\nRéponse reçue:', responseText);
 				}
 			} else {
-				console.error('Erreur XHR preloadImagesGame:', xhr.status);
+                if (DEBUG) console.error('Erreur XHR preloadImagesGame:', xhr.status);
 			}
 		}
 	};

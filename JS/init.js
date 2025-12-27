@@ -1,16 +1,15 @@
-// Transition invisible pour fix un bug
-const DEBUG = true;
+const DEBUG = false;
+// Transition invisible bug fix
 const originalDuration = TRANSITION_DURATION;
 TRANSITION_DURATION = 0;
 playTransition(() => {
-    TRANSITION_DURATION = originalDuration;
-    hide(divGame);
+	TRANSITION_DURATION = originalDuration;
+	hide(divGame);
 });
 window.addEventListener('load', function () {
 	initGame();
 	preloadImagesUi();
 	preloadImagesGame();
-
 
 	//========EVENTS=======
 	document.getElementById('transition').onclick = () => {};
@@ -33,7 +32,7 @@ window.addEventListener('load', function () {
 		openLoginForm();
 	};
 	startBtn.onclick = () => {
-		start()
+		start();
 	};
 
 	inputUsrName.addEventListener('keyup', checkValidUsrName);
@@ -75,7 +74,7 @@ window.addEventListener('load', function () {
 	});
 	// CONFIRM
 	cancelBtnForCfrm.onclick = () => {
-		closeConfirmDiv()
+		closeConfirmDiv();
 	};
 	inputForConfirm.addEventListener('keyup', checkValidTitleForSave);
 });
@@ -86,9 +85,9 @@ function initGame() {
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			let response = xhr.responseText;
-			console.log('✅ init_session.php -> Session initialisée : ', response); // to fix -> no response
+			if (DEBUG) console.log('✅ init_session.php -> Session initialisée : ', response); // to fix -> no response
 		} else if (xhr.readyState === 4 && xhr.status !== 200) {
-			console.error("❌init_session.php -> Erreur lors de l'appel AJAX : " + xhr.statusText);
+			if (DEBUG) console.error("❌init_session.php -> Erreur lors de l'appel AJAX : " + xhr.statusText);
 		}
 	};
 	xhr.send();
@@ -98,5 +97,5 @@ function initGame() {
 function preloadImagesUi() {
 	preloadImage('assets/extern/UI/bg-config-gallery.png');
 	preloadImage('assets/extern/UI/main/background-unsatured.png');
-    preloadImage('assets/internHD/bg_op_snowywoods.png');
+	preloadImage('assets/internHD/bg_op_snowywoods.png');
 }

@@ -2,7 +2,11 @@ let isTextLoading = false;
 let currentMusic = null;
 let musicFadeInterval = null;
 let globalMusicVolume = 0.75;
-let isHidingText = false;
+let isQcmactive = false;
+
+// document.onkeyup = (event) => {
+// 	pressKey(event);
+// };
 
 //==========KEY PRESS Fonction==========
 function pressKey(event) {
@@ -10,11 +14,9 @@ function pressKey(event) {
 	if (isDisplay(divGame)) {
 		if (event.key === 'Escape') {
 			toggleEscape();
-		} 
-		else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && !isDisplay(divEscape)) {
+		} else if ((event.key === ' ' || event.key === 'ArrowRight' || event.key === 'Enter') && !isDisplay(divEscape)) {
 			getLine();
-		} 
-		else if (event.key.toLowerCase() === 'f') {
+		} else if (event.key.toLowerCase() === 'f') {
 			fullScreen();
 		}
 	}
@@ -23,8 +25,7 @@ function pressKey(event) {
 function fullScreen() {
 	if (!document.fullscreenElement) {
 		document.documentElement.requestFullscreen();
-	} 
-	else {
+	} else {
 		document.exitFullscreen();
 	}
 }
@@ -39,9 +40,8 @@ function toggleEscape() {
 		};
 		document.onkeyup = (event) => {
 			pressKey(event);
-		}
-	} 
-	else {
+		};
+	} else {
 		showFlex(divEscape);
 		blurF(divMenu);
 		blurF(divGame);
@@ -140,7 +140,7 @@ function update_dialogue(response) {
 	const music_name = response.music_name || '';
 
 	switch (type) {
-        case 1: // type 1 -> text
+		case 1: // type 1 -> text
 			// Gestion of music with pos and z...
 			if (pos === 7) {
 				play_music(music_name);
@@ -189,7 +189,7 @@ function update_dialogue(response) {
 			displayGameEnd(response.ending_name);
 			break;
 		default:
-			console.log("Type non géré pour l'instant : " + type);
+			if (DEBUG) console.log("Type non géré pour l'instant : " + type);
 			setTimeout(() => getLine(), 0);
 			break;
 	}
@@ -226,8 +226,8 @@ function displayText(content, characterName = '', characterColor = '', character
 //==== TYPE 2 FUNCTIONS ==================================
 function change_bg(img_name, reset) {
 	if (reset) {
-        hideTextBox();
-        hideNameBox();
+		hideTextBox();
+		hideNameBox();
 		reset_sprite_stack(); // Reset immédiatement, avant la transition
 
 		const bgTransition = document.getElementById('bg_transition');
@@ -241,8 +241,7 @@ function change_bg(img_name, reset) {
 			divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 			bgTransition.style.opacity = 0;
 		}, 300);
-	}
-	else {
+	} else {
 		divGame.style.backgroundImage = `url("assets/internHD/${img_name}")`;
 	}
 }
@@ -254,7 +253,7 @@ function reset_sprite_stack() {
 function handle_ev(image_name, animation_tag, pos, z, width, height, is_background) {
 	hideTextBox();
 	hideNameBox();
-    console.log(animation_tag);
+	if (DEBUG) console.log(animation_tag);
 	if (is_background) {
 		reset_sprite_stack();
 	}
@@ -294,17 +293,11 @@ function handle_ev_dezoom_animation(image_name, pos, z, width, height, is_backgr
 
 	requestAnimationFrame(() => {
 		setTimeout(() => {
-			const animation = evDiv.animate(
-				[
-					{transform: 'scale(1.3)'},
-					{transform: 'scale(1)'}
-				],
-				{
-					duration: 3000,
-					easing: 'ease-out',
-					fill: 'forwards'
-				}
-			);
+			const animation = evDiv.animate([{transform: 'scale(1.3)'}, {transform: 'scale(1)'}], {
+				duration: 3000,
+				easing: 'ease-out',
+				fill: 'forwards'
+			});
 
 			animation.finished.then(() => {
 				if (is_background) {
@@ -318,7 +311,6 @@ function handle_ev_dezoom_animation(image_name, pos, z, width, height, is_backgr
 }
 
 function handle_ev_slide(image_name, pos, z, width, height, is_background) {
-    console.log("enter");
 	let evDiv = document.createElement('div');
 	evDiv.style.backgroundImage = `url("assets/internHD/${image_name}")`;
 	evDiv.style.backgroundSize = 'cover';
@@ -343,17 +335,11 @@ function handle_ev_slide(image_name, pos, z, width, height, is_background) {
 
 	requestAnimationFrame(() => {
 		setTimeout(() => {
-			const animation = evDiv.animate(
-				[
-					{backgroundPosition: 'left center'},
-					{backgroundPosition: 'right center'}
-				],
-				{
-					duration: 20000, // 5 secondes pour un slide lent
-					easing: 'ease-in-out',
-					fill: 'forwards'
-				}
-			);
+			const animation = evDiv.animate([{backgroundPosition: 'left center'}, {backgroundPosition: 'right center'}], {
+				duration: 20000, // 5 secondes pour un slide lent
+				easing: 'ease-in-out',
+				fill: 'forwards'
+			});
 
 			animation.finished.then(() => {
 				if (is_background) {
@@ -390,97 +376,97 @@ function convert_y_on_current_format_hd(y) {
 }
 
 function add_sprite(image_name, image_tag, pos, z, width, height) {
-    // Cas particuiliers :
-    if (image_tag === 'heartattack') {
-        handle_heartattack(image_name, image_tag, pos, z, width, height);
-        return false; // logique pour ne pas appeller directement getline
-    }
+	// Cas particuiliers :
+	if (image_tag === 'heartattack') {
+		handle_heartattack(image_name, image_tag, pos, z, width, height);
+		return false; // logique pour ne pas appeller directement getline
+	}
 
-    // ev_* images avec une animation
-    if (image_name.startsWith('ev_')) {
-        handle_ev(image_name, image_tag, pos, z, width, height, false);
-        return false; // logique pour ne pas appeller directement getline
-    }
+	// ev_* images avec une animation
+	if (image_name.startsWith('ev_')) {
+		handle_ev(image_name, image_tag, pos, z, width, height, false);
+		return false; // logique pour ne pas appeller directement getline
+	}
 
-    let spriteImg = document.createElement('div');
-    spriteImg.style.backgroundImage = `url("assets/internHD/${image_name}")`;
-    spriteImg.className = 'sprite';
-    spriteImg.dataset.tag = image_tag;
-    spriteImg.dataset.pos = pos;
-    spriteImg.dataset.z = z;
-    spriteImg.style.zIndex = z;
-    spriteImg.style.backgroundRepeat = 'no-repeat';
-    spriteImg.style.backgroundPosition = 'center';
+	let spriteImg = document.createElement('div');
+	spriteImg.style.backgroundImage = `url("assets/internHD/${image_name}")`;
+	spriteImg.className = 'sprite';
+	spriteImg.dataset.tag = image_tag;
+	spriteImg.dataset.pos = pos;
+	spriteImg.dataset.z = z;
+	spriteImg.style.zIndex = z;
+	spriteImg.style.backgroundRepeat = 'no-repeat';
+	spriteImg.style.backgroundPosition = 'center';
 
-    // Fix Sprites en plein écran (1920x1080) met en cover mode
-    const isFullscreenSprite = (width >= 1920 && height >= 1080);
+	// Fix Sprites en plein écran (1920x1080) met en cover mode
+	const isFullscreenSprite = width >= 1920 && height >= 1080;
 
-    if (isFullscreenSprite) {
-        spriteImg.style.backgroundSize = 'cover';
-        spriteImg.style.width = '100%';
-        spriteImg.style.height = '100%';
-        spriteImg.style.left = convert_x_on_current_format(pos) + 'px';
-    } else {
-        spriteImg.style.backgroundSize = 'contain';
+	if (isFullscreenSprite) {
+		spriteImg.style.backgroundSize = 'cover';
+		spriteImg.style.width = '100%';
+		spriteImg.style.height = '100%';
+		spriteImg.style.left = convert_x_on_current_format(pos) + 'px';
+	} else {
+		spriteImg.style.backgroundSize = 'contain';
 
-        let convertedX;
-        if (pos === 800) {
-            const baseX = 750;
-            convertedX = convert_x_on_current_format(baseX);
-        } else if (pos > 800) {
-            // Si pos > 800, convertir 800 puis convertir le reste et additionner
-            const baseX = 800;
-            const remainderX = pos - 800;
-            convertedX = convert_x_on_current_format(baseX) + convert_x_on_current_format(remainderX);
-        } else {
-            convertedX = convert_x_on_current_format(pos);
-        }
+		let convertedX;
+		if (pos === 800) {
+			const baseX = 750;
+			convertedX = convert_x_on_current_format(baseX);
+		} else if (pos > 800) {
+			// Si pos > 800, convertir 800 puis convertir le reste et additionner
+			const baseX = 800;
+			const remainderX = pos - 800;
+			convertedX = convert_x_on_current_format(baseX) + convert_x_on_current_format(remainderX);
+		} else {
+			convertedX = convert_x_on_current_format(pos);
+		}
 
-        spriteImg.style.left = convertedX + 'px';
-        spriteImg.style.bottom = '0';
+		spriteImg.style.left = convertedX + 'px';
+		spriteImg.style.bottom = '0';
 
-        // dimensions
-        spriteImg.style.width = (width > 0 ? width : 200) + 'px';
-        spriteImg.style.height = (height > 0 ? height : 200) + 'px';
-    }
+		// dimensions
+		spriteImg.style.width = (width > 0 ? width : 200) + 'px';
+		spriteImg.style.height = (height > 0 ? height : 200) + 'px';
+	}
 
-    let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
+	let existingSprite = spriteStack.querySelector(`div[data-tag="${image_tag}"]`);
 
-    if (existingSprite) {
-        // transition du sprite s'il y en a déjà un autre
-        const oldPos = parseFloat(existingSprite.dataset.pos);
-        const newPos = parseFloat(pos);
+	if (existingSprite) {
+		// transition du sprite s'il y en a déjà un autre
+		const oldPos = parseFloat(existingSprite.dataset.pos);
+		const newPos = parseFloat(pos);
 
-        // pas de transition pour les sprites plein écran ou si même position
-        if (oldPos !== newPos && !isFullscreenSprite) {
-            const newLeft = parseFloat(spriteImg.style.left);
+		// pas de transition pour les sprites plein écran ou si même position
+		if (oldPos !== newPos && !isFullscreenSprite) {
+			const newLeft = parseFloat(spriteImg.style.left);
 
-            existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
-            existingSprite.dataset.pos = pos;
-            existingSprite.dataset.z = z;
-            existingSprite.style.zIndex = z;
-            existingSprite.style.width = spriteImg.style.width;
-            existingSprite.style.height = spriteImg.style.height;
+			existingSprite.style.backgroundImage = spriteImg.style.backgroundImage;
+			existingSprite.dataset.pos = pos;
+			existingSprite.dataset.z = z;
+			existingSprite.style.zIndex = z;
+			existingSprite.style.width = spriteImg.style.width;
+			existingSprite.style.height = spriteImg.style.height;
 
-            existingSprite.style.transition = 'left 0.5s ease-in-out';
+			existingSprite.style.transition = 'left 0.5s ease-in-out';
 
-            existingSprite.style.left = newLeft + 'px';
+			existingSprite.style.left = newLeft + 'px';
 
-            setTimeout(() => {
-                existingSprite.style.transition = '';
-            }, 500);
-        } else {
-            spriteImg.style.opacity = '0';
-            spriteImg.classList.add('sprite-fade-in');
-            existingSprite.replaceWith(spriteImg);
-        }
-    } else {
-        spriteImg.style.opacity = '0';
-        spriteImg.classList.add('sprite-fade-in');
-        spriteStack.appendChild(spriteImg);
-    }
+			setTimeout(() => {
+				existingSprite.style.transition = '';
+			}, 500);
+		} else {
+			spriteImg.style.opacity = '0';
+			spriteImg.classList.add('sprite-fade-in');
+			existingSprite.replaceWith(spriteImg);
+		}
+	} else {
+		spriteImg.style.opacity = '0';
+		spriteImg.classList.add('sprite-fade-in');
+		spriteStack.appendChild(spriteImg);
+	}
 
-    return true; // Pas d'animation, sprite ajouté immédiatement
+	return true; // Pas d'animation, sprite ajouté immédiatement
 }
 
 function handle_heartattack(image_name, image_tag, pos, z, width) {
@@ -587,7 +573,7 @@ function play_music(music_name) {
 	currentMusic.loop = true;
 	currentMusic.volume = globalMusicVolume;
 
-	currentMusic.play().catch(error => {
+	currentMusic.play().catch((error) => {
 		if (DEBUG) console.error('Erreur lors de la lecture de la musique:', error);
 	});
 
@@ -639,6 +625,16 @@ function stop_music(fadeout_seconds) {
 //==== ANIMATION D'APPARITION DU TEXTE ==================
 function animateText(element, content, callback) {
 	const speed = textDisplaySpeed ?? 90;
+
+	// Si vitesse au max (100), affichage instantané
+	if (speed >= 100) {
+		element.innerHTML = `<span>${content}</span>`;
+		if (callback) {
+			callback();
+		}
+		return;
+	}
+
 	const delay = (101 - speed) / 2;
 
 	element.innerHTML = '<span></span>';
@@ -715,6 +711,14 @@ function showOverlayText(content) {
 	textOverlay.appendChild(newSpan);
 
 	const speed = textDisplaySpeed ?? 90;
+
+	// Si vitesse au max (100), affichage instantané
+	if (speed >= 100) {
+		newSpan.textContent = content;
+		triggerLogoEffect(textOverlay, 'pop2');
+		return;
+	}
+
 	const delay = (101 - speed) / 2;
 
 	let i = 0;
@@ -754,6 +758,7 @@ function triggerLogoEffect(element, animationClass = 'pop') {
 }
 
 function displayQCM(qcm_data) {
+	isQcmactive = true;
 	hideTextBox();
 	hideOverlayText();
 	hideCenteredText();
@@ -779,7 +784,7 @@ function displayQCM(qcm_data) {
 	const choicesContainer = document.createElement('div');
 	choicesContainer.id = 'qcm-choices';
 
-	qcm_data.options.forEach(option => {
+	qcm_data.options.forEach((option) => {
 		const choiceDiv = document.createElement('div');
 		choiceDiv.className = 'qcm-choice';
 		choiceDiv.textContent = option.text;
@@ -796,10 +801,11 @@ function displayQCM(qcm_data) {
 }
 
 function handleQCMChoice(choice) {
+	isQcmactive = false;
 	if (DEBUG) console.log('Choix QCM:', choice);
 
 	const choices = document.querySelectorAll('.qcm-choice');
-	choices.forEach(c => c.onclick = null);
+	choices.forEach((c) => (c.onclick = null));
 
 	let xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
